@@ -31,8 +31,7 @@ public class Animal extends Edible{
 
     @Override
     public void run() {
-        move();
-        turn(3);
+        eat();
         super.run();
     }
 
@@ -55,9 +54,9 @@ public class Animal extends Edible{
         Position newPos = getFacingPosition();
 
         if(isAdjacentTo(newPos)) {
-            if (Thread.interrupted()) {return;}
+            if (Thread.interrupted() || !isAlive) {return;}
             synchronized (world) {
-                if (Thread.interrupted()) {return;}
+                if (Thread.interrupted() || !isAlive) {return;}
                 Thing thingAtNewPos = world.getThingAt(newPos);
                 if (thingAtNewPos.getClass() == Nothing.class) {
                     world.removeThing(this);
@@ -85,9 +84,9 @@ public class Animal extends Edible{
             return;
         }
 
-        if (Thread.interrupted()) {return;}
+        if (Thread.interrupted() || !isAlive) {return;}
         synchronized (world) {
-            if (Thread.interrupted()) {return;}
+            if (Thread.interrupted() || !isAlive) {return;}
             Egg egg = new Egg(world, pos, attributes, this);
             world.addThing(pos, egg);
         }
@@ -158,10 +157,12 @@ public class Animal extends Edible{
      */
     protected boolean eat() {
         Thing thingToEat = getFacingThing();
+        System.out.println(this);
         if (thingToEat instanceof Edible) {
             Edible edibleToEat = (Edible)thingToEat;
             world.killThing(thingToEat);
             addEnergy(edibleToEat.getEnergy());
+            System.out.println(this);
             return true;
         } else {
             return false;
@@ -177,9 +178,9 @@ public class Animal extends Edible{
      */
     protected boolean attack() {
         removeEnergy(attributes.getAttackCost());
-        if (Thread.interrupted()) {return false;}
+        if (Thread.interrupted() || !isAlive) {return false;}
         synchronized(world){
-            if (Thread.interrupted()) {return false;}
+            if (Thread.interrupted() || !isAlive) {return false;}
             Thing thingBeingAttacked = getFacingThing();
             if (thingBeingAttacked.getClass() == Animal.class) {
                 thingBeingAttacked.removeHealth(attributes.getAttackDamage());
@@ -227,7 +228,11 @@ public class Animal extends Edible{
     }
 
     protected Thing getFacingThing() {
-        return world.getThingAt(getFacingPosition());
+        if (Thread.interrupted() || !isAlive) {return null;}
+        synchronized (world) {
+            if (Thread.interrupted() || !isAlive) {return null;}
+            return world.getThingAt(getFacingPosition());
+        }
     }
 
     
@@ -257,7 +262,9 @@ public class Animal extends Edible{
         health -= amount;
         if (health <= 0) {
             // Animal dies
+            if (Thread.interrupted() || !isAlive) {return;}
             synchronized (world) {
+                if (Thread.interrupted() || !isAlive) {return;}
                 if (energy > 0){
                     Food food = new Food(world, pos, energy);
                     world.replaceThing(this, food);//place food with energy equal to itself in the world when it dies

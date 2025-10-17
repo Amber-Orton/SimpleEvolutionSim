@@ -27,9 +27,9 @@ public class Egg extends Edible{
             }
         }
 
-        if (Thread.interrupted()) {return;}
+        if (Thread.interrupted() || !isAlive) {return;}
         synchronized(world){
-            if (Thread.interrupted()) {return;}
+            if (Thread.interrupted() || !isAlive) {return;}
             if (world.getThingAt(pos) != parent && world.posIsNothingClass(pos)){
                 world.putThingAt(pos, this);//attempt to place itself in the world
             }
@@ -42,9 +42,9 @@ public class Egg extends Edible{
     public void hatch() {
         Animal child = new Animal(world, pos, attributes.generateMutatedAttributes(), parent);
 
-        if (Thread.interrupted()) {return;}
+        if (Thread.interrupted() || !isAlive) {return;}
         synchronized (world) {
-            if (Thread.interrupted()) {return;}
+            if (Thread.interrupted() || !isAlive) {return;}
             world.replaceThing(this, child);
             world.killThing(this);
         }

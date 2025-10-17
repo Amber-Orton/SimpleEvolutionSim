@@ -36,7 +36,7 @@ public class World {
             }
         }
         putThingAt(new Position(1, 1), new Animal(this, new Position(1,1) , new AnimalAttributes(33, 33, 34, 303), null));
-        putThingAt(new Position(2, 1), new Animal(this, new Position(2,1) , new AnimalAttributes(33, 33, 34, 3), null));
+        putThingAt(new Position(2, 1), new Food(this, new Position(2, 1), 2));
     }
 
     /**
@@ -168,9 +168,9 @@ public class World {
      */
     public void killThing(Thing thing) {
         removeThing(thing);
-        thing.setWorld(null);
+        thing.die();
         if (thing.thread != null){
-            thing.interrupt();
+            thing.thread.interrupt();
         }
     }
 

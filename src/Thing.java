@@ -5,6 +5,7 @@ public class Thing implements Runnable {
     protected Position pos;
     protected Thread thread;
     protected World world;
+    protected boolean isAlive;
 
 
     protected Color color;
@@ -16,11 +17,15 @@ public class Thing implements Runnable {
         this.color = color;
         this.world = world;
         setPos(pos);
+        this.isAlive = true;
     }
     
     @Override
     public void run() {
         // Default behavior: do nothing
+        if (!isAlive){
+            world = null;
+        }
         thread = null;
     }
     
@@ -70,5 +75,9 @@ public class Thing implements Runnable {
     
     public Thread getThread() {
         return thread;
+    }
+
+    public void die(){
+        isAlive= false;
     }
 }
