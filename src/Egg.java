@@ -30,7 +30,7 @@ public class Egg extends Edible{
         if (Thread.interrupted() || !isAlive) {return;}
         synchronized(world){
             if (Thread.interrupted() || !isAlive) {return;}
-            if (world.getThingAt(pos) != parent && world.posIsNothingClass(pos)){
+            if (world.getThingAt(pos) != parent && world.posIsNothing(pos)){
                 world.putThingAt(pos, this);//attempt to place itself in the world
             }
         }

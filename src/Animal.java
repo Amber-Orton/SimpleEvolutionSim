@@ -58,7 +58,7 @@ public class Animal extends Edible{
             synchronized (world) {
                 if (Thread.interrupted() || !isAlive) {return;}
                 Thing thingAtNewPos = world.getThingAt(newPos);
-                if (thingAtNewPos.getClass() == Nothing.class) {
+                if (thingAtNewPos instanceof Nothing) {
                     world.removeThing(this);
                     world.putThingAt(newPos, this);
                 }

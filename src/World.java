@@ -6,6 +6,7 @@ public class World {
     private int height;
     private Set<Thing> things;
     Thing[][] grid;
+    Nothing[][] nothingGrid;
     private final Wall DEFAULTWALL = new Wall();
 
 
@@ -14,6 +15,7 @@ public class World {
         this.width = width;
         this.height = height;
         this.grid = new Thing[height][width];
+        this.nothingGrid = new Nothing[height][width];
         things = new java.util.HashSet<>();
         populateWorld();
     }
@@ -26,12 +28,13 @@ public class World {
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
                 Position position = new Position(row, col);
+                nothingGrid[row][col] = new Nothing(this, new Position(row, col));
                 //if (Math.random() < 0.2) { // 20% chance to place a Wall on each cell
                 //    putThingAt(position, new Wall(this, position));
                 //}else if (Math.random() < 0.1) { // 10% chance to place an Animal on each cell
                 //    putThingAt(position, new Animal(this, position , new AnimalAttributes(20, 20, 5), null));
                 //} else {
-                    putThingAt(position, Nothing.getInstance()); // Empty cell
+                    putThingAt(position, nothingGrid[row][col]); // Empty cell
                 //}
             }
         }
@@ -76,15 +79,13 @@ public class World {
      * @param thing The Thing to place at the specified location
      */
     public void putThingAt(Position pos, Thing thing) {
-        if (getThingAt(pos) != null && !posIsNothingClass(pos)) {//cannot place one Thing on another unless placing on Nothing
-            //if (!(thing.getClass() == Egg.class && (getThingAt(pos).getClass() == Animal.class || getThingAt(pos).getClass() == Egg.class))){//can place Egg on Animal or Egg
+        if (getThingAt(pos) != null && !posIsNothing(pos)) {//cannot place one Thing on another unless placing on Nothing
                 throw new IllegalArgumentException("Cant place a Thing at an occupied cell " + pos + ". Current thing: " + getThingAt(pos) + ", New thing: " + thing);
-            //}
         }
 
         addThing(pos, thing);
 
-        if (thing.getClass() != Egg.class || posIsNothingClass(pos)){//dont attempt to put Egg in grid if something else is aready there
+        if (thing.getClass() != Egg.class || posIsNothing(pos)){//dont attempt to put Egg in grid if something else is aready there
             grid[pos.getPos()[0]][pos.getPos()[1]] = thing;
         }
     }
@@ -100,13 +101,11 @@ public class World {
         if (!posIsInBounds(pos)) {
             throw new IndexOutOfBoundsException("Invalid grid coordinates when placing thing");
         }
-        if (!thingIsNothingInstance(thing)){// Don't attempt to change coordinates of the singleton instance of Nothing
+        if (!thingIsNothing(thing)){// Don't attempt to change coordinates of Nothing
             thing.setPos(pos);
             thing.setWorld(this);
         }
-        if (!thingIsNothingClass(thing)) { // Don't add an instance of Nothing to things
-            things.add(thing);
-        }
+        things.add(thing);
     }
 
     /** 
@@ -157,7 +156,7 @@ public class World {
      * @param thing the thing to remove
      */
     public void removeThing(Thing thing){
-        replaceThing(thing, Nothing.getInstance());
+        replaceThing(thing, nothingGrid[thing.getPos().getRow()][thing.getPos().getCol()]);
     }
 
     /**
@@ -183,36 +182,20 @@ public class World {
      * @param thing thing to check
      * @return true if thing is any instace of Nothing false otherwise
      */
-    public boolean thingIsNothingClass(Thing thing){
-        return thing.getClass() == Nothing.class;
+    public boolean thingIsNothing(Thing thing){
+        return thing instanceof Nothing;
     }
 
-    /**
-     * returns weather thing is the singlton instace of Nothing
-     * @param thing thing to check
-     * @return true if thing is singlton instace of Nothing false otherwise
-     */
-    public boolean thingIsNothingInstance(Thing thing){
-        return thing == Nothing.getInstance();
-    }
 
     /**
      * returns weather there is any instace of Nothing at the position
      * @param pos position to check
      * @return true if any instace of Nothing is at pos in grid false otherwise
      */
-    public boolean posIsNothingClass(Position pos){
-        return thingIsNothingClass(getThingAt(pos));
+    public boolean posIsNothing(Position pos){
+        return thingIsNothing(getThingAt(pos));
     }
 
-    /**
-     * returns weather there is the singlton instace of Nothing at the position
-     * @param pos position to check
-     * @return true if singlton instace of Nothing is at pos in grid false otherwise
-     */
-    public boolean posIsNothingInstance(Position pos){
-        return thingIsNothingInstance(getThingAt(pos));
-    }
 
     public Set<Thing> getThings() {
         return things;
