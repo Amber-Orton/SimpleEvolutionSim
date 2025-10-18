@@ -156,17 +156,25 @@ public class Animal extends Edible{
      * @return true if an edible thing was eaten, false otherwise
      */
     protected boolean eat() {
-        Thing thingToEat = getFacingThing();
-        System.out.println(this);
-        if (thingToEat instanceof Edible) {
-            Edible edibleToEat = (Edible)thingToEat;
-            world.killThing(thingToEat);
-            addEnergy(edibleToEat.getEnergy());
-            System.out.println(this);
-            return true;
-        } else {
-            return false;
+        if (Thread.interrupted() || !isAlive) {return false;}
+        synchronized (world){
+            if (Thread.interrupted() || !isAlive) {return false;}
+            Thing thingToEat = getFacingThing();
+            if (thingToEat instanceof Edible) {
+                Edible edibleToEat = (Edible)thingToEat;
+                world.killThing(thingToEat);
+                addEnergy(edibleToEat.getEnergy());
+                return true;
+            } else {
+                return false;
+            }
         }
+    }
+
+    
+    protected void rest() {
+        removeEnergy(3);
+        addHealth(2);
     }
 
 
@@ -235,11 +243,6 @@ public class Animal extends Edible{
         }
     }
 
-    
-    protected void rest() {
-        removeEnergy(3);
-        addHealth(2);
-    }
     
     protected void addEnergy(float amount) {
         energy = Math.min(attributes.getMaxEnergy(), energy + amount);

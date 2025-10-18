@@ -1,8 +1,10 @@
 package NeuralNet;
 
+import java.util.ArrayList;
+
 public class NeuralNet {
 
-    Node[][] nodes
+    ArrayList<> Nodes 
 
     public NeuralNet(Node[][] nodes){
 
