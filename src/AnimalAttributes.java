@@ -22,7 +22,7 @@ public class AnimalAttributes {
         this.attackDamage = attackDamage;
     }
 
-    public static void getWorldAttributes(int statTotal, int attackCost, float mutationRate) {
+    public static void setWorldAttributes(int statTotal, int attackCost, float mutationRate) {
         AnimalAttributes.statTotal = statTotal;
         AnimalAttributes.attackCost = attackCost;
         AnimalAttributes.mutationRate = mutationRate;

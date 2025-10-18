@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.util.Random;
 
 /**
  * Represents an empty space in the world.
@@ -6,13 +7,24 @@ import java.awt.Color;
  */
 public class Nothing extends Thing {
         
+    private static final Random random = new Random();
+    private static float foodGrowRate;
+    private static float newFoodEnergy;
 
     public Nothing(World world, Position pos) {
         super(Color.WHITE, world, pos);
     }
 
+    public static void setWorldAttributes(float foodGrowRate, float newFoodEnergy) {
+        Nothing.foodGrowRate = foodGrowRate;
+        Nothing.newFoodEnergy = newFoodEnergy;
+    }
+
     @Override
     public void run() {
+        if (random.nextFloat() <= foodGrowRate) {
+            world.replaceThing(this, new Food(world, pos, newFoodEnergy));
+        }
         super.run();
     }
 
