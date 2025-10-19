@@ -14,4 +14,9 @@ public class Food extends Edible{
         this.energy = energy;
     }
 
+    @Override
+    protected int getasInt() {
+        return 2;
+    }
+
 }

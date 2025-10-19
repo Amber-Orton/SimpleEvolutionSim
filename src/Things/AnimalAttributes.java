@@ -85,6 +85,10 @@ public class AnimalAttributes {
         return attackCost;
     }
 
+    public NeuralNet getNeuralNet() {
+        return neuralNet;
+    }
+
 
     @Override
     public String toString() {

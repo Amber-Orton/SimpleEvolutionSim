@@ -1,7 +1,9 @@
 package Run;
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Set;
 
+import NeuralNet.NeuralNet;
 import Things.Animal;
 import Things.AnimalAttributes;
 import Things.Egg;
@@ -48,7 +50,65 @@ public class World {
                 //}
             }
         }
-        putThingAt(new Position(1, 1), new Animal(this, new Position(1,1) , new AnimalAttributes(33, 33, 34, 303, null), null));
+
+        ArrayList<ArrayList<float[][]>> testNet = new ArrayList<>();
+
+        // ----- Hidden Layer (3 nodes, each with 4 weights + 1 bias) -----
+        ArrayList<float[][]> hiddenLayer = new ArrayList<>();
+
+        hiddenLayer.add(new float[][] {
+            { 0.2f, -0.5f, 0.1f, 0.4f },  // weights
+            { 0.05f }                     // bias
+        });
+        hiddenLayer.add(new float[][] {
+            { -0.3f, 0.8f, -0.2f, 0.6f },
+            { -0.1f }
+        });
+        hiddenLayer.add(new float[][] {
+            { 0.7f, -0.4f, 0.3f, -0.9f },
+            { 0.2f }
+        });
+
+        testNet.add(hiddenLayer);
+
+        // ----- Output Layer (7 nodes, each with 3 weights + 1 bias) -----
+        ArrayList<float[][]> outputLayer = new ArrayList<>();
+
+        outputLayer.add(new float[][] {
+            { 0.5f, -0.1f, 0.3f },
+            { 0.0f }
+        });
+        outputLayer.add(new float[][] {
+            { -0.2f, 0.7f, 0.1f },
+            { 0.05f }
+        });
+        outputLayer.add(new float[][] {
+            { 0.6f, -0.5f, 0.4f },
+            { -0.2f }
+        });
+        outputLayer.add(new float[][] {
+            { -0.3f, 0.9f, -0.7f },
+            { 0.1f }
+        });
+        outputLayer.add(new float[][] {
+            { 0.2f, -0.8f, 0.5f },
+            { 0.0f }
+        });
+        outputLayer.add(new float[][] {
+            { -0.4f, 0.2f, 0.6f },
+            { -0.15f }
+        });
+        outputLayer.add(new float[][] {
+            { 0.1f, 0.3f, -0.2f },
+            { 0.07f }
+        });
+
+        testNet.add(outputLayer);
+
+
+        putThingAt(new Position(1, 1), new Animal(this, new Position(1,1),
+            new AnimalAttributes(33, 33, 34, 303, new NeuralNet(testNet)),
+            null));
         putThingAt(new Position(2, 1), new Food(this, new Position(2, 1), 2));
     }
 

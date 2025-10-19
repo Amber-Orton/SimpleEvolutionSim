@@ -35,4 +35,9 @@ public class Nothing extends Thing {
     public String toString() {
         return super.toString() + ":Nothing";
     }
+
+    @Override
+    protected int getasInt() {
+        return 1;
+    }
 }

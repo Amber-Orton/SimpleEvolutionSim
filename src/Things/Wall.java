@@ -23,4 +23,9 @@ public class Wall extends Thing {
     public String toString() {
         return super.toString() + ":Wall";
     }
+
+    @Override
+    protected int getasInt() {
+        return 0;
+    }
 }

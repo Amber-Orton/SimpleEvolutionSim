@@ -3,7 +3,7 @@ import java.awt.Color;
 
 import Run.World;
 
-public class Thing implements Runnable {
+public abstract class Thing implements Runnable {
 
     protected Position pos;
     public Thread thread;
@@ -79,6 +79,10 @@ public class Thing implements Runnable {
     public Thread getThread() {
         return thread;
     }
+
+
+    //for seeing input to neural net
+    protected abstract int getasInt();
 
     public void die(){
         isAlive= false;

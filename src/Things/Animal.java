@@ -41,7 +41,7 @@ public class Animal extends Edible{
 
 
     protected void think() {
-        
+        return;
     }
 
     /**
@@ -105,40 +105,51 @@ public class Animal extends Edible{
      * @return An array of Thing objects in the order: [Up, Down, Left, Right].
      * If an adjacent cell is out of bounds, it will contain null.
      */
-    protected Thing[] see() {
+    protected float[][] see() {
         Position facingPosition = getFacingPosition();
+        Thing[] seenThings;
         switch (facing) {
             case DIRECTION.NORTH:
-                return new Thing[]{
+                seenThings = new Thing[]{
                     world.getThingAt(facingPosition.add(new Position(0, -1))),
                     getFacingThing(),
                     world.getThingAt(facingPosition.add(new Position(0, +1)))
                 };
+                break;
 
             case DIRECTION.EAST:
-                return new Thing[]{
+                seenThings = new Thing[]{
                     world.getThingAt(facingPosition.add(new Position(-1, 0))),
                     getFacingThing(),
                     world.getThingAt(facingPosition.add(new Position(+1, 0)))
                 };
+                break;
             
             case DIRECTION.SOUTH:
-                return new Thing[]{
+                seenThings = new Thing[]{
                     world.getThingAt(facingPosition.add(new Position(0, +1))),
                     getFacingThing(),
                     world.getThingAt(facingPosition.add(new Position(0, -1)))
                 };
+                break;
 
             case DIRECTION.WEST:
-                return new Thing[]{
+                seenThings = new Thing[]{
                     world.getThingAt(facingPosition.add(new Position(+1, 0))),
                     getFacingThing(),
                     world.getThingAt(facingPosition.add(new Position(-1, 0)))
                 };
+                break;
         
             default:
                 return null;
         }
+        float[][] out = new float[3][5];
+        int i = 0;
+        for (Thing thing : seenThings) {
+            out[i][thing.getasInt()] = 1;
+        }
+        return out;
     }
     
     /**
@@ -279,6 +290,11 @@ public class Animal extends Edible{
                 world.killThing(this);
             }
         }
+    }
+
+        @Override
+    protected int getasInt() {
+        return 4;
     }
     
     

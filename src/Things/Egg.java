@@ -53,6 +53,12 @@ public class Egg extends Edible{
         }
     }
     
+
+        @Override
+    protected int getasInt() {
+        return 3;
+    }
+
     
     @Override
     public String toString() {
