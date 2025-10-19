@@ -35,7 +35,40 @@ public class Animal extends Edible{
 
     @Override
     public void run() {
-        eat();
+        ACTION action = think();
+
+        switch (action) {
+            case TURN_LEFT:
+                turn(-1);
+                break;
+            
+            case TURN_RIGHT:
+                turn(1);
+                break;
+
+            case MOVE:
+                move();
+                break;
+
+            case ATTACK:
+                attack();
+                break;
+
+            case EAT:
+                eat();
+                break;
+
+            case REPRODUCE:
+                reproduce();
+                break;
+
+            case REST:
+                rest();
+                break;
+
+            default:
+                break;
+        }
         super.run();
     }
 
