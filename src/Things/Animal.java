@@ -40,8 +40,19 @@ public class Animal extends Edible{
     }
 
 
-    protected void think() {
-        return;
+    protected ACTION think() {
+        float[] thinkingInputs = new float[18];
+        float[][] seen = see();
+        int i = 0;
+        for(float[] floats : seen) {
+            for (float f : floats) {
+                thinkingInputs[i++] = f;
+            }
+        }
+        thinkingInputs[i++] = energy;
+        thinkingInputs[i++] = health;
+        thinkingInputs[i++] = attributes.getReproductionCost();
+        return attributes.getNeuralNet().think(thinkingInputs);
     }
 
     /**
