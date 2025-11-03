@@ -25,10 +25,14 @@ public class Nothing extends Thing {
 
     @Override
     public void run() {
+        super.run();
+    }
+    
+    @Override
+    public void doAction() {
         if (random.nextFloat() <= foodGrowRate) {
             world.replaceThing(this, new Food(world, pos, newFoodEnergy));
         }
-        super.run();
     }
 
     @Override

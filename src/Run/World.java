@@ -1,6 +1,7 @@
 package Run;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Set;
 
 import NeuralNet.NeuralNet;
@@ -16,10 +17,12 @@ import Things.Food;
 public class World {
     private int width;
     private int height;
-    private Set<Thing> things;
+    private Set<Thing> things = new HashSet<>();
+    private Set<Thing> thingsToUpdate = new HashSet<>();
     Thing[][] grid;
     Nothing[][] nothingGrid;
     private final Wall DEFAULTWALL = new Wall();
+
 
 
 
@@ -28,7 +31,6 @@ public class World {
         this.height = height;
         this.grid = new Thing[height][width];
         this.nothingGrid = new Nothing[height][width];
-        things = new java.util.HashSet<>();
         populateWorld();
     }
 
@@ -53,19 +55,19 @@ public class World {
 
         ArrayList<ArrayList<float[][]>> testNet = new ArrayList<>();
 
-        // ----- Hidden Layer (3 nodes, each with 4 weights + 1 bias) -----
+        // ----- Hidden Layer (3 nodes, each with 18 weights + 1 bias) -----
         ArrayList<float[][]> hiddenLayer = new ArrayList<>();
 
         hiddenLayer.add(new float[][] {
-            { 0.2f, -0.5f, 0.1f, 0.4f },  // weights
+            { 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, 0.8f},  // weights
             { 0.05f }                     // bias
         });
         hiddenLayer.add(new float[][] {
-            { -0.3f, 0.8f, -0.2f, 0.6f },
+            { -0.3f, 0.8f, -0.2f, 0.6f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, 0.8f },
             { -0.1f }
         });
         hiddenLayer.add(new float[][] {
-            { 0.7f, -0.4f, 0.3f, -0.9f },
+            { 0.7f, -0.4f, 0.3f, -0.9f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, 0.8f },
             { 0.2f }
         });
 
@@ -76,7 +78,7 @@ public class World {
 
         outputLayer.add(new float[][] {
             { 0.5f, -0.1f, 0.3f },
-            { 0.0f }
+            { 0.1f }
         });
         outputLayer.add(new float[][] {
             { -0.2f, 0.7f, 0.1f },
@@ -107,13 +109,14 @@ public class World {
 
 
         putThingAt(new Position(1, 1), new Animal(this, new Position(1,1),
-            new AnimalAttributes(33, 33, 34, 303, new NeuralNet(testNet)),
+            new AnimalAttributes(33, 33, 34, 33, new NeuralNet(testNet)),
             null));
         putThingAt(new Position(2, 1), new Food(this, new Position(2, 1), 2));
     }
 
     /**
-     * Advance the world by one tick, running each Thing in its own thread.
+     * Advance the world by one tick, running each Thing in its own thread to think 
+     * then one thread for updating the world with the actions of the Things.
      */
     public void tick() {
         Thread[] threads = new Thread[things.size()];
@@ -138,6 +141,15 @@ public class World {
                 e.printStackTrace();
             }
         }
+
+        thingsToUpdate = new HashSet<>(things);
+
+        while (thingsToUpdate.iterator().hasNext()) {
+            Thing thing = thingsToUpdate.iterator().next();
+            thing.doAction();
+            thingsToUpdate.remove(thing);
+        }
+
         System.out.println("ticked!");
     }
 

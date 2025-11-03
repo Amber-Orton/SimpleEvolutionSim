@@ -31,6 +31,10 @@ public abstract class Thing implements Runnable {
         }
         thread = null;
     }
+
+    public void doAction() {
+        return;//defult to do nothing
+    }
     
     @Override
     public String toString() {

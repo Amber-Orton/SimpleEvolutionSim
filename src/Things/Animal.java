@@ -1,5 +1,7 @@
 package Things;
 import java.awt.Color;
+import java.util.HashSet;
+import java.util.Set;
 
 import Run.World;
 
@@ -8,8 +10,9 @@ public class Animal extends Edible{
 
     protected AnimalAttributes attributes;
     protected float health;
+    protected Set<Egg> eggs = new HashSet<>();
 
-
+    protected ACTION action;
     protected DIRECTION facing;
 
 
@@ -35,8 +38,15 @@ public class Animal extends Edible{
 
     @Override
     public void run() {
-        ACTION action = think();
+        action = think();
+        super.run();
+    }
 
+
+    @Override
+    public void doAction(){
+        if (!isAlive) {return;}
+        System.out.println(this.toString() + " is doing action: " + action);
         switch (action) {
             case TURN_LEFT:
                 turn(-1);
@@ -69,8 +79,9 @@ public class Animal extends Edible{
             default:
                 break;
         }
-        super.run();
     }
+
+
 
 
     protected ACTION think() {
@@ -82,9 +93,11 @@ public class Animal extends Edible{
                 thinkingInputs[i++] = f;
             }
         }
-        thinkingInputs[i++] = energy;
-        thinkingInputs[i++] = health;
-        thinkingInputs[i++] = attributes.getReproductionCost();
+
+        //devide by 100 to make in range 0 - 100 since the cap for all is ~100
+        thinkingInputs[i++] = energy/100;
+        thinkingInputs[i++] = health/100;
+        thinkingInputs[i++] = attributes.getReproductionCost()/100;
         return attributes.getNeuralNet().think(thinkingInputs);
     }
 
@@ -96,19 +109,18 @@ public class Animal extends Edible{
     */
     protected void move() {
         removeEnergy(1);
-        if (Thread.interrupted()) {return;}
 
         
         Position newPos = getFacingPosition();
 
         if(isAdjacentTo(newPos)) {
-            if (Thread.interrupted() || !isAlive) {return;}
-            synchronized (world) {
-                if (Thread.interrupted() || !isAlive) {return;}
-                Thing thingAtNewPos = world.getThingAt(newPos);
-                if (thingAtNewPos instanceof Nothing) {
-                    world.removeThing(this);
-                    world.putThingAt(newPos, this);
+            Thing thingAtNewPos = world.getThingAt(newPos);
+            if (thingAtNewPos instanceof Nothing) {
+                world.removeThing(this);
+                world.putThingAt(newPos, this);
+                for (Egg egg : eggs){
+                    egg.perantMoved();
+                    eggs.remove(egg);
                 }
             }
         }else {
@@ -132,12 +144,9 @@ public class Animal extends Edible{
             return;
         }
 
-        if (Thread.interrupted() || !isAlive) {return;}
-        synchronized (world) {
-            if (Thread.interrupted() || !isAlive) {return;}
-            Egg egg = new Egg(world, pos, attributes, this);
-            world.addThing(pos, egg);
-        }
+        Egg egg = new Egg(world, pos, attributes, this);
+        world.addThing(pos, egg);
+        eggs.add(egg);
     }
 
 
@@ -215,18 +224,14 @@ public class Animal extends Edible{
      * @return true if an edible thing was eaten, false otherwise
      */
     protected boolean eat() {
-        if (Thread.interrupted() || !isAlive) {return false;}
-        synchronized (world){
-            if (Thread.interrupted() || !isAlive) {return false;}
-            Thing thingToEat = getFacingThing();
-            if (thingToEat instanceof Edible) {
-                Edible edibleToEat = (Edible)thingToEat;
-                world.killThing(thingToEat);
-                addEnergy(edibleToEat.getEnergy());
-                return true;
-            } else {
-                return false;
-            }
+        Thing thingToEat = getFacingThing();
+        if (thingToEat instanceof Edible) {
+            Edible edibleToEat = (Edible)thingToEat;
+            world.killThing(thingToEat);
+            addEnergy(edibleToEat.getEnergy());
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -245,16 +250,12 @@ public class Animal extends Edible{
      */
     protected boolean attack() {
         removeEnergy(attributes.getAttackCost());
-        if (Thread.interrupted() || !isAlive) {return false;}
-        synchronized(world){
-            if (Thread.interrupted() || !isAlive) {return false;}
-            Thing thingBeingAttacked = getFacingThing();
-            if (thingBeingAttacked.getClass() == Animal.class) {
-                thingBeingAttacked.removeHealth(attributes.getAttackDamage());
-                return true;
-            } else {
-                return false;
-            }
+        Thing thingBeingAttacked = getFacingThing();
+        if (thingBeingAttacked.getClass() == Animal.class) {
+            thingBeingAttacked.removeHealth(attributes.getAttackDamage());
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -295,11 +296,7 @@ public class Animal extends Edible{
     }
 
     protected Thing getFacingThing() {
-        if (Thread.interrupted() || !isAlive) {return null;}
-        synchronized (world) {
-            if (Thread.interrupted() || !isAlive) {return null;}
-            return world.getThingAt(getFacingPosition());
-        }
+        return world.getThingAt(getFacingPosition());
     }
 
     
@@ -322,17 +319,13 @@ public class Animal extends Edible{
     @Override
     public void removeHealth(float amount) {
         health -= amount;
+        // Animal dies
         if (health <= 0) {
-            // Animal dies
-            if (Thread.interrupted() || !isAlive) {return;}
-            synchronized (world) {
-                if (Thread.interrupted() || !isAlive) {return;}
-                if (energy > 0){
-                    Food food = new Food(world, pos, energy);
-                    world.replaceThing(this, food);//place food with energy equal to itself in the world when it dies
-                }
-                world.killThing(this);
+            if (energy > 0){
+                Food food = new Food(world, pos, energy);
+                world.replaceThing(this, food);//place food with energy equal to itself in the world when it dies
             }
+            world.killThing(this);
         }
     }
 

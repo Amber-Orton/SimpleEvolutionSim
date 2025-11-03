@@ -16,45 +16,39 @@ public class Egg extends Edible{
         this.energy = attributes.getReproductionCost();
     }
 
-    public void run() {
-        tick();
+    @Override
+    public void run(){
+        cyclesToHatch--;
         super.run();
+    }
+
+    @Override
+    //egg is special case as it needs to do calculations when it does action
+    public void doAction() {
+        if (!isAlive) { return; }
+        tick();
     }
     
     private void tick() {
-        if (parent.getThread() != null){//wait untill parent has finished incase it is going to move off of the egg this tick
-            try {
-                parent.getThread().join();
-            } catch (InterruptedException e) {
-                return;//is killed
-            }
-        }
-
-        if (Thread.interrupted() || !isAlive) {return;}
-        synchronized(world){
-            if (Thread.interrupted() || !isAlive) {return;}
-            if (world.getThingAt(pos) != parent && world.posIsNothing(pos)){
-                world.putThingAt(pos, this);//attempt to place itself in the world
-            }
-        }
-        if (cyclesToHatch-- <= 0){
+        if (cyclesToHatch <= 0){
             hatch();
         }
+    }
+
+    public void perantMoved() {
+        world.putThingAt(pos, this);//attempt to place itself in the world
+        tick();
     }
 
     public void hatch() {
         Animal child = new Animal(world, pos, attributes.generateMutatedAttributes(), parent);
 
-        if (Thread.interrupted() || !isAlive) {return;}
-        synchronized (world) {
-            if (Thread.interrupted() || !isAlive) {return;}
-            world.replaceThing(this, child);
-            world.killThing(this);
-        }
+        world.replaceThing(this, child);
+        world.killThing(this);
     }
     
 
-        @Override
+    @Override
     protected int getasInt() {
         return 3;
     }
