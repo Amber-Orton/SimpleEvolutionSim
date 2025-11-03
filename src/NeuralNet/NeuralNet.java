@@ -17,24 +17,25 @@ public class NeuralNet {
             inputLayer.add(new InputNode(this));
         }
         this.neuralNetNodes.add(inputLayer);
-
+        
         //add hidden layers
         int layerNum = 1;
         for (ArrayList<float[][]> layer : neuralNetNodesWeightsAndBiases) {
             neuralNetNodes.add(new ArrayList<>());
             if (layerNum < neuralNetNodesWeightsAndBiases.size() - 1){
                 for (float[][] nodeWeightsAndBiases : layer) {
-                    neuralNetNodes.get(layerNum).add(new HiddenNode(neuralNetNodes.get(layerNum -1),nodeWeightsAndBiases[0], nodeWeightsAndBiases[1][0], new ReLU()));
+                    neuralNetNodes.get(layerNum).add(new HiddenNode(neuralNetNodes.get(layerNum -1),nodeWeightsAndBiases[0], nodeWeightsAndBiases[1][0]));
                 }
             } else {//last layer is the output nodes (should be 7)
                 for (float[][] nodeWeightsAndBiases : layer) {
-                        neuralNetNodes.get(layerNum).add(new HiddenNode(neuralNetNodes.get(layerNum -1),nodeWeightsAndBiases[0], nodeWeightsAndBiases[1][0], new None()));
+                    neuralNetNodes.get(layerNum).add(new OutputNode(neuralNetNodes.get(layerNum -1),nodeWeightsAndBiases[0], nodeWeightsAndBiases[1][0]));
                 }
             }
             layerNum++;
         }
-
-        System.out.println(neuralNetNodes);
+        
+        System.out.println("Created a NeuralNet!");
+        System.out.println(this);
     }
     
     public ACTION think(float[] inputs) {
@@ -60,12 +61,10 @@ public class NeuralNet {
             outputProbabilities[i] = (float)Math.exp(outputProbabilities[i]);
             sum += outputProbabilities[i];
         }
-        System.out.println();
+        
         for (int i = 0; i < outputProbabilities.length; i++) {
             outputProbabilities[i] = outputProbabilities[i]/sum;
-            System.out.print(outputProbabilities[i]);
         }
-        System.out.println();
 
         // work out action based on probabilities
         double num = Math.random();
@@ -81,5 +80,12 @@ public class NeuralNet {
 
     protected float getNextInput(){
         return inputs[inputPos++];
+    }
+
+    @Override
+    public String toString() {
+        return "NeuralNet{" +
+                neuralNetNodes +
+                '}';
     }
 }

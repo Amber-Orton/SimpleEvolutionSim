@@ -15,7 +15,7 @@ public class InputNode extends Node{
 
     @Override
     public String toString() {
-        return "InputNode, " + super.toString();
+        return "InputNode; " + super.toString();
     }
 
 }
