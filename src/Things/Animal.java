@@ -10,7 +10,6 @@ public class Animal extends Edible{
 
     protected AnimalAttributes attributes;
     protected float health;
-    protected Set<Egg> eggs = new HashSet<>();
 
     protected ACTION action;
     protected DIRECTION facing;
@@ -79,6 +78,7 @@ public class Animal extends Edible{
             default:
                 break;
         }
+        super.doAction();
     }
 
 
@@ -94,10 +94,10 @@ public class Animal extends Edible{
             }
         }
 
-        //devide by 100 to make in range 0 - 100 since the cap for all is ~100
-        thinkingInputs[i++] = energy/100;
-        thinkingInputs[i++] = health/100;
-        thinkingInputs[i++] = attributes.getReproductionCost()/100;
+        //devide by 100 to make in range 0 - maxstattotal since the cap for all is ~maxstattotal
+        thinkingInputs[i++] = energy/attributes.getMaxStatTotal();
+        thinkingInputs[i++] = health/attributes.getMaxStatTotal();
+        thinkingInputs[i++] = attributes.getReproductionCost()/attributes.getMaxStatTotal();
         return attributes.getNeuralNet().think(thinkingInputs);
     }
 
@@ -118,10 +118,6 @@ public class Animal extends Edible{
             if (thingAtNewPos instanceof Nothing) {
                 world.removeThing(this);
                 world.putThingAt(newPos, this);
-                for (Egg egg : eggs){
-                    egg.perantMoved();
-                    eggs.remove(egg);
-                }
             }
         }else {
             throw new IllegalArgumentException("Can only move to adjacent cells. Tried to move from " + pos + " to " + newPos);
@@ -146,7 +142,6 @@ public class Animal extends Edible{
 
         Egg egg = new Egg(world, pos, attributes, this);
         world.addThing(pos, egg);
-        eggs.add(egg);
     }
 
 
@@ -317,6 +312,12 @@ public class Animal extends Edible{
     }
 
     @Override
+    public void die() {
+        System.out.println(this + " has died.");
+        super.die();
+    }
+
+    @Override
     public void removeHealth(float amount) {
         health -= amount;
         // Animal dies
@@ -329,7 +330,7 @@ public class Animal extends Edible{
         }
     }
 
-        @Override
+    @Override
     protected int getasInt() {
         return 4;
     }
@@ -337,7 +338,7 @@ public class Animal extends Edible{
     
     @Override
     public String toString() {
-        return "Health: " + health + '/' + attributes.getMaxHealth() + ", Energy: " + energy + '/' + attributes.getMaxEnergy() + ", " + super.toString() + ":Animal";
+        return "Health: " + health + '/' + attributes.getMaxHealth() + ", Energy: " + energy + '/' + attributes.getMaxEnergy() + ", Attack Damage: " + attributes.getAttackDamage() + ", " + super.toString() + ":Animal";
     }
     
 }

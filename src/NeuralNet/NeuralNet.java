@@ -9,8 +9,11 @@ public class NeuralNet {
     ArrayList<ArrayList<Node>> neuralNetNodes = new ArrayList<>();
     int inputPos;
     float[] inputs;
+    ArrayList<ArrayList<float[][]>> neuralNetNodesWeightsAndBiases;
 
     public NeuralNet(ArrayList<ArrayList<float[][]>> neuralNetNodesWeightsAndBiases){
+        this.neuralNetNodesWeightsAndBiases = neuralNetNodesWeightsAndBiases;//save for easy copying
+
         //create input layer
         ArrayList<Node> inputLayer = new ArrayList<>();
         for (int i = 0; i < 18; i++) {
@@ -33,9 +36,6 @@ public class NeuralNet {
             }
             layerNum++;
         }
-        
-        System.out.println("Created a NeuralNet!");
-        System.out.println(this);
     }
     
     public ACTION think(float[] inputs) {
@@ -61,7 +61,7 @@ public class NeuralNet {
             outputProbabilities[i] = (float)Math.exp(outputProbabilities[i]);
             sum += outputProbabilities[i];
         }
-        
+
         for (int i = 0; i < outputProbabilities.length; i++) {
             outputProbabilities[i] = outputProbabilities[i]/sum;
         }
@@ -76,6 +76,10 @@ public class NeuralNet {
 
 
         return ACTION.values()[i-1];
+    }
+
+    public ArrayList<ArrayList<float[][]>> getNeuralNetNodesWeightsAndBiases() {
+        return neuralNetNodesWeightsAndBiases;
     }
 
     protected float getNextInput(){

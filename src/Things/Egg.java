@@ -26,7 +26,14 @@ public class Egg extends Edible{
     //egg is special case as it needs to do calculations when it does action
     public void doAction() {
         if (!isAlive) { return; }
-        tick();
+        if (world.posIsNothing(pos)) {
+            world.putThingAt(pos, this);//attempt to place itself in the world
+            tick();
+        }
+        if (world.getThingAt(pos) == this) {
+            tick();
+        }
+        super.doAction();
     }
     
     private void tick() {
@@ -35,10 +42,6 @@ public class Egg extends Edible{
         }
     }
 
-    public void perantMoved() {
-        world.putThingAt(pos, this);//attempt to place itself in the world
-        tick();
-    }
 
     public void hatch() {
         Animal child = new Animal(world, pos, attributes.generateMutatedAttributes(), parent);

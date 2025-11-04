@@ -1,4 +1,5 @@
 package Things;
+import java.util.ArrayList;
 import java.util.Random;
 
 import NeuralNet.NeuralNet;
@@ -10,7 +11,8 @@ public class AnimalAttributes {
     private static int statTotal;
     private static int attackCost;
     private static float mutationRate;
-    
+    private static float mutationFactor;
+    private static float nodeInsertOrDeleteRate;
 
 
     private float maxEnergy;
@@ -27,10 +29,12 @@ public class AnimalAttributes {
         this.neuralNet = neuralNet;
     }
 
-    public static void setWorldAttributes(int statTotal, int attackCost, float mutationRate) {
+    public static void setWorldAttributes(int statTotal, int attackCost, float mutationRate, float mutationFactor, float nodeInsertOrDeleteRate) {
         AnimalAttributes.statTotal = statTotal;
         AnimalAttributes.attackCost = attackCost;
         AnimalAttributes.mutationRate = mutationRate;
+        AnimalAttributes.mutationFactor = mutationFactor;
+        AnimalAttributes.nodeInsertOrDeleteRate = nodeInsertOrDeleteRate;
     }
 
     public AnimalAttributes generateMutatedAttributes() {
@@ -56,11 +60,146 @@ public class AnimalAttributes {
             newReproductionCost = newAttributes[0];
         }
 
-        return new AnimalAttributes(newAttributes[0], newAttributes[1], newAttributes[2], newReproductionCost, neuralNet);
+        return new AnimalAttributes(newAttributes[0], newAttributes[1], newAttributes[2], newReproductionCost, generateMutatedNeuralNet());
+    }
+
+    private NeuralNet generateMutatedNeuralNet() {
+        ArrayList<ArrayList<float[][]>> neuralNetNodesWeightsAndBiases = neuralNet.getNeuralNetNodesWeightsAndBiases();
+        for (ArrayList<float[][]> layer : neuralNetNodesWeightsAndBiases) {
+            for (float[][] nodeWeightsAndBias : layer) {
+                //mutate weights
+                for (int i = 0; i < nodeWeightsAndBias[0].length; i++) {
+                    if (random.nextFloat() < mutationRate) {
+                        nodeWeightsAndBias[0][i] *= generateMutationFactor();
+                    }
+                }
+                //mutate the bias
+                if (random.nextFloat() < mutationRate) {
+                    nodeWeightsAndBias[1][0] *= generateMutationFactor();
+                }
+            }
+        }
+        
+        if (random.nextFloat() < nodeInsertOrDeleteRate) {
+            int action = random.nextInt(3);
+            if (action == 0) {
+                // Insert a new node
+                int layer = random.nextInt(neuralNetNodesWeightsAndBiases.size()-1); // -1 since output layer are fixed in size
+                float[][] newNode = new float[2][];// create the node
+                if (layer > 0) {
+                    newNode[0] = new float[neuralNetNodesWeightsAndBiases.get(layer-1).size()];
+                } else {
+                    newNode[0] = new float[18];
+                }
+                newNode[1] = new float[1];
+                // initialise the bias and weights to be very small for small mutations
+                for (int i = 0; i < newNode[0].length; i++) {
+                    newNode[0][i] = random.nextFloat()*mutationFactor;
+                }
+                newNode[1][0] = random.nextFloat()*mutationFactor;
+                
+                
+                //TODO: change to use arrayList instead of float[][]
+                //update the weights of the next layer
+                for (int i = 0; i < neuralNetNodesWeightsAndBiases.get(layer + 1).size(); i++) {
+                    float[][] oldWeightsAndBias = neuralNetNodesWeightsAndBiases.get(layer + 1).get(i);
+                    float[][] newWeightsAndBias = new float[2][];
+                    newWeightsAndBias[0] = new float[neuralNetNodesWeightsAndBiases.get(layer).size()];
+                    newWeightsAndBias[1] = new float[1];
+                    //copy the old weights
+                    for (int j = 0; j < newWeightsAndBias[0].length-1; j++) {
+                        newWeightsAndBias[0][j] = oldWeightsAndBias[0][j];
+                    }
+                    newWeightsAndBias[0][-1] = random.nextFloat()*mutationFactor;//add the new weight
+                    newWeightsAndBias[1][0] = oldWeightsAndBias[1][0];//copy the old bias
+                    neuralNetNodesWeightsAndBiases.get(layer + 1).set(i, newWeightsAndBias);//put the new weights and bias back in the list
+                }
+            } else if (action == 1) {
+                // add or remove a layer
+                if (random.nextBoolean()) {
+                    // Add a new layer
+                    int layer = random.nextInt(neuralNetNodesWeightsAndBiases.size());
+                    ArrayList<float[][]> newLayer = new ArrayList<>();
+                    int previousLayerSize;
+                    if (layer > 0) {
+                        previousLayerSize = neuralNetNodesWeightsAndBiases.get(layer-1).size();
+                    } else {
+                        previousLayerSize = 18; // Input layer size
+                    }
+
+                    // Create nodes for the new layer same number to reduce the impact of adding a new layer
+                    for (int i = 0; i < previousLayerSize; i++) {
+                        float[][] newNode = new float[2][];
+                        newNode[0] = new float[previousLayerSize];
+                        newNode[1] = new float[1];
+                        
+                        // Initialize weights and bias with small random values
+                        for (int j = 0; j < newNode[0].length; j++) {
+                            newNode[0][j] = random.nextFloat() * mutationFactor;
+                        }
+                        newNode[0][i] = 1.0f;//set weight of the directly previous node to be 1 to reduce the impact of adding a new layer
+                        newNode[1][0] = random.nextFloat() * mutationFactor;
+                        newLayer.add(newNode);
+                    }
+                    
+                    // Insert the new layer
+                    neuralNetNodesWeightsAndBiases.add(layer, newLayer);
+                    
+                } else {
+                    // Remove a layer
+                    if (neuralNetNodesWeightsAndBiases.size() > 2) { // Keep at least one hidden layer
+                        int layer = random.nextInt(neuralNetNodesWeightsAndBiases.size() - 1);
+                        
+                        // Update weights for the layer after the removed layer
+                        int previousLayerSize;
+                        if (layer > 0){
+                            previousLayerSize = neuralNetNodesWeightsAndBiases.get(layer - 1).size();
+                        } else {
+                            previousLayerSize = 18; // Input layer size
+                        }
+
+                        for (float[][] node : neuralNetNodesWeightsAndBiases.get(layer + 1)) {
+                            float[] newWeights = new float[previousLayerSize];
+                            
+                            // Initialize new weights with small random values
+                            for (int i = 0; i < previousLayerSize; i++) {
+                                newWeights[i] = random.nextFloat() * mutationFactor;
+                            }
+                            node[0] = newWeights;
+                        }
+                        
+                        // Remove the layer
+                        neuralNetNodesWeightsAndBiases.remove(layer);
+                    }
+                }
+            } else if (action == 2) {
+                // remove a node
+                int layer = random.nextInt(neuralNetNodesWeightsAndBiases.size()-1);
+                if (neuralNetNodesWeightsAndBiases.get(layer).size() > 1) {
+                    int node = random.nextInt(neuralNetNodesWeightsAndBiases.get(layer).size());
+                    neuralNetNodesWeightsAndBiases.get(layer).remove(node);
+                }
+                //update next layer
+                for (float[][] nextNode : neuralNetNodesWeightsAndBiases.get(layer + 1)) {
+                    float[] oldWeights = nextNode[0];
+                    float[] newWeights = new float[neuralNetNodesWeightsAndBiases.get(layer).size()];
+                    int j = 0;
+                    for (int i = 0; i < newWeights.length; i++) {
+                        newWeights[i] = oldWeights[j++];
+                        if (i == layer) {
+                            j++;
+                        }
+                    }
+                    nextNode[0] = newWeights;
+                }
+            }
+        }
+
+        return new NeuralNet(neuralNetNodesWeightsAndBiases);
     }
 
     private float generateMutationFactor() {
-        return 1 + (((float)random.nextGaussian()*2 - 1) * mutationRate);
+        return 1.0f + (float)(random.nextGaussian() * mutationFactor);
     }
     
 
@@ -89,6 +228,9 @@ public class AnimalAttributes {
         return neuralNet;
     }
 
+    public int getMaxStatTotal() {
+        return statTotal;
+    }
 
     @Override
     public String toString() {

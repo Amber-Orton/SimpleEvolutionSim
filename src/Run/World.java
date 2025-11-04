@@ -19,6 +19,7 @@ public class World {
     private int height;
     private Set<Thing> things = new HashSet<>();
     private Set<Thing> thingsToUpdate = new HashSet<>();
+    private Set<Thing> eggsToUpdate = new HashSet<>();
     Thing[][] grid;
     Nothing[][] nothingGrid;
     private final Wall DEFAULTWALL = new Wall();
@@ -109,7 +110,7 @@ public class World {
 
 
         putThingAt(new Position(1, 1), new Animal(this, new Position(1,1),
-            new AnimalAttributes(33, 33, 34, 33, new NeuralNet(testNet)),
+            new AnimalAttributes(33, 33, 34, 3, new NeuralNet(testNet)),
             null));
         putThingAt(new Position(2, 1), new Food(this, new Position(2, 1), 2));
     }
@@ -142,12 +143,27 @@ public class World {
             }
         }
 
-        thingsToUpdate = new HashSet<>(things);
+        thingsToUpdate = new HashSet<>();
+        eggsToUpdate = new HashSet<>();
+        for (Thing thing : things) {
+            if (thing instanceof Egg) {
+                eggsToUpdate.add(thing);
+            } else {
+                thingsToUpdate.add(thing);
+            }
+        }
 
         while (thingsToUpdate.iterator().hasNext()) {
             Thing thing = thingsToUpdate.iterator().next();
             thing.doAction();
             thingsToUpdate.remove(thing);
+        }
+
+        //update eggs after
+        while (eggsToUpdate.iterator().hasNext()) {
+            Thing egg = eggsToUpdate.iterator().next();
+            egg.doAction();
+            eggsToUpdate.remove(egg);
         }
 
         System.out.println("ticked!");
