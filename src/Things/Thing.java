@@ -38,7 +38,7 @@ public abstract class Thing implements Runnable {
     
     @Override
     public String toString() {
-        return pos.toString() + " is: Thing";
+        return "at: " + pos.toString() + " is: Thing";
     }
 
     public Color getColor() {

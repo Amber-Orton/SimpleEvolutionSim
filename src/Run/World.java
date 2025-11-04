@@ -1,18 +1,14 @@
 package Run;
 import java.awt.Color;
-import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.Set;
 
-import NeuralNet.NeuralNet;
-import Things.Animal;
-import Things.AnimalAttributes;
 import Things.Egg;
 import Things.Nothing;
 import Things.Position;
 import Things.Thing;
 import Things.Wall;
-import Things.Food;
 
 public class World {
     private int width;
@@ -20,100 +16,21 @@ public class World {
     private Set<Thing> things = new HashSet<>();
     private Set<Thing> thingsToUpdate = new HashSet<>();
     private Set<Thing> eggsToUpdate = new HashSet<>();
-    Thing[][] grid;
-    Nothing[][] nothingGrid;
+    protected Thing[][] grid;
+    protected Nothing[][] nothingGrid;
     private final Wall DEFAULTWALL = new Wall();
 
 
 
 
-    public World(int width, int height) {
+    protected World(int width, int height) {
         this.width = width;
         this.height = height;
         this.grid = new Thing[height][width];
         this.nothingGrid = new Nothing[height][width];
-        populateWorld();
     }
 
-    /**
-     * Populate the world with Things.
-     */
-    private void populateWorld() {
-        // currently just for testing purposes
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
-                Position position = new Position(row, col);
-                nothingGrid[row][col] = new Nothing(this, new Position(row, col));
-                //if (Math.random() < 0.2) { // 20% chance to place a Wall on each cell
-                //    putThingAt(position, new Wall(this, position));
-                //}else if (Math.random() < 0.1) { // 10% chance to place an Animal on each cell
-                //    putThingAt(position, new Animal(this, position , new AnimalAttributes(20, 20, 5), null));
-                //} else {
-                    putThingAt(position, nothingGrid[row][col]); // Empty cell
-                //}
-            }
-        }
-
-        ArrayList<ArrayList<float[][]>> testNet = new ArrayList<>();
-
-        // ----- Hidden Layer (3 nodes, each with 18 weights + 1 bias) -----
-        ArrayList<float[][]> hiddenLayer = new ArrayList<>();
-
-        hiddenLayer.add(new float[][] {
-            { 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, 0.8f},  // weights
-            { 0.05f }                     // bias
-        });
-        hiddenLayer.add(new float[][] {
-            { -0.3f, 0.8f, -0.2f, 0.6f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, 0.8f },
-            { -0.1f }
-        });
-        hiddenLayer.add(new float[][] {
-            { 0.7f, -0.4f, 0.3f, -0.9f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, -0.5f, 0.1f, 0.4f, 0.2f, 0.8f },
-            { 0.2f }
-        });
-
-        testNet.add(hiddenLayer);
-
-        // ----- Output Layer (7 nodes, each with 3 weights + 1 bias) -----
-        ArrayList<float[][]> outputLayer = new ArrayList<>();
-
-        outputLayer.add(new float[][] {
-            { 0.5f, -0.1f, 0.3f },
-            { 0.1f }
-        });
-        outputLayer.add(new float[][] {
-            { -0.2f, 0.7f, 0.1f },
-            { 0.05f }
-        });
-        outputLayer.add(new float[][] {
-            { 0.6f, -0.5f, 0.4f },
-            { -0.2f }
-        });
-        outputLayer.add(new float[][] {
-            { -0.3f, 0.9f, -0.7f },
-            { 0.1f }
-        });
-        outputLayer.add(new float[][] {
-            { 0.2f, -0.8f, 0.5f },
-            { 0.0f }
-        });
-        outputLayer.add(new float[][] {
-            { -0.4f, 0.2f, 0.6f },
-            { -0.15f }
-        });
-        outputLayer.add(new float[][] {
-            { 0.1f, 0.3f, -0.2f },
-            { 0.07f }
-        });
-
-        testNet.add(outputLayer);
-
-
-        putThingAt(new Position(1, 1), new Animal(this, new Position(1,1),
-            new AnimalAttributes(33, 33, 34, 3, new NeuralNet(testNet)),
-            null));
-        putThingAt(new Position(2, 1), new Food(this, new Position(2, 1), 2));
-    }
+    
 
     /**
      * Advance the world by one tick, running each Thing in its own thread to think 
