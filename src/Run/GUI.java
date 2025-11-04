@@ -37,8 +37,29 @@ public class GUI {
         frame.setSize(600, 600);
         frame.setLayout(new BorderLayout());
 
-        // Create the grid panel
+        gridPanels = createGridPanel(frame);
+        JPanel controlPanel = createControlPanel(frame);
+    }
+
+    /** 
+     * update the world with up to date Things
+     */ 
+    private void updateWorldView() {
+        Color[][] grid = world.getGridOfColors();
+        for (int row = 0; row < world.getWidth(); row++) {
+            for (int col = 0; col < world.getHeight(); col++) {
+                gridPanels[row][col].setBackground(grid[row][col]);//potential efficincy gain: only updating changed cells? store previous grid? maybe too much extra storage?
+            }
+        }
+    }
+
+    private JPanel[][] createGridPanel(JFrame frame) {
+                // Create the grid panel
         JPanel gridPanel = new JPanel();
+        return loadGridPanel(frame, gridPanel);
+    }
+
+    private JPanel[][] loadGridPanel(JFrame frame, JPanel gridPanel) {
         gridPanel.setLayout(new GridLayout(world.getWidth(), world.getHeight()));
         gridPanels = new JPanel[world.getWidth()][world.getHeight()];
 
@@ -54,7 +75,10 @@ public class GUI {
         // Add the grid panel to the frame
         frame.add(gridPanel, BorderLayout.CENTER);
         updateWorldView();
+        return gridPanels;
+    }
 
+    private JPanel createControlPanel(JFrame frame) {
         // Create a control panel with a button to tick
         JPanel controlPanel = new JPanel();
         JButton tickButton = new JButton("Tick");
@@ -72,17 +96,7 @@ public class GUI {
         // Add the control panel to the frame and set visible
         frame.add(controlPanel, BorderLayout.SOUTH);
         frame.setVisible(true);
-    }
 
-    /** 
-     * update the world with up to date Things
-     */ 
-    private void updateWorldView() {
-        Color[][] grid = world.getGridOfColors();
-        for (int row = 0; row < world.getWidth(); row++) {
-            for (int col = 0; col < world.getHeight(); col++) {
-                gridPanels[row][col].setBackground(grid[row][col]);//potential efficincy gain: only updating changed cells? store previous grid? maybe too much extra storage?
-            }
-        }
+        return controlPanel;
     }
 }
