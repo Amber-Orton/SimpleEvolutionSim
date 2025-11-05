@@ -39,6 +39,7 @@ public class GUI {
 
         gridPanels = createGridPanel(frame);
         JPanel controlPanel = createControlPanel(frame);
+        frame.setVisible(true);
     }
 
     /** 
@@ -81,6 +82,14 @@ public class GUI {
     private JPanel createControlPanel(JFrame frame) {
         // Create a control panel with a button to tick
         JPanel controlPanel = new JPanel();
+
+        createTickButton(frame,controlPanel);
+
+        frame.add(controlPanel, BorderLayout.SOUTH);
+        return controlPanel;
+    }
+
+    private void createTickButton(JFrame frame, JPanel controlPanel) {
         JButton tickButton = new JButton("Tick");
         controlPanel.add(tickButton);
 
@@ -91,12 +100,6 @@ public class GUI {
                 world.tick();
                 updateWorldView();
             }
-        });
-
-        // Add the control panel to the frame and set visible
-        frame.add(controlPanel, BorderLayout.SOUTH);
-        frame.setVisible(true);
-
-        return controlPanel;
+        });       
     }
 }
