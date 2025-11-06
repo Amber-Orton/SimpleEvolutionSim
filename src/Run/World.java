@@ -16,9 +16,11 @@ public class World {
     private Set<Thing> things = new HashSet<>();
     private Set<Thing> thingsToUpdate = new HashSet<>();
     private Set<Thing> eggsToUpdate = new HashSet<>();
+    private Set<Thing> nothingToUpdate = new HashSet<>();
     protected Thing[][] grid;
     protected Nothing[][] nothingGrid;
     private final Wall DEFAULTWALL = new Wall();
+    private int tickCount = 0;
 
 
 
@@ -36,10 +38,13 @@ public class World {
      * Advance the world by one tick, running each Thing in its own thread to think 
      * then one thread for updating the world with the actions of the Things.
      */
-    public void tick() {
+    public void tick() {        
+        tickCount++;
+
         Thread[] threads = new Thread[things.size()];
         int i = 0;
 
+        //create the threads
         for (Thing thing : things) {
             Thread t = new Thread(thing);
             thing.setThread(t);
@@ -65,25 +70,26 @@ public class World {
         for (Thing thing : things) {
             if (thing instanceof Egg) {
                 eggsToUpdate.add(thing);
+            } else if (thing instanceof Nothing) {
+                nothingToUpdate.add(thing);
             } else {
                 thingsToUpdate.add(thing);
             }
         }
 
-        while (thingsToUpdate.iterator().hasNext()) {
-            Thing thing = thingsToUpdate.iterator().next();
-            thing.doAction();
-            thingsToUpdate.remove(thing);
-        }
-
-        //update eggs after
-        while (eggsToUpdate.iterator().hasNext()) {
-            Thing egg = eggsToUpdate.iterator().next();
-            egg.doAction();
-            eggsToUpdate.remove(egg);
-        }
+        thingsDoAction(thingsToUpdate);
+        thingsDoAction(eggsToUpdate);
+        thingsDoAction(nothingToUpdate);
 
         System.out.println("ticked!");
+    }
+
+    private void thingsDoAction(Set<Thing> things) {
+        while (things.iterator().hasNext()) {
+            Thing thing = things.iterator().next();
+            thing.doAction();
+            things.remove(thing);
+        }
     }
 
     
@@ -222,5 +228,9 @@ public class World {
     
     public int getHeight() {
         return height;
+    }
+
+    public int getTickCount() {
+        return tickCount;
     }
 }
