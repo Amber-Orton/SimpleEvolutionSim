@@ -20,6 +20,11 @@ public class Wall extends Thing {
     }
 
     @Override
+    public String getName() {
+        return "Wall";
+    }
+
+    @Override
     public String toString() {
         return super.toString() + ":Wall";
     }

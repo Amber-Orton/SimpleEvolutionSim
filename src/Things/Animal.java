@@ -1,6 +1,7 @@
 package Things;
 import java.awt.Color;
 
+
 import Run.World;
 
 
@@ -307,6 +308,22 @@ public class Animal extends Edible{
 
     protected void addHealth(float amount) {
         health = Math.min(attributes.getMaxHealth(), health + amount);
+    }
+
+    public AnimalAttributes getAnimalAttributes() {
+        return attributes;
+    }
+
+    public float getHealth() {
+        return health;
+    }
+
+    public String getName() {
+        return "Animal";
+    }
+
+    public ACTION getAction() {
+        return action;
     }
 
     @Override

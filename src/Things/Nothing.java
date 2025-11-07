@@ -24,6 +24,11 @@ public class Nothing extends Thing {
     }
 
     @Override
+    public String getName() {
+        return "Nothing";
+    }
+
+    @Override
     public void run() {
         super.run();
     }

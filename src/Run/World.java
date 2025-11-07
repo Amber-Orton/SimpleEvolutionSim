@@ -152,6 +152,10 @@ public class World {
         }
     }
 
+    public Thing getThingAt(int row, int col) {
+        return getThingAt(new Position(row, col));
+    }
+
     /**
      * changes Thing at the location of origionalThing to newThing as long as origionalThing is in grid at origionalThing.pos
      * fails and returns false if origionalThing is not where it is supposed to be

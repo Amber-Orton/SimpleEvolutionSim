@@ -84,6 +84,7 @@ public abstract class Thing implements Runnable {
         return thread;
     }
 
+    public abstract String getName();
 
     //for seeing input to neural net
     protected abstract int getasInt();

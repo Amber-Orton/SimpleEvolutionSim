@@ -15,6 +15,11 @@ public class Food extends Edible{
     }
 
     @Override
+    public String getName() {
+        return "Food";
+    }
+
+    @Override
     protected int getasInt() {
         return 2;
     }

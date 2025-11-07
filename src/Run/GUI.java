@@ -1,6 +1,14 @@
 package Run;
 
 import javax.swing.*;
+
+import Things.Animal;
+import Things.Egg;
+import Things.Food;
+import Things.Position;
+import Things.Thing;
+import Things.Wall;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -15,6 +23,9 @@ public class GUI {
 
     private JTextField tickCountDisplay;
     private JTextArea selectedThingNameText;
+    private JTextArea selectedThingInfoTextLeft;
+    private JTextArea selectedThingInfoTextRight;
+    private Thing selectedThing;
 
     public static GUI getInstanceOrChangeWorld(World world) {
         if (instance == null) {
@@ -98,7 +109,7 @@ public class GUI {
                 cell.addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        // displayThingInfo(rr, cc);
+                        displayThingInfo(rr, cc);
                     }
                 });
             }
@@ -116,7 +127,7 @@ public class GUI {
         controlPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
         // Selected thing name (top)
-        selectedThingNameText = new JTextArea("Click on a Thing to show its information here");
+        selectedThingNameText = new JTextArea("Click on a Thing to show its name here");
         selectedThingNameText.setLineWrap(true);
         selectedThingNameText.setWrapStyleWord(true);
         selectedThingNameText.setEditable(false);
@@ -125,13 +136,18 @@ public class GUI {
 
         // Stats and Neural Net side-by-side (equal width)
         JPanel infoPanel = new JPanel(new GridLayout(1, 2, 8, 0));
-        JTextArea stats = new JTextArea("Stats");
-        JTextArea neural = new JTextArea("Neural Net");
-        stats.setEditable(false);
-        neural.setEditable(false);
-        infoPanel.add(wrapInScrollIfNeeded(stats));
-        infoPanel.add(wrapInScrollIfNeeded(neural));
-        infoPanel.setMaximumSize(new Dimension(400, 200));
+        selectedThingInfoTextLeft = new JTextArea("Click on a Thing to show its information here");
+        selectedThingInfoTextRight = new JTextArea("");
+        selectedThingInfoTextLeft.setEditable(false);
+        selectedThingInfoTextRight.setEditable(false);
+        selectedThingInfoTextLeft.setLineWrap(true);
+        selectedThingInfoTextLeft.setWrapStyleWord(true);
+        selectedThingInfoTextRight.setLineWrap(true);
+        selectedThingInfoTextRight.setWrapStyleWord(true);
+        infoPanel.add(wrapInScrollIfNeeded(selectedThingInfoTextLeft));
+        infoPanel.add(wrapInScrollIfNeeded(selectedThingInfoTextRight));
+        // Remove the setMaximumSize to allow it to grow
+        infoPanel.setPreferredSize(new Dimension(400, 200));
         controlPanel.add(infoPanel);
         controlPanel.add(Box.createRigidArea(new Dimension(0, 8)));
 
@@ -142,7 +158,7 @@ public class GUI {
         JTextArea worldStatsArea = new JTextArea("World Stats (placeholder)\nYou can fill this later.");
         worldStatsArea.setEditable(false);
         worldStatsPanel.add(new JScrollPane(worldStatsArea), BorderLayout.CENTER);
-        worldStatsPanel.setMaximumSize(new Dimension(400, 200));
+        worldStatsPanel.setPreferredSize(new Dimension(400, 200));
         controlPanel.add(worldStatsPanel);
 
         // glue to push content to top if the right panel is taller
@@ -172,10 +188,84 @@ public class GUI {
 
         return tickPanel;
     }
+    
+    private void displayThingInfo(int row, int col){
+        if (!world.posIsNothing(new Position(row, col))) {
+            selectedThing = world.getThingAt(row, col);
+            selectedThingNameText.setText(selectedThing.getName());
+    
+            updateSelectedThingInfo(selectedThing);
+        }
+    }
+
+    private void updateSelectedThingInfo(Thing thing) {
+        if (thing == null) { return; }
+        if (thing instanceof Animal) {
+            showAnimalInfo((Animal) thing);
+        } else if (thing instanceof Egg) {
+            showEggInfo((Egg) thing);
+        } else if (thing instanceof Wall) {
+            showWallInfo((Wall) thing);
+        } else if (thing instanceof Food) {
+            showFoodInfo((Food) thing);
+        } else {
+            showErrorMessage(thing);
+        }
+    }
+
+    private void showAnimalInfo(Animal animal) {
+        if (animal.getHealth() <= 0) {
+            selectedThingInfoTextLeft.setText("This animal is dead.");
+        } else {
+            selectedThingInfoTextLeft.setText(
+                "Health: " + animal.getHealth() + '/' + animal.getAnimalAttributes().getMaxHealth() 
+                + "\nEnergy: " + animal.getEnergy() + '/' + animal.getAnimalAttributes().getMaxEnergy()
+                + "\nAttack Damage: " + animal.getAnimalAttributes().getAttackDamage()
+                + "\nReproduction Cost: " + animal.getAnimalAttributes().getReproductionCost()
+                + "\nLast Action: " + animal.getAction());
+            selectedThingInfoTextRight.setText(animal.getAnimalAttributes().getNeuralNet().toString());
+        }
+    }
+
+    private void showEggInfo(Egg egg) {
+        if (!egg.isHatched()) {
+            selectedThingInfoTextLeft.setText(
+                "Max Health: " + egg.getAnimalAttributes().getMaxHealth()
+                + "\nMax Energy: " + egg.getAnimalAttributes().getMaxEnergy()
+                + "\nAttack Damage: " + egg.getAnimalAttributes().getAttackDamage()
+                + "\nStored Energy: " + egg.getAnimalAttributes().getReproductionCost()
+            );
+            selectedThingInfoTextRight.setText(
+                "Parent: " + egg.getParent().getName()
+                + "\nCycles to Hatch: " + egg.getCyclesToHatch()
+            );
+        } else {
+            selectedThing = egg.getChild();
+            updateSelectedThingInfo(selectedThing);
+        }
+    }
+
+    private void showWallInfo(Wall wall) {
+        selectedThingInfoTextLeft.setText("Wall");
+        selectedThingInfoTextRight.setText("Walls are impassable barriers.");
+    }
+
+    private void showFoodInfo(Food food) {
+        selectedThingInfoTextLeft.setText(
+            "Energy: " + food.getEnergy()
+        );
+        selectedThingInfoTextRight.setText("Food is a source of energy and can be eaten by animals, \nspawns from nothing and from dead animals.");
+    }
+
+    private void showErrorMessage(Thing thing) {
+        selectedThingInfoTextLeft.setText("Something went wrong invalid selection");
+        selectedThingInfoTextRight.setText("");
+    }
 
     private void tick() {
         world.tick();
         updateWorldView();
+        updateSelectedThingInfo(selectedThing);
         tickCountDisplay.setText("Tick Count: " + world.getTickCount());
     }
 

@@ -7,6 +7,8 @@ public class Egg extends Edible{
     private AnimalAttributes attributes;
     private Animal parent;
     private int cyclesToHatch;
+    private boolean isHatched = false;
+    private Animal child;
 
     public Egg(World world, Position pos, AnimalAttributes attributes, Animal parent) {
         super(Color.PINK, world, pos);
@@ -44,12 +46,37 @@ public class Egg extends Edible{
 
 
     public void hatch() {
-        Animal child = new Animal(world, pos, attributes.generateMutatedAttributes(), parent);
+        child = new Animal(world, pos, attributes.generateMutatedAttributes(), parent);
+        isHatched = true;
 
         world.replaceThing(this, child);
         world.killThing(this);
     }
-    
+
+    public Animal getChild() {
+        return child;
+    }
+
+    public boolean isHatched() {
+        return isHatched;
+    }
+
+    public int getCyclesToHatch() {
+        return cyclesToHatch;
+    }
+
+    public AnimalAttributes getAnimalAttributes() {
+        return attributes;
+    }
+
+    public Animal getParent() {
+        return parent;
+    }
+
+    @Override
+    public String getName() {
+        return "Egg";
+    }
 
     @Override
     protected int getasInt() {
