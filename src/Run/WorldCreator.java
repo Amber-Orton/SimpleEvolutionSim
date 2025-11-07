@@ -12,15 +12,20 @@ import Things.Position;
 public class WorldCreator {
 
     public static World createWorld(int worldWidth, int worldHeight, int maxLayers) {
+        // Default to 0.1 density if caller doesn't provide one
+        return createWorld(worldWidth, worldHeight, maxLayers, 0.1f);
+    }
+
+    public static World createWorld(int worldWidth, int worldHeight, int maxLayers, float initialAnimalDensity) {
         World world = new World(worldWidth, worldHeight);
-        populateWorld(world, maxLayers);
+        populateWorld(world, maxLayers, initialAnimalDensity);
         return world;
     }
 
     /**
      * Populate the world with Things.
      */
-    private static void populateWorld(World world, int maxLayers) {
+    private static void populateWorld(World world, int maxLayers, float initialAnimalDensity) {
         // first fill with Nothing
         for (int row = 0; row < world.getHeight(); row++) {
             for (int col = 0; col < world.getWidth(); col++) {
@@ -30,25 +35,30 @@ public class WorldCreator {
             }
         }
 
-        // Create one random animal at (1,1)
+        // Randomly place animals by density
         Random rnd = new Random();
+        int placed = 0;
+        for (int row = 0; row < world.getHeight(); row++) {
+            for (int col = 0; col < world.getWidth(); col++) {
+                if (rnd.nextFloat() < initialAnimalDensity) {
+                    NeuralNet net = buildRandomNeuralNet(rnd, maxLayers, 18, 7);
+                    AnimalAttributes attrs = buildRandomAnimalAttributes(rnd, 100, net);
+                    Position pos = new Position(row, col);
+                    world.putThingAt(pos, new Animal(world, pos, attrs, null));
+                    placed++;
+                }
+            }
+        }
 
-        // Net: input=18 (not stored), output=7, hidden layers <= maxLayers-1
-        NeuralNet net = buildRandomNeuralNet(rnd, maxLayers, 18, 7);
-
-        // Non-net attributes: 3 stats sum to 100 (reproduction cost excluded and randomized)
-        int statTotal = 100; // mirrors Main.ANIMAL_STAT_TOTAL
-        AnimalAttributes attrs = buildRandomAnimalAttributes(rnd, statTotal, net);
-
-        world.putThingAt(
-            new Position(1, 1),
-            new Animal(
-                world,
-                new Position(1, 1),
-                attrs,
-                null
-            )
-        );
+        // Ensure at least one animal exists
+        if (placed == 0) {
+            int row = rnd.nextInt(world.getHeight());
+            int col = rnd.nextInt(world.getWidth());
+            NeuralNet net = buildRandomNeuralNet(rnd, maxLayers, 18, 7);
+            AnimalAttributes attrs = buildRandomAnimalAttributes(rnd, 100, net);
+            Position pos = new Position(row, col);
+            world.putThingAt(pos, new Animal(world, pos, attrs, null));
+        }
     }
 
     /**
