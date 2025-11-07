@@ -20,19 +20,12 @@ public class Main {
     private static float FOOD_GROW_RATE = 0.1f;
     private static float NEW_FOOD_ENERGY = 10;
 
-    
-    
-    
     public static void main(String[] args) {
         //pass world attributes to the relavant palces
         AnimalAttributes.setWorldAttributes(ANIMAL_STAT_TOTAL, ANIMAL_ATTACK_COST, MUTATION_RATE, MUTATION_FACTOR, NODE_INSERT_OR_DELETE_RATE, MAX_LAYERS);
         Nothing.setWorldAttributes(FOOD_GROW_RATE, NEW_FOOD_ENERGY);
 
-
-
-
-
-        World world = WorldCreator.createWorld(WORLD_WIDTH, WORLD_HEIGHT);
+        World world = WorldCreator.createWorld(WORLD_WIDTH, WORLD_HEIGHT, MAX_LAYERS);
         GUI gui = GUI.getInstanceOrChangeWorld(world);
         gui.run();
     }
