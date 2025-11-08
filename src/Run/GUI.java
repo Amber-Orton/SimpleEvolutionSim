@@ -233,6 +233,14 @@ public class GUI {
             ((JSpinner.NumberEditor) densitySpinner.getEditor()).getFormat().setMinimumFractionDigits(2);
             content.add(densitySpinner, gbc);
 
+            // Initial neural net randomness (0..1)
+            gbc.gridx = 0; gbc.gridy++;
+            content.add(new JLabel("Initial Neural Net Randomness (0..1), recommend 0.1"), gbc);
+            gbc.gridx = 1;
+            JSpinner randomnesSpinner = new JSpinner(new SpinnerNumberModel((double) Main.INITIAL_NEURAL_NET_RANDOMNESS, 0.0, 1.0, 0.01));
+             ((JSpinner.NumberEditor) randomnesSpinner.getEditor()).getFormat().setMinimumFractionDigits(2);
+             content.add(randomnesSpinner, gbc);
+
             // Buttons
             gbc.gridx = 0; gbc.gridy++;
             gbc.gridwidth = 2;
@@ -249,16 +257,18 @@ public class GUI {
                 int newH = ((Number) heightSpinner.getValue()).intValue();
                 int newMaxLayers = ((Number) layersSpinner.getValue()).intValue();
                 float newDensity = ((Number) densitySpinner.getValue()).floatValue();
+                float newRandomness = ((Number) randomnesSpinner.getValue()).floatValue();
 
                 // Apply to Main and propagate world attributes
                 Main.WORLD_WIDTH = newW;
                 Main.WORLD_HEIGHT = newH;
                 Main.MAX_LAYERS = newMaxLayers;
                 Main.INITIAL_ANIMAL_DENSITY = newDensity;
+                Main.INITIAL_NEURAL_NET_RANDOMNESS = newRandomness;
                 Main.updateAttributes();
 
                 // Build new world
-                World newWorld = WorldCreator.createWorld(newW, newH, newMaxLayers, newDensity);
+                World newWorld = Main.createWorld();
                 GUI gui = GUI.getInstanceOrChangeWorld(newWorld);
 
                 // Close current main window and relaunch
@@ -426,6 +436,19 @@ class WorldStatsPanel {
         worldStatsContent.add(SliderFactory.makeIntSlider(
             "Animal Attack Cost", 0, 50, Main.ANIMAL_ATTACK_COST,
             v -> { Main.ANIMAL_ATTACK_COST = v; Main.updateAttributes(); }
+        ));
+
+        worldStatsContent.add(SliderFactory.makeIntSlider(
+            "Animal Move Cost", 0, 20, Main.ANIMAL_MOVE_COST,
+            v -> { Main.ANIMAL_MOVE_COST = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeIntSlider(
+            "Animal Rest Energy", 0, 20, Main.ANIMAL_REST_ENERGY,
+            v -> { Main.ANIMAL_REST_ENERGY = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeIntSlider(
+            "Animal Rest Health", 0, 20, Main.ANIMAL_REST_HEALTH,
+            v -> { Main.ANIMAL_REST_HEALTH = v; Main.updateAttributes(); }
         ));
         worldStatsContent.add(SliderFactory.makeZeroToOneSlider(
             "Mutation Rate (0..1)", Main.MUTATION_RATE,

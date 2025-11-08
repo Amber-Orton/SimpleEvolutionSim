@@ -14,7 +14,7 @@ public class Egg extends Edible{
         super(Color.PINK, world, pos);
         this.attributes = attributes;
         this.parent = parent;
-        this.cyclesToHatch = 2;
+        this.cyclesToHatch = attributes.getHatchCycles();
         this.energy = attributes.getReproductionCost();
     }
 

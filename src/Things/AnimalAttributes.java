@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import NeuralNet.NeuralNet;
+import Run.Main;
 
 public class AnimalAttributes {
 
@@ -10,10 +11,14 @@ public class AnimalAttributes {
 
     private static int statTotal;
     private static int attackCost;
+    private static int moveCost;
     private static float mutationRate;
     private static float mutationFactor;
     private static float nodeInsertOrDeleteRate;
     private static int maxLayers;
+    private static int restEnergy;
+    private static int restHealth;
+    private static int hatchCycles;
 
     private float maxEnergy;
     private float maxHealth;
@@ -29,13 +34,17 @@ public class AnimalAttributes {
         this.neuralNet = neuralNet;
     }
 
-    public static void setWorldAttributes(int statTotal, int attackCost, float mutationRate, float mutationFactor, float nodeInsertOrDeleteRate, int maxLayers) {
+    public static void setWorldAttributes(int statTotal, int attackCost, float mutationRate, float mutationFactor, float nodeInsertOrDeleteRate, int maxLayers, int moveCost, int restEnergy, int restHealth, int hatchCycles) {
         AnimalAttributes.statTotal = statTotal;
         AnimalAttributes.attackCost = attackCost;
         AnimalAttributes.mutationRate = mutationRate;
         AnimalAttributes.mutationFactor = mutationFactor;
         AnimalAttributes.nodeInsertOrDeleteRate = nodeInsertOrDeleteRate;
         AnimalAttributes.maxLayers = maxLayers;
+        AnimalAttributes.moveCost = moveCost;
+        AnimalAttributes.restEnergy = restEnergy;
+        AnimalAttributes.restHealth = restHealth;
+        AnimalAttributes.hatchCycles = hatchCycles;
     }
 
     public AnimalAttributes generateMutatedAttributes() {
@@ -90,7 +99,7 @@ public class AnimalAttributes {
                 if (layer > 0) {
                     newNode[0] = new float[neuralNetNodesWeightsAndBiases.get(layer-1).size()];
                 } else {
-                    newNode[0] = new float[18];
+                    newNode[0] = new float[Main.NEURAL_NET_INPUT_SIZE];
                 }
                 newNode[1] = new float[1];
                 // initialise the bias and weights to be very small for small mutations
@@ -126,7 +135,7 @@ public class AnimalAttributes {
                         if (layer > 0) {
                             previousLayerSize = neuralNetNodesWeightsAndBiases.get(layer-1).size();
                         } else {
-                            previousLayerSize = 18; // Input layer size
+                            previousLayerSize = Main.NEURAL_NET_INPUT_SIZE; // Input layer size
                         }
 
                         // Create nodes for the new layer same number to reduce the impact of adding a new layer
@@ -157,7 +166,7 @@ public class AnimalAttributes {
                         if (layer > 0){
                             previousLayerSize = neuralNetNodesWeightsAndBiases.get(layer - 1).size();
                         } else {
-                            previousLayerSize = 18; // Input layer size
+                            previousLayerSize = Main.NEURAL_NET_INPUT_SIZE; // Input layer size
                         }
 
                         for (float[][] node : neuralNetNodesWeightsAndBiases.get(layer + 1)) {
@@ -233,6 +242,22 @@ public class AnimalAttributes {
 
     public int getMaxStatTotal() {
         return statTotal;
+    }
+
+    public int getMoveCost() {
+        return moveCost;
+    }
+
+    public int getRestEnergy() {
+        return restEnergy;
+    }
+
+    public int getRestHealth() {
+        return restHealth;
+    }
+
+    public int getHatchCycles() {
+        return hatchCycles;
     }
 
     @Override

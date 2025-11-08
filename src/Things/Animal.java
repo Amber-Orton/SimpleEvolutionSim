@@ -1,7 +1,7 @@
 package Things;
 import java.awt.Color;
 
-
+import Run.Main;
 import Run.World;
 
 
@@ -47,11 +47,11 @@ public class Animal extends Edible{
         System.out.println(this.toString() + " is doing action: " + action);
         switch (action) {
             case TURN_LEFT:
-                turn(-1);
+                facing = facing.turnLeft();
                 break;
             
             case TURN_RIGHT:
-                turn(1);
+                facing = facing.turnRight();
                 break;
 
             case MOVE:
@@ -84,7 +84,7 @@ public class Animal extends Edible{
 
 
     protected ACTION think() {
-        float[] thinkingInputs = new float[18];
+        float[] thinkingInputs = new float[Main.NEURAL_NET_INPUT_SIZE];
         float[][] seen = see();
         int i = 0;
         for(float[] floats : seen) {
@@ -107,7 +107,7 @@ public class Animal extends Edible{
     * @param newCol The column index of the new position.
     */
     protected void move() {
-        removeEnergy(1);
+        removeEnergy(attributes.getMoveCost());
 
         
         Position newPos = getFacingPosition();
@@ -199,17 +199,7 @@ public class Animal extends Edible{
         return out;
     }
     
-    /**
-     * turns the animal left if direction <= -0.5 and right if direction >= 0.5 and does not turn otherwise
-     * @param direction float of which direction to turn
-     */
-    protected void turn(float direction) {
-        if (direction <= -0.5) {// turn left
-            facing = facing.turnLeft();
-        } else if (direction >= 0.5) {
-            facing = facing.turnRight();
-        }
-    }
+
 
 
     /**
@@ -231,8 +221,8 @@ public class Animal extends Edible{
 
     
     protected void rest() {
-        removeEnergy(3);
-        addHealth(2);
+        removeEnergy(attributes.getRestEnergy());
+        addHealth(attributes.getRestHealth());
     }
 
 

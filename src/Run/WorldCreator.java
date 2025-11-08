@@ -10,22 +10,19 @@ import Things.Nothing;
 import Things.Position;
 
 public class WorldCreator {
+    private static final int INPUT_SIZE = Main.NEURAL_NET_INPUT_SIZE;
+    private static final int OUTPUT_SIZE = Main.NEURAL_NET_OUTPUT_SIZE;
 
-    public static World createWorld(int worldWidth, int worldHeight, int maxLayers) {
-        // Default to 0.1 density if caller doesn't provide one
-        return createWorld(worldWidth, worldHeight, maxLayers, 0.1f);
-    }
-
-    public static World createWorld(int worldWidth, int worldHeight, int maxLayers, float initialAnimalDensity) {
+    public static World createWorld(int worldWidth, int worldHeight, int maxLayers, int statTotal, float initialAnimalDensity, float initialNeuralNetRandomness) {
         World world = new World(worldWidth, worldHeight);
-        populateWorld(world, maxLayers, initialAnimalDensity);
+        populateWorld(world, maxLayers, statTotal, initialAnimalDensity, initialNeuralNetRandomness);
         return world;
     }
 
     /**
      * Populate the world with Things.
      */
-    private static void populateWorld(World world, int maxLayers, float initialAnimalDensity) {
+    private static void populateWorld(World world, int maxLayers,int statTotal, float initialAnimalDensity, float initialNeuralNetRandomness) {
         // first fill with Nothing
         for (int row = 0; row < world.getHeight(); row++) {
             for (int col = 0; col < world.getWidth(); col++) {
@@ -41,8 +38,8 @@ public class WorldCreator {
         for (int row = 0; row < world.getHeight(); row++) {
             for (int col = 0; col < world.getWidth(); col++) {
                 if (rnd.nextFloat() < initialAnimalDensity) {
-                    NeuralNet net = buildRandomNeuralNet(rnd, maxLayers, 18, 7);
-                    AnimalAttributes attrs = buildRandomAnimalAttributes(rnd, 100, net);
+                    NeuralNet net = buildRandomNeuralNet(rnd, maxLayers, INPUT_SIZE, OUTPUT_SIZE, initialNeuralNetRandomness);
+                    AnimalAttributes attrs = buildRandomAnimalAttributes(rnd, statTotal, net);
                     Position pos = new Position(row, col);
                     world.putThingAt(pos, new Animal(world, pos, attrs, null));
                     placed++;
@@ -54,8 +51,8 @@ public class WorldCreator {
         if (placed == 0) {
             int row = rnd.nextInt(world.getHeight());
             int col = rnd.nextInt(world.getWidth());
-            NeuralNet net = buildRandomNeuralNet(rnd, maxLayers, 18, 7);
-            AnimalAttributes attrs = buildRandomAnimalAttributes(rnd, 100, net);
+            NeuralNet net = buildRandomNeuralNet(rnd, maxLayers, INPUT_SIZE, OUTPUT_SIZE, initialNeuralNetRandomness);
+            AnimalAttributes attrs = buildRandomAnimalAttributes(rnd, statTotal, net);
             Position pos = new Position(row, col);
             world.putThingAt(pos, new Animal(world, pos, attrs, null));
         }
@@ -63,19 +60,19 @@ public class WorldCreator {
 
     /**
      * Build a random feed-forward network with:
-     * - Input size fixed (not stored in the list) e.g., 18
-     * - Output layer fixed at 'outputSize' nodes (7)
+     * - Input size fixed (not stored in the list) e.g., INPUT_SIZE
+     * - Output layer fixed at 'outputSize' nodes (OUTPUT_SIZE)
      * - 1..(maxLayers-1) hidden layers (since the list includes hidden + output)
      * - Each hidden layer node has 'prevLayerSize' weights, first hidden layer uses 'inputSize'
      */
-    private static NeuralNet buildRandomNeuralNet(Random rnd, int maxLayers, int inputSize, int outputSize) {
+    private static NeuralNet buildRandomNeuralNet(Random rnd, int maxLayers, int inputSize, int outputSize, float initialNeuralNetRandomness) {
         // Ensure at least one hidden layer; 'maxLayers' counts hidden+output in the list
         int maxHiddenLayers = Math.max(1, maxLayers - 1);
         int hiddenLayers = 1 + rnd.nextInt(maxHiddenLayers); // [1, maxHiddenLayers]
 
-        // Hidden layer node count bounds (tuned to be reasonable)
+        // Hidden layer node count bounds
         int minHiddenNodes = 4;
-        int maxHiddenNodes = Math.max(minHiddenNodes, inputSize); // up to 18 by default
+        int maxHiddenNodes = Math.max(minHiddenNodes, inputSize);
 
         ArrayList<ArrayList<float[][]>> layers = new ArrayList<>();
         int prevSize = inputSize;
@@ -92,9 +89,9 @@ public class WorldCreator {
 
                 // Small random weights/bias around 0
                 for (int i = 0; i < prevSize; i++) {
-                    node[0][i] = (rnd.nextFloat() - 0.5f) * 0.2f; // [-0.1, 0.1]
+                    node[0][i] = (rnd.nextFloat() - 0.5f) * initialNeuralNetRandomness *2; // +-initialNeuralNetRandomness
                 }
-                node[1][0] = (rnd.nextFloat() - 0.5f) * 0.2f;
+                node[1][0] = (rnd.nextFloat() - 0.5f) * initialNeuralNetRandomness *2;
 
                 layer.add(node);
             }
@@ -111,9 +108,9 @@ public class WorldCreator {
             node[1] = new float[1];        // bias
 
             for (int i = 0; i < prevSize; i++) {
-                node[0][i] = (rnd.nextFloat() - 0.5f) * 0.2f;
+                node[0][i] = (rnd.nextFloat() - 0.5f) * initialNeuralNetRandomness *2;
             }
-            node[1][0] = (rnd.nextFloat() - 0.5f) * 0.2f;
+            node[1][0] = (rnd.nextFloat() - 0.5f) * initialNeuralNetRandomness *2;
 
             outputLayer.add(node);
         }
