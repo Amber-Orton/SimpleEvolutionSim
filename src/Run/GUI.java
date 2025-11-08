@@ -53,6 +53,8 @@ public class GUI {
         leftPanel.add(tickPanel, BorderLayout.NORTH);
         JPanel gridPanel = createGridPanel();
         leftPanel.add(gridPanel, BorderLayout.CENTER);
+        JPanel resetPanel = createResetPanel();
+        leftPanel.add(resetPanel, BorderLayout.SOUTH);
 
         // RIGHT (controls)
         JPanel rightPanel = new JPanel();
@@ -67,8 +69,8 @@ public class GUI {
 
     private void updateWorldView() {
         Color[][] grid = world.getGridOfColors();
-        int rows = world.getWidth();
-        int cols = world.getHeight();
+        int rows = world.getHeight(); // was world.getWidth()
+        int cols = world.getWidth();  // was world.getHeight()
 
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
@@ -80,8 +82,8 @@ public class GUI {
     }
 
     private JPanel createGridPanel() {
-        int rows = world.getWidth();
-        int cols = world.getHeight();
+        int rows = world.getHeight(); // was world.getWidth()
+        int cols = world.getWidth();  // was world.getHeight()
 
         JPanel gridPanel = new JPanel(new SquareGridLayout(rows, cols));
         gridPanels = new JPanel[rows][cols];
@@ -186,6 +188,96 @@ public class GUI {
         updateWorldView();
         updateSelectedThingInfo(selectedThing);
         tickCountDisplay.setText("Tick Count: " + world.getTickCount());
+    }
+
+    private JPanel createResetPanel() {
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
+        JButton btn = new JButton("New World...");
+        panel.add(btn);
+
+        btn.addActionListener(e -> {
+            JDialog dlg = new JDialog(SwingUtilities.getWindowAncestor(panel), "Create New World", Dialog.ModalityType.APPLICATION_MODAL);
+            JPanel content = new JPanel();
+            content.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            content.setLayout(new GridBagLayout());
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.insets = new Insets(5, 5, 5, 5);
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.gridx = 0; gbc.gridy = 0;
+
+            // World Width
+            content.add(new JLabel("World Width, recommend between 5 and 200"), gbc);
+            gbc.gridx = 1;
+            JSpinner widthSpinner = new JSpinner(new SpinnerNumberModel(Main.WORLD_WIDTH, 1, Integer.MAX_VALUE, 1));
+            content.add(widthSpinner, gbc);
+
+            // World Height
+            gbc.gridx = 0; gbc.gridy++;
+            content.add(new JLabel("World Height, recommend between 5 and 200"), gbc);
+            gbc.gridx = 1;
+            JSpinner heightSpinner = new JSpinner(new SpinnerNumberModel(Main.WORLD_HEIGHT, 1, Integer.MAX_VALUE, 1));
+            content.add(heightSpinner, gbc);
+
+            // Initial Max Neural Net Layers
+            gbc.gridx = 0; gbc.gridy++;
+            content.add(new JLabel("Initial Max Neural Net Layers, recommend between 1 and 20"), gbc);
+            gbc.gridx = 1;
+            JSpinner layersSpinner = new JSpinner(new SpinnerNumberModel(Main.MAX_LAYERS, 1, Integer.MAX_VALUE, 1));
+            content.add(layersSpinner, gbc);
+
+            // Initial Animal Density (0..1)
+            gbc.gridx = 0; gbc.gridy++;
+            content.add(new JLabel("Initial Animal Density (0..1)"), gbc);
+            gbc.gridx = 1;
+            JSpinner densitySpinner = new JSpinner(new SpinnerNumberModel((double) Main.INITIAL_ANIMAL_DENSITY, 0.0, 1.0, 0.01));
+            ((JSpinner.NumberEditor) densitySpinner.getEditor()).getFormat().setMinimumFractionDigits(2);
+            content.add(densitySpinner, gbc);
+
+            // Buttons
+            gbc.gridx = 0; gbc.gridy++;
+            gbc.gridwidth = 2;
+            JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+            JButton cancel = new JButton("Cancel");
+            JButton create = new JButton("Create");
+            buttons.add(cancel);
+            buttons.add(create);
+            content.add(buttons, gbc);
+
+            cancel.addActionListener(ev -> dlg.dispose());
+            create.addActionListener(ev -> {
+                int newW = ((Number) widthSpinner.getValue()).intValue();
+                int newH = ((Number) heightSpinner.getValue()).intValue();
+                int newMaxLayers = ((Number) layersSpinner.getValue()).intValue();
+                float newDensity = ((Number) densitySpinner.getValue()).floatValue();
+
+                // Apply to Main and propagate world attributes
+                Main.WORLD_WIDTH = newW;
+                Main.WORLD_HEIGHT = newH;
+                Main.MAX_LAYERS = newMaxLayers;
+                Main.INITIAL_ANIMAL_DENSITY = newDensity;
+                Main.updateAttributes();
+
+                // Build new world
+                World newWorld = WorldCreator.createWorld(newW, newH, newMaxLayers, newDensity);
+                GUI gui = GUI.getInstanceOrChangeWorld(newWorld);
+
+                // Close current main window and relaunch
+                Window mainWin = SwingUtilities.getWindowAncestor(panel);
+                dlg.dispose();
+                if (mainWin != null) {
+                    mainWin.dispose();
+                }
+                // Start a new frame with the updated world
+                SwingUtilities.invokeLater(gui::run);
+            });
+
+            dlg.setContentPane(content);
+            dlg.pack();
+            dlg.setLocationRelativeTo(SwingUtilities.getWindowAncestor(panel));
+            dlg.setVisible(true);
+        });
+
+        return panel;
     }
 }
 
