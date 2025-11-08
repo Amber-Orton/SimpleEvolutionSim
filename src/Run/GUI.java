@@ -14,8 +14,7 @@ import java.awt.event.*;
 import java.util.function.Consumer;
 
 /**
- * GUI for the Simple Evolution Simulation.
- * Uses a custom SquareGridLayout so each cell remains square.
+ * Main GUI for the Simple Evolution Simulation.
  */
 public class GUI {
     private World world;
@@ -46,17 +45,12 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(900, 700);
 
-        // top-level horizontal split: left (grid) and right (controls)
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
 
         // LEFT (grid + tick)
         JPanel leftPanel = new JPanel(new BorderLayout());
-
-        // tick controls (top)
         JPanel tickPanel = createTickPanel();
         leftPanel.add(tickPanel, BorderLayout.NORTH);
-
-        // grid (center)
         JPanel gridPanel = createGridPanel();
         leftPanel.add(gridPanel, BorderLayout.CENTER);
 
@@ -65,14 +59,12 @@ public class GUI {
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
         createControlPanel(rightPanel);
 
-        // add to frame
         frame.getContentPane().add(leftPanel);
         frame.getContentPane().add(rightPanel);
 
         frame.setVisible(true);
     }
 
-    /** update the world view colors into the cell panels */
     private void updateWorldView() {
         Color[][] grid = world.getGridOfColors();
         int rows = world.getWidth();
@@ -80,7 +72,6 @@ public class GUI {
 
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                // defensive check in case something changed
                 if (gridPanels != null && r < gridPanels.length && c < gridPanels[r].length) {
                     gridPanels[r][c].setBackground(grid[r][c]);
                 }
@@ -88,12 +79,10 @@ public class GUI {
         }
     }
 
-    /** Creates the grid panel and cell components using SquareGridLayout */
     private JPanel createGridPanel() {
         int rows = world.getWidth();
         int cols = world.getHeight();
 
-        // gridPanel uses the custom SquareGridLayout so each cell is square
         JPanel gridPanel = new JPanel(new SquareGridLayout(rows, cols));
         gridPanels = new JPanel[rows][cols];
 
@@ -116,18 +105,16 @@ public class GUI {
             }
         }
 
-        // initial paint
         updateWorldView();
         return gridPanel;
     }
 
-    /** Creates the right-side control panel with Selected, Stats, Neural Net and World Stats */
     private void createControlPanel(JPanel panel) {
         JPanel controlPanel = new JPanel();
         controlPanel.setLayout(new BoxLayout(controlPanel, BoxLayout.Y_AXIS));
         controlPanel.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
 
-        // Selected thing name (top)
+        // Selected thing name
         selectedThingNameText = new JTextArea("Click on a Thing to show its name here");
         selectedThingNameText.setLineWrap(true);
         selectedThingNameText.setWrapStyleWord(true);
@@ -135,7 +122,7 @@ public class GUI {
         selectedThingNameText.setMaximumSize(new Dimension(300, 60));
         controlPanel.add(selectedThingNameText);
 
-        // Stats and Neural Net side-by-side (equal width)
+        // Stats and Neural Net panels
         JPanel infoPanel = new JPanel(new GridLayout(1, 2, 8, 0));
         selectedThingInfoTextLeft = new JTextArea("Click on a Thing to show its information here");
         selectedThingInfoTextRight = new JTextArea("");
@@ -151,78 +138,11 @@ public class GUI {
         controlPanel.add(infoPanel);
         controlPanel.add(Box.createRigidArea(new Dimension(0, 8)));
 
-        // World Stats with scrolling content
-        JPanel worldStatsContainer = new JPanel(new BorderLayout());
-        worldStatsContainer.setBorder(BorderFactory.createTitledBorder("World Stats"));
-        worldStatsContainer.setPreferredSize(new Dimension(400, 260)); // initial size
+        // World Stats
+        JPanel worldStatsPanel = WorldStatsPanel.create();
+        controlPanel.add(worldStatsPanel);
 
-        // Inner content that actually holds the rows
-        JPanel worldStatsContent = new JPanel();
-        worldStatsContent.setLayout(new BoxLayout(worldStatsContent, BoxLayout.Y_AXIS));
-
-        // Add all rows to the scrollable content
-        worldStatsContent.add(makeIntSliderRow(
-            "Animal Stats Total",
-            50, 200, Main.ANIMAL_STAT_TOTAL,
-            v -> {Main.ANIMAL_STAT_TOTAL = v;
-            Main.updateAttributes();}
-        ));
-        worldStatsContent.add(makeIntSliderRow(
-            "Animal Attack Cost",
-            0, 50, Main.ANIMAL_ATTACK_COST,
-            v -> {Main.ANIMAL_ATTACK_COST = v;
-            Main.updateAttributes();}
-        ));
-        worldStatsContent.add(makeZeroToOneSliderRow(
-            "Mutation Rate (0..1)",
-            Main.MUTATION_RATE,
-            v -> {Main.MUTATION_RATE = v;
-            Main.updateAttributes();}
-        ));
-        worldStatsContent.add(makeZeroToOneSliderRow(
-            "Mutation Factor (0..1)",
-            Main.MUTATION_FACTOR,
-            v -> {Main.MUTATION_FACTOR = v;
-            Main.updateAttributes();}
-        ));
-        worldStatsContent.add(makeZeroToOneSliderRow(
-            "Node Insert/Delete Rate (0..1)",
-            Main.NODE_INSERT_OR_DELETE_RATE,
-            v -> {Main.NODE_INSERT_OR_DELETE_RATE = v;
-            Main.updateAttributes();}
-        ));
-        worldStatsContent.add(makeIntSliderRow(
-            "Max Neural Net Layers",
-            1, 10, Main.MAX_LAYERS,
-            v -> {Main.MAX_LAYERS = v;
-            Main.updateAttributes();}
-        ));
-        worldStatsContent.add(makeZeroToOneSliderRow(
-            "Food Grow Rate (0..1)",
-            Main.FOOD_GROW_RATE,
-            v -> {Main.FOOD_GROW_RATE = v;
-            Main.updateAttributes();}
-        ));
-        worldStatsContent.add(makeIntBackedFloatRow(
-            "New Food Energy",
-            1, 100, Math.round(Main.NEW_FOOD_ENERGY),
-            f -> {Main.NEW_FOOD_ENERGY = f;
-            Main.updateAttributes();}
-        ));
-
-        // Put the content into a scroll pane, keep the title on the container
-        JScrollPane worldStatsScroll = new JScrollPane(worldStatsContent);
-        worldStatsScroll.setBorder(null); // keep the outer border only
-        worldStatsScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        worldStatsScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        worldStatsScroll.getVerticalScrollBar().setUnitIncrement(16);
-
-        worldStatsContainer.add(worldStatsScroll, BorderLayout.CENTER);
-        controlPanel.add(worldStatsContainer);
-
-        // glue to push content to top if the right panel is taller
         controlPanel.add(Box.createVerticalGlue());
-
         panel.add(controlPanel);
     }
 
@@ -233,7 +153,6 @@ public class GUI {
         return sp;
     }
 
-    /** tick controls panel */
     private JPanel createTickPanel() {
         JPanel tickPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
         tickCountDisplay = new JTextField("Tick Count: " + world.getTickCount());
@@ -252,73 +171,14 @@ public class GUI {
         if (!world.posIsNothing(new Position(row, col))) {
             selectedThing = world.getThingAt(row, col);
             selectedThingNameText.setText(selectedThing.getName());
-    
             updateSelectedThingInfo(selectedThing);
         }
     }
 
     private void updateSelectedThingInfo(Thing thing) {
         if (thing == null) { return; }
-        if (thing instanceof Animal) {
-            showAnimalInfo((Animal) thing);
-        } else if (thing instanceof Egg) {
-            showEggInfo((Egg) thing);
-        } else if (thing instanceof Wall) {
-            showWallInfo((Wall) thing);
-        } else if (thing instanceof Food) {
-            showFoodInfo((Food) thing);
-        } else {
-            showErrorMessage(thing);
-        }
-    }
-
-    private void showAnimalInfo(Animal animal) {
-        if (animal.getHealth() <= 0) {
-            selectedThingInfoTextLeft.setText("This animal is dead.");
-        } else {
-            selectedThingInfoTextLeft.setText(
-                "Health: " + animal.getHealth() + '/' + animal.getAnimalAttributes().getMaxHealth() 
-                + "\nEnergy: " + animal.getEnergy() + '/' + animal.getAnimalAttributes().getMaxEnergy()
-                + "\nAttack Damage: " + animal.getAnimalAttributes().getAttackDamage()
-                + "\nReproduction Cost: " + animal.getAnimalAttributes().getReproductionCost()
-                + "\nLast Action: " + animal.getAction());
-            selectedThingInfoTextRight.setText(animal.getAnimalAttributes().getNeuralNet().toString());
-        }
-    }
-
-    private void showEggInfo(Egg egg) {
-        if (!egg.isHatched()) {
-            selectedThingInfoTextLeft.setText(
-                "Max Health: " + egg.getAnimalAttributes().getMaxHealth()
-                + "\nMax Energy: " + egg.getAnimalAttributes().getMaxEnergy()
-                + "\nAttack Damage: " + egg.getAnimalAttributes().getAttackDamage()
-                + "\nStored Energy: " + egg.getAnimalAttributes().getReproductionCost()
-            );
-            selectedThingInfoTextRight.setText(
-                "Parent: " + egg.getParent().getName()
-                + "\nCycles to Hatch: " + egg.getCyclesToHatch()
-            );
-        } else {
-            selectedThing = egg.getChild();
-            updateSelectedThingInfo(selectedThing);
-        }
-    }
-
-    private void showWallInfo(Wall wall) {
-        selectedThingInfoTextLeft.setText("Wall");
-        selectedThingInfoTextRight.setText("Walls are impassable barriers.");
-    }
-
-    private void showFoodInfo(Food food) {
-        selectedThingInfoTextLeft.setText(
-            "Energy: " + food.getEnergy()
-        );
-        selectedThingInfoTextRight.setText("Food is a source of energy and can be eaten by animals, \nspawns from nothing and from dead animals.");
-    }
-
-    private void showErrorMessage(Thing thing) {
-        selectedThingInfoTextLeft.setText("Something went wrong invalid selection");
-        selectedThingInfoTextRight.setText("");
+        ThingInfoDisplay.display(thing, selectedThingInfoTextLeft, selectedThingInfoTextRight, 
+                                 t -> { selectedThing = t; updateSelectedThingInfo(t); });
     }
 
     private void tick() {
@@ -327,73 +187,196 @@ public class GUI {
         updateSelectedThingInfo(selectedThing);
         tickCountDisplay.setText("Tick Count: " + world.getTickCount());
     }
+}
 
-    // ------------------------------------------------------------------------
-    // Custom layout manager: SquareGridLayout
-    // - Arranges components in a rows x cols grid
-    // - Each cell is square (width == height)
-    // - Grid is centered in the available area and leaves padding if aspect differs
-    // ------------------------------------------------------------------------
-    private static class SquareGridLayout implements LayoutManager {
-        private final int rows;
-        private final int cols;
+/**
+ * Custom layout manager that arranges components in a grid where each cell is square.
+ * Grid is centered in available area with padding if aspect ratio differs.
+ */
+class SquareGridLayout implements LayoutManager {
+    private final int rows;
+    private final int cols;
 
-        public SquareGridLayout(int rows, int cols) {
-            this.rows = Math.max(1, rows);
-            this.cols = Math.max(1, cols);
-        }
+    public SquareGridLayout(int rows, int cols) {
+        this.rows = Math.max(1, rows);
+        this.cols = Math.max(1, cols);
+    }
 
-        @Override
-        public void layoutContainer(Container parent) {
-            int totalW = parent.getWidth();
-            int totalH = parent.getHeight();
+    @Override
+    public void layoutContainer(Container parent) {
+        int totalW = parent.getWidth();
+        int totalH = parent.getHeight();
 
-            if (totalW <= 0 || totalH <= 0) return;
+        if (totalW <= 0 || totalH <= 0) return;
 
-            // maximum square cell size that fits both horizontally and vertically
-            int cellSize = Math.min(totalW / cols, totalH / rows);
-            if (cellSize <= 0) return;
+        int cellSize = Math.min(totalW / cols, totalH / rows);
+        if (cellSize <= 0) return;
 
-            int gridW = cellSize * cols;
-            int gridH = cellSize * rows;
+        int gridW = cellSize * cols;
+        int gridH = cellSize * rows;
 
-            // center the grid
-            int xOffset = (totalW - gridW) / 2;
-            int yOffset = (totalH - gridH) / 2;
+        int xOffset = (totalW - gridW) / 2;
+        int yOffset = (totalH - gridH) / 2;
 
-            for (int r = 0; r < rows; r++) {
-                for (int c = 0; c < cols; c++) {
-                    int idx = r * cols + c;
-                    if (idx < parent.getComponentCount()) {
-                        Component comp = parent.getComponent(idx);
-                        int x = xOffset + c * cellSize;
-                        int y = yOffset + r * cellSize;
-                        comp.setBounds(x, y, cellSize, cellSize);
-                    }
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                int idx = r * cols + c;
+                if (idx < parent.getComponentCount()) {
+                    Component comp = parent.getComponent(idx);
+                    int x = xOffset + c * cellSize;
+                    int y = yOffset + r * cellSize;
+                    comp.setBounds(x, y, cellSize, cellSize);
                 }
             }
         }
-
-        @Override
-        public Dimension preferredLayoutSize(Container parent) {
-            // prefer each cell 20x20 initially
-            return new Dimension(cols * 20, rows * 20);
-        }
-
-        @Override
-        public Dimension minimumLayoutSize(Container parent) {
-            return new Dimension(cols * 5, rows * 5);
-        }
-
-        @Override
-        public void addLayoutComponent(String name, Component comp) { }
-        @Override
-        public void removeLayoutComponent(Component comp) { }
     }
 
-    // Build a row: int slider with numeric text readout (editable). Allows out-of-range input.
-    // When out-of-range, slider pins to end, and a red badge indicates "below min"/"above max".
-    private JPanel makeIntSliderRow(String title, int min, int max, int initial, Consumer<Integer> onChange) {
+    @Override
+    public Dimension preferredLayoutSize(Container parent) {
+        return new Dimension(cols * 20, rows * 20);
+    }
+
+    @Override
+    public Dimension minimumLayoutSize(Container parent) {
+        return new Dimension(cols * 5, rows * 5);
+    }
+
+    @Override
+    public void addLayoutComponent(String name, Component comp) { }
+    @Override
+    public void removeLayoutComponent(Component comp) { }
+}
+
+/**
+ * Handles displaying information about Things in the GUI text areas.
+ */
+class ThingInfoDisplay {
+    
+    public static void display(Thing thing, JTextArea leftArea, JTextArea rightArea, Consumer<Thing> onUpdate) {
+        if (thing instanceof Animal) {
+            showAnimalInfo((Animal) thing, leftArea, rightArea);
+        } else if (thing instanceof Egg) {
+            showEggInfo((Egg) thing, leftArea, rightArea, onUpdate);
+        } else if (thing instanceof Wall) {
+            showWallInfo(leftArea, rightArea);
+        } else if (thing instanceof Food) {
+            showFoodInfo((Food) thing, leftArea, rightArea);
+        } else {
+            showErrorMessage(leftArea, rightArea);
+        }
+    }
+
+    private static void showAnimalInfo(Animal animal, JTextArea leftArea, JTextArea rightArea) {
+        if (animal.getHealth() <= 0) {
+            leftArea.setText("This animal is dead.");
+            rightArea.setText("");
+        } else {
+            leftArea.setText(
+                "Health: " + animal.getHealth() + '/' + animal.getAnimalAttributes().getMaxHealth() 
+                + "\nEnergy: " + animal.getEnergy() + '/' + animal.getAnimalAttributes().getMaxEnergy()
+                + "\nAttack Damage: " + animal.getAnimalAttributes().getAttackDamage()
+                + "\nReproduction Cost: " + animal.getAnimalAttributes().getReproductionCost()
+                + "\nLast Action: " + animal.getAction());
+            rightArea.setText(animal.getAnimalAttributes().getNeuralNet().toString());
+        }
+    }
+
+    private static void showEggInfo(Egg egg, JTextArea leftArea, JTextArea rightArea, Consumer<Thing> onUpdate) {
+        if (!egg.isHatched()) {
+            leftArea.setText(
+                "Max Health: " + egg.getAnimalAttributes().getMaxHealth()
+                + "\nMax Energy: " + egg.getAnimalAttributes().getMaxEnergy()
+                + "\nAttack Damage: " + egg.getAnimalAttributes().getAttackDamage()
+                + "\nStored Energy: " + egg.getAnimalAttributes().getReproductionCost()
+            );
+            rightArea.setText(
+                "Parent: " + egg.getParent().getName()
+                + "\nCycles to Hatch: " + egg.getCyclesToHatch()
+            );
+        } else {
+            onUpdate.accept(egg.getChild());
+        }
+    }
+
+    private static void showWallInfo(JTextArea leftArea, JTextArea rightArea) {
+        leftArea.setText("Wall");
+        rightArea.setText("Walls are impassable barriers.");
+    }
+
+    private static void showFoodInfo(Food food, JTextArea leftArea, JTextArea rightArea) {
+        leftArea.setText("Energy: " + food.getEnergy());
+        rightArea.setText("Food is a source of energy and can be eaten by animals, \nspawns from nothing and from dead animals.");
+    }
+
+    private static void showErrorMessage(JTextArea leftArea, JTextArea rightArea) {
+        leftArea.setText("Something went wrong invalid selection");
+        rightArea.setText("");
+    }
+}
+
+/**
+ * Creates and manages the World Stats panel with sliders for simulation parameters.
+ */
+class WorldStatsPanel {
+    
+    public static JPanel create() {
+        JPanel worldStatsContainer = new JPanel(new BorderLayout());
+        worldStatsContainer.setBorder(BorderFactory.createTitledBorder("World Stats"));
+        worldStatsContainer.setPreferredSize(new Dimension(400, 260));
+
+        JPanel worldStatsContent = new JPanel();
+        worldStatsContent.setLayout(new BoxLayout(worldStatsContent, BoxLayout.Y_AXIS));
+
+        worldStatsContent.add(SliderFactory.makeIntSlider(
+            "Animal Stats Total", 50, 200, Main.ANIMAL_STAT_TOTAL,
+            v -> { Main.ANIMAL_STAT_TOTAL = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeIntSlider(
+            "Animal Attack Cost", 0, 50, Main.ANIMAL_ATTACK_COST,
+            v -> { Main.ANIMAL_ATTACK_COST = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeZeroToOneSlider(
+            "Mutation Rate (0..1)", Main.MUTATION_RATE,
+            v -> { Main.MUTATION_RATE = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeZeroToOneSlider(
+            "Mutation Factor (0..1)", Main.MUTATION_FACTOR,
+            v -> { Main.MUTATION_FACTOR = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeZeroToOneSlider(
+            "Node Insert/Delete Rate (0..1)", Main.NODE_INSERT_OR_DELETE_RATE,
+            v -> { Main.NODE_INSERT_OR_DELETE_RATE = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeIntSlider(
+            "Max Neural Net Layers", 1, 10, Main.MAX_LAYERS,
+            v -> { Main.MAX_LAYERS = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeZeroToOneSlider(
+            "Food Grow Rate (0..1)", Main.FOOD_GROW_RATE,
+            v -> { Main.FOOD_GROW_RATE = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeIntBackedFloatSlider(
+            "New Food Energy", 1, 100, Math.round(Main.NEW_FOOD_ENERGY),
+            f -> { Main.NEW_FOOD_ENERGY = f; Main.updateAttributes(); }
+        ));
+
+        JScrollPane worldStatsScroll = new JScrollPane(worldStatsContent);
+        worldStatsScroll.setBorder(null);
+        worldStatsScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        worldStatsScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        worldStatsScroll.getVerticalScrollBar().setUnitIncrement(16);
+
+        worldStatsContainer.add(worldStatsScroll, BorderLayout.CENTER);
+        return worldStatsContainer;
+    }
+}
+
+/**
+ * Factory for creating slider rows with text input and out-of-range indicators.
+ */
+class SliderFactory {
+    
+    public static JPanel makeIntSlider(String title, int min, int max, int initial, Consumer<Integer> onChange) {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.setBorder(BorderFactory.createTitledBorder(title));
@@ -451,8 +434,7 @@ public class GUI {
         return p;
     }
 
-    // Build a row: 0..1 float mapped to 0..100% slider. Allows any float; badge shows out-of-range.
-    private JPanel makeZeroToOneSliderRow(String title, float initial, Consumer<Float> onChange) {
+    public static JPanel makeZeroToOneSlider(String title, float initial, Consumer<Float> onChange) {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.setBorder(BorderFactory.createTitledBorder(title));
@@ -510,8 +492,7 @@ public class GUI {
         return p;
     }
 
-    // Build a row: int slider but backing value is float (text accepts any float). Badge shows out-of-range.
-    private JPanel makeIntBackedFloatRow(String title, int min, int max, int initialAsInt, Consumer<Float> onChange) {
+    public static JPanel makeIntBackedFloatSlider(String title, int min, int max, int initialAsInt, Consumer<Float> onChange) {
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
         p.setBorder(BorderFactory.createTitledBorder(title));

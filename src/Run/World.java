@@ -61,6 +61,7 @@ public class World {
             try {
                 t.join();
             } catch (InterruptedException e) {
+                System.out.println(t.toString() + " interrupted");
                 e.printStackTrace();
             }
         }
