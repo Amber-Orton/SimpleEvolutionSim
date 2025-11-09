@@ -84,6 +84,10 @@ public abstract class Thing implements Runnable {
         return thread;
     }
 
+    public boolean isAlive() {
+        return isAlive;
+    }
+
     public abstract String getName();
 
     //for seeing input to neural net

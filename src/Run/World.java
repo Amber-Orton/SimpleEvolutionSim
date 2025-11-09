@@ -60,6 +60,9 @@ public class World implements Runnable {
     public synchronized void tick() {
         tickCount++;
 
+        // Remove dead things before ticking
+        things.removeIf(thing -> !thing.isAlive());
+
         Thread[] threads = new Thread[things.size()];
         int i = 0;
 

@@ -29,7 +29,6 @@ public class GUI {
     private JTextArea selectedThingInfoTextRight;
     private Thing selectedThing;
 
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final WorldPlayer worldPlayer = new WorldPlayer();
     private static boolean optionsShown = false;
 
@@ -224,21 +223,46 @@ public class GUI {
 
         newWorldButton.addActionListener(e -> showNewWorldDialog(rootPanel));
 
-        JPanel msptPanel = SliderFactory.makeIntSlider(
-            "MSPT", 1, 1000, Main.tickMillis,
-            v -> { Main.tickMillis = v; }
-        );
-        JButton playPauseButton = new JButton("Play");
-        playPauseButton.addActionListener(e -> {
-            Main.play = !Main.play;
-            playPauseButton.setText(Main.play ? "Pause" : "Play");
-            if (Main.play) {
-                executor.submit(worldPlayer::run);
+        // MSPT input box with Play/Pause button
+        JPanel msptPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
+        msptPanel.setBorder(BorderFactory.createTitledBorder("MSPT"));
+        
+        JTextField msptField = new JTextField(Integer.toString(Main.tickMillis), 8);
+        msptField.setMaximumSize(new Dimension(100, 28));
+        
+        Runnable applyMspt = () -> {
+            try {
+                int val = Integer.parseInt(msptField.getText().trim());
+                if (val < 0) val = 0;
+                Main.tickMillis = val;
+            } catch (NumberFormatException ex) {
+                msptField.setText(Integer.toString(Main.tickMillis));
+            }
+        };
+        
+        msptField.addActionListener(e -> applyMspt.run());
+        msptField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                applyMspt.run();
             }
         });
-        msptPanel.add(Box.createHorizontalStrut(8));
-        msptPanel.add(playPauseButton);
-        content.add(msptPanel);
+        
+        msptPanel.add(new JLabel("Value: "));
+        msptPanel.add(msptField);
+        
+         JButton playPauseButton = new JButton("Play");
+         playPauseButton.addActionListener(e -> {
+             Main.play = !Main.play;
+             playPauseButton.setText(Main.play ? "Pause" : "Play");
+             if (Main.play) {
+                 Thread worldPlayerThread = new Thread(worldPlayer);
+                 worldPlayerThread.start();
+             }
+         });
+         msptPanel.add(playPauseButton);
+        
+         content.add(msptPanel);
 
         // Wrap content in scroll pane (scrolls if window too small)
         JScrollPane sp = new JScrollPane(content);
