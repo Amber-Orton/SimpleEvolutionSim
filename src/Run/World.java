@@ -60,7 +60,12 @@ public class World implements Runnable {
         tickCount++;
 
         // Remove dead things before ticking
-        things.removeIf(thing -> !thing.isAlive());
+        //things.removeIf(thing -> !thing.isAlive());
+        for (Thing thing : new HashSet<>(things)) {
+            if (!thing.isAlive()) {
+                removeThing(thing);
+            }
+        }
 
         Thread[] threads = new Thread[things.size()];
         int i = 0;

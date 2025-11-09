@@ -11,6 +11,7 @@ import Things.Wall;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Arrays;
 import java.util.function.Consumer;
 
 /**
@@ -81,8 +82,8 @@ public class GUI {
 
     private void updateWorldView() {
         Color[][] grid = world.getGridOfColors();
-        int rows = world.getHeight(); // was world.getWidth()
-        int cols = world.getWidth();  // was world.getHeight()
+        int rows = world.getHeight();
+        int cols = world.getWidth();
 
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
@@ -94,8 +95,8 @@ public class GUI {
     }
 
     private JPanel createGridPanel() {
-        int rows = world.getHeight(); // was world.getWidth()
-        int cols = world.getWidth();  // was world.getHeight()
+        int rows = world.getHeight();
+        int cols = world.getWidth();
 
         JPanel gridPanel = new JPanel(new SquareGridLayout(rows, cols));
         gridPanels = new JPanel[rows][cols];
@@ -185,6 +186,7 @@ public class GUI {
             System.out.println("Tick Count: " + world.getTickCount());
             System.out.println("Things in World: " + world.getThings().size());
             System.out.println("Ready to Tick: " + Main.world.readyToTick);
+            System.out.println("Nothing Grid: " + Arrays.deepToString(world.nothingGrid));
         });
         tickPanel.add(debugButton);
 
@@ -223,17 +225,19 @@ public class GUI {
         JPanel content = new JPanel();
         content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
-        // Row: New World button (kept simple)
         JPanel newWorldRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
         JButton newWorldButton = new JButton("New World...");
+        JButton playPauseButton = new JButton("Play");
         newWorldRow.add(newWorldButton);
         content.add(newWorldRow);
 
-        newWorldButton.addActionListener(e -> showNewWorldDialog(rootPanel));
+        newWorldButton.addActionListener(e -> {Main.play = false;
+            playPauseButton.setText(Main.play ? "Pause" : "Play");
+            showNewWorldDialog(rootPanel);
+        });
 
-        // MSPT input box with Play/Pause button
         JPanel msptPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
-        msptPanel.setBorder(BorderFactory.createTitledBorder("MSPT"));
+        msptPanel.setBorder(BorderFactory.createTitledBorder("Target MSPT"));
         
         JTextField msptField = new JTextField(Integer.toString(Main.tickMillis), 8);
         msptField.setMaximumSize(new Dimension(100, 28));
@@ -259,7 +263,6 @@ public class GUI {
         msptPanel.add(new JLabel("Value: "));
         msptPanel.add(msptField);
         
-         JButton playPauseButton = new JButton("Play");
          playPauseButton.addActionListener(e -> {
              Main.play = !Main.play;
              playPauseButton.setText(Main.play ? "Pause" : "Play");
@@ -435,16 +438,15 @@ class ThingInfoDisplay {
     }
 
     private static void showAnimalInfo(Animal animal, JTextArea leftArea, JTextArea rightArea) {
+        leftArea.setText(
+            "Health: " + animal.getHealth() + '/' + animal.getAnimalAttributes().getMaxHealth() 
+            + "\nEnergy: " + animal.getEnergy() + '/' + animal.getAnimalAttributes().getMaxEnergy()
+            + "\nAttack Damage: " + animal.getAnimalAttributes().getAttackDamage()
+            + "\nReproduction Cost: " + animal.getAnimalAttributes().getReproductionCost()
+            + "\nLast Action: " + animal.getAction());
         if (animal.getHealth() <= 0) {
-            leftArea.setText("This animal is dead.");
-            rightArea.setText("");
+            rightArea.setText("This animal is dead.");
         } else {
-            leftArea.setText(
-                "Health: " + animal.getHealth() + '/' + animal.getAnimalAttributes().getMaxHealth() 
-                + "\nEnergy: " + animal.getEnergy() + '/' + animal.getAnimalAttributes().getMaxEnergy()
-                + "\nAttack Damage: " + animal.getAnimalAttributes().getAttackDamage()
-                + "\nReproduction Cost: " + animal.getAnimalAttributes().getReproductionCost()
-                + "\nLast Action: " + animal.getAction());
             rightArea.setText(animal.getAnimalAttributes().getNeuralNet().toString());
         }
     }
