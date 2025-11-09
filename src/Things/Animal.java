@@ -85,6 +85,9 @@ public class Animal extends Edible{
 
     protected ACTION think() {
         float[] thinkingInputs = new float[Main.NEURAL_NET_INPUT_SIZE];
+        if (world == null) {
+            System.out.println("World is not initialized for : " + this);
+        }
         float[][] seen = see();
         int i = 0;
         for(float[] floats : seen) {
@@ -150,7 +153,7 @@ public class Animal extends Edible{
      * this should not matter as see() will be called before think()
      * and the world is likely to change while thinking anyway.
      * @return An array of Thing objects in the order: [Up, Down, Left, Right].
-     * If an adjacent cell is out of bounds, it will contain null.
+     * If an adjacent cell is out of bounds, it will contain default wall.
      */
     protected float[][] see() {
         Position facingPosition = getFacingPosition();
@@ -329,9 +332,11 @@ public class Animal extends Edible{
         if (health <= 0) {
             if (energy > 0){
                 Food food = new Food(world, pos, energy);
-                world.replaceThing(this, food);//place food with energy equal to itself in the world when it dies
+                world.killThing(this);
+                world.putThingAt(pos, food);//place food with energy equal to itself in the world when it dies
+            } else {
+                world.killThing(this);
             }
-            world.killThing(this);
         }
     }
 

@@ -11,6 +11,8 @@ import Things.Wall;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 
 /**
@@ -26,6 +28,14 @@ public class GUI {
     private JTextArea selectedThingInfoTextLeft;
     private JTextArea selectedThingInfoTextRight;
     private Thing selectedThing;
+
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final WorldPlayer worldPlayer = new WorldPlayer();
+    private static boolean optionsShown = false;
+
+    public static GUI getInstance() {
+        return instance;
+    }
 
     public static GUI getInstanceOrChangeWorld(World world) {
         if (instance == null) {
@@ -65,6 +75,11 @@ public class GUI {
         frame.getContentPane().add(rightPanel);
 
         frame.setVisible(true);
+
+        if (Main.SHOW_OPTIONS_ON_FIRST_OPEN && !optionsShown) {
+            optionsShown = true;
+            SwingUtilities.invokeLater(() -> showNewWorldDialog(frame));
+        }
     }
 
     private void updateWorldView() {
@@ -184,110 +199,129 @@ public class GUI {
     }
 
     private void tick() {
-        world.tick();
+        synchronized (world) {
+            world.tick();
+            updateAfterTick();
+        }
+    }
+
+    protected void updateAfterTick() {
         updateWorldView();
-        updateSelectedThingInfo(selectedThing);
-        tickCountDisplay.setText("Tick Count: " + world.getTickCount());
+            updateSelectedThingInfo(selectedThing);
+            tickCountDisplay.setText("Tick Count: " + world.getTickCount());
     }
 
     private JPanel createResetPanel() {
-        JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
-        JButton btn = new JButton("New World...");
-        panel.add(btn);
+        JPanel rootPanel = new JPanel(new BorderLayout());
+        JPanel content = new JPanel();
+        content.setLayout(new BoxLayout(content, BoxLayout.Y_AXIS));
 
-        btn.addActionListener(e -> {
-            JDialog dlg = new JDialog(SwingUtilities.getWindowAncestor(panel), "Create New World", Dialog.ModalityType.APPLICATION_MODAL);
-            JPanel content = new JPanel();
-            content.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-            content.setLayout(new GridBagLayout());
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.insets = new Insets(5, 5, 5, 5);
-            gbc.fill = GridBagConstraints.HORIZONTAL;
-            gbc.gridx = 0; gbc.gridy = 0;
+        // Row: New World button (kept simple)
+        JPanel newWorldRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
+        JButton newWorldButton = new JButton("New World...");
+        newWorldRow.add(newWorldButton);
+        content.add(newWorldRow);
 
-            // World Width
-            content.add(new JLabel("World Width, recommend between 5 and 200"), gbc);
-            gbc.gridx = 1;
-            JSpinner widthSpinner = new JSpinner(new SpinnerNumberModel(Main.WORLD_WIDTH, 1, Integer.MAX_VALUE, 1));
-            content.add(widthSpinner, gbc);
+        newWorldButton.addActionListener(e -> showNewWorldDialog(rootPanel));
 
-            // World Height
-            gbc.gridx = 0; gbc.gridy++;
-            content.add(new JLabel("World Height, recommend between 5 and 200"), gbc);
-            gbc.gridx = 1;
-            JSpinner heightSpinner = new JSpinner(new SpinnerNumberModel(Main.WORLD_HEIGHT, 1, Integer.MAX_VALUE, 1));
-            content.add(heightSpinner, gbc);
-
-            // Initial Max Neural Net Layers
-            gbc.gridx = 0; gbc.gridy++;
-            content.add(new JLabel("Initial Max Neural Net Layers, recommend between 1 and 20"), gbc);
-            gbc.gridx = 1;
-            JSpinner layersSpinner = new JSpinner(new SpinnerNumberModel(Main.MAX_LAYERS, 1, Integer.MAX_VALUE, 1));
-            content.add(layersSpinner, gbc);
-
-            // Initial Animal Density (0..1)
-            gbc.gridx = 0; gbc.gridy++;
-            content.add(new JLabel("Initial Animal Density (0..1)"), gbc);
-            gbc.gridx = 1;
-            JSpinner densitySpinner = new JSpinner(new SpinnerNumberModel((double) Main.INITIAL_ANIMAL_DENSITY, 0.0, 1.0, 0.01));
-            ((JSpinner.NumberEditor) densitySpinner.getEditor()).getFormat().setMinimumFractionDigits(2);
-            content.add(densitySpinner, gbc);
-
-            // Initial neural net randomness (0..1)
-            gbc.gridx = 0; gbc.gridy++;
-            content.add(new JLabel("Initial Neural Net Randomness (0..1), recommend 0.1"), gbc);
-            gbc.gridx = 1;
-            JSpinner randomnesSpinner = new JSpinner(new SpinnerNumberModel((double) Main.INITIAL_NEURAL_NET_RANDOMNESS, 0.0, 1.0, 0.01));
-             ((JSpinner.NumberEditor) randomnesSpinner.getEditor()).getFormat().setMinimumFractionDigits(2);
-             content.add(randomnesSpinner, gbc);
-
-            // Buttons
-            gbc.gridx = 0; gbc.gridy++;
-            gbc.gridwidth = 2;
-            JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-            JButton cancel = new JButton("Cancel");
-            JButton create = new JButton("Create");
-            buttons.add(cancel);
-            buttons.add(create);
-            content.add(buttons, gbc);
-
-            cancel.addActionListener(ev -> dlg.dispose());
-            create.addActionListener(ev -> {
-                int newW = ((Number) widthSpinner.getValue()).intValue();
-                int newH = ((Number) heightSpinner.getValue()).intValue();
-                int newMaxLayers = ((Number) layersSpinner.getValue()).intValue();
-                float newDensity = ((Number) densitySpinner.getValue()).floatValue();
-                float newRandomness = ((Number) randomnesSpinner.getValue()).floatValue();
-
-                // Apply to Main and propagate world attributes
-                Main.WORLD_WIDTH = newW;
-                Main.WORLD_HEIGHT = newH;
-                Main.MAX_LAYERS = newMaxLayers;
-                Main.INITIAL_ANIMAL_DENSITY = newDensity;
-                Main.INITIAL_NEURAL_NET_RANDOMNESS = newRandomness;
-                Main.updateAttributes();
-
-                // Build new world
-                World newWorld = Main.createWorld();
-                GUI gui = GUI.getInstanceOrChangeWorld(newWorld);
-
-                // Close current main window and relaunch
-                Window mainWin = SwingUtilities.getWindowAncestor(panel);
-                dlg.dispose();
-                if (mainWin != null) {
-                    mainWin.dispose();
-                }
-                // Start a new frame with the updated world
-                SwingUtilities.invokeLater(gui::run);
-            });
-
-            dlg.setContentPane(content);
-            dlg.pack();
-            dlg.setLocationRelativeTo(SwingUtilities.getWindowAncestor(panel));
-            dlg.setVisible(true);
+        JPanel msptPanel = SliderFactory.makeIntSlider(
+            "MSPT", 1, 1000, Main.tickMillis,
+            v -> { Main.tickMillis = v; }
+        );
+        JButton playPauseButton = new JButton("Play");
+        playPauseButton.addActionListener(e -> {
+            Main.play = !Main.play;
+            playPauseButton.setText(Main.play ? "Pause" : "Play");
+            if (Main.play) {
+                executor.submit(worldPlayer::run);
+            }
         });
+        msptPanel.add(Box.createHorizontalStrut(8));
+        msptPanel.add(playPauseButton);
+        content.add(msptPanel);
 
-        return panel;
+        // Wrap content in scroll pane (scrolls if window too small)
+        JScrollPane sp = new JScrollPane(content);
+        sp.setBorder(null);
+        sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        sp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        sp.getVerticalScrollBar().setUnitIncrement(16);
+
+        rootPanel.add(sp, BorderLayout.CENTER);
+        return rootPanel;
+    }
+
+    private void showNewWorldDialog(Component parentRef) {
+        // If parentRef is itself a Window (initial call passes the JFrame), getWindowAncestor returns null.
+        // Handle that so the original frame is properly disposed on first creation.
+        Window mainWin = (parentRef instanceof Window)
+                ? (Window) parentRef
+                : SwingUtilities.getWindowAncestor(parentRef);
+        JDialog dlg = new JDialog(mainWin, "Create New World", Dialog.ModalityType.APPLICATION_MODAL);
+        JPanel dlgContent = new JPanel(new GridBagLayout());
+        dlgContent.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0; gbc.gridy = 0;
+        dlgContent.add(new JLabel("World Width, recommend between 5 and 200"), gbc);
+        gbc.gridx = 1;
+        JSpinner widthSpinner = new JSpinner(new SpinnerNumberModel(Main.WORLD_WIDTH, 1, Integer.MAX_VALUE, 1));
+        dlgContent.add(widthSpinner, gbc);
+        gbc.gridx = 0; gbc.gridy++;
+        dlgContent.add(new JLabel("World Height, recommend between 5 and 200"), gbc);
+        gbc.gridx = 1;
+        JSpinner heightSpinner = new JSpinner(new SpinnerNumberModel(Main.WORLD_HEIGHT, 1, Integer.MAX_VALUE, 1));
+        dlgContent.add(heightSpinner, gbc);
+        gbc.gridx = 0; gbc.gridy++;
+        dlgContent.add(new JLabel("Initial Max Neural Net Layers, recommend between 1 and 20"), gbc);
+        gbc.gridx = 1;
+        JSpinner layersSpinner = new JSpinner(new SpinnerNumberModel(Main.MAX_LAYERS, 1, Integer.MAX_VALUE, 1));
+        dlgContent.add(layersSpinner, gbc);
+        gbc.gridx = 0; gbc.gridy++;
+        dlgContent.add(new JLabel("Initial Animal Density (0..1)"), gbc);
+        gbc.gridx = 1;
+        JSpinner densitySpinner = new JSpinner(new SpinnerNumberModel((double) Main.INITIAL_ANIMAL_DENSITY, 0.0, 1.0, 0.01));
+        ((JSpinner.NumberEditor) densitySpinner.getEditor()).getFormat().setMinimumFractionDigits(2);
+        dlgContent.add(densitySpinner, gbc);
+        gbc.gridx = 0; gbc.gridy++;
+        dlgContent.add(new JLabel("Initial Neural Net Randomness (0..1), recommend 0.1"), gbc);
+        gbc.gridx = 1;
+        JSpinner randomnessSpinner = new JSpinner(new SpinnerNumberModel((double) Main.INITIAL_NEURAL_NET_RANDOMNESS, 0.0, 1.0, 0.01));
+        ((JSpinner.NumberEditor) randomnessSpinner.getEditor()).getFormat().setMinimumFractionDigits(2);
+        dlgContent.add(randomnessSpinner, gbc);
+        gbc.gridx = 0; gbc.gridy++;
+        gbc.gridwidth = 2;
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JButton cancel = new JButton("Cancel");
+        JButton create = new JButton("Create");
+        buttons.add(cancel);
+        buttons.add(create);
+        dlgContent.add(buttons, gbc);
+        cancel.addActionListener(ev -> dlg.dispose());
+        create.addActionListener(ev -> {
+            int newW = ((Number) widthSpinner.getValue()).intValue();
+            int newH = ((Number) heightSpinner.getValue()).intValue();
+            int newMaxLayers = ((Number) layersSpinner.getValue()).intValue();
+            float newDensity = ((Number) densitySpinner.getValue()).floatValue();
+            float newRandomness = ((Number) randomnessSpinner.getValue()).floatValue();
+            Main.WORLD_WIDTH = newW;
+            Main.WORLD_HEIGHT = newH;
+            Main.MAX_LAYERS = newMaxLayers;
+            Main.INITIAL_ANIMAL_DENSITY = newDensity;
+            Main.INITIAL_NEURAL_NET_RANDOMNESS = newRandomness;
+            Main.updateAttributes();
+            World newWorld = Main.createWorld();
+            Main.world = newWorld;
+            GUI gui = GUI.getInstanceOrChangeWorld(newWorld);
+            dlg.dispose();
+            if (mainWin != null) mainWin.dispose();
+            SwingUtilities.invokeLater(gui::run);
+        });
+        dlg.setContentPane(dlgContent);
+        dlg.pack();
+        dlg.setLocationRelativeTo(mainWin);
+        dlg.setVisible(true);
     }
 }
 

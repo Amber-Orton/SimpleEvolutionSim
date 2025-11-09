@@ -10,7 +10,7 @@ import Things.Position;
 import Things.Thing;
 import Things.Wall;
 
-public class World {
+public class World implements Runnable {
     private int width;
     private int height;
     private Set<Thing> things = new HashSet<>();
@@ -23,6 +23,7 @@ public class World {
     private int tickCount = 0;
 
 
+    protected boolean readyToTick = true;
 
 
     protected World(int width, int height) {
@@ -32,13 +33,31 @@ public class World {
         this.nothingGrid = new Nothing[height][width];
     }
 
-    
+
+    /**
+     * Used to tick automatically on time
+     * The caller must first check and set readyToTick to false before calling
+     */
+    public void run() {
+        doTickAndUpdateGUI();  // Do the tick
+
+        synchronized (this) {
+            readyToTick = true;
+            notifyAll();
+        }
+    }
+
+    protected void doTickAndUpdateGUI() {
+        tick();
+        GUI.getInstance().updateAfterTick();
+        readyToTick = true;
+    }
 
     /**
      * Advance the world by one tick, running each Thing in its own thread to think 
      * then one thread for updating the world with the actions of the Things.
      */
-    public void tick() {        
+    public synchronized void tick() {
         tickCount++;
 
         Thread[] threads = new Thread[things.size()];
@@ -93,7 +112,16 @@ public class World {
         }
     }
 
-    
+    private void toUpdateRemove(Thing thing) {
+        if (thing instanceof Egg) {
+            eggsToUpdate.remove(thing);
+        } else if (thing instanceof Nothing) {
+            nothingToUpdate.remove(thing);
+        } else {
+            thingsToUpdate.remove(thing);
+        }
+    }
+
     /** 
      * Set a Thing at a specific location in the grid.
      * Useful for testing and initializing.
@@ -187,7 +215,6 @@ public class World {
 
     /**
      * removes all references to thing in this instance of world using removeThing(Thing)
-     * Edits Thing to set the world to null (so we thow an error if it attempts to change world)
      * interrupts things thread to kill it
      * @param thing the thing to kill
      */

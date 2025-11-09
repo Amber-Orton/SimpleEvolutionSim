@@ -25,15 +25,21 @@ public class Main {
     protected static float INITIAL_ANIMAL_DENSITY = 0.1f;
     protected static float INITIAL_NEURAL_NET_RANDOMNESS = 0.1f;
 
+
+    protected static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false;
+
+
+    protected static volatile boolean play = false;
+    protected static volatile int tickMillis = 1000;
+    protected static World world;
+
     //do not change unless you know what youre doing
     public static final int NEURAL_NET_INPUT_SIZE = 18;
     public static final int NEURAL_NET_OUTPUT_SIZE = 7;
 
     public static void main(String[] args) {
         updateAttributes();
-
-
-        World world = createWorld();
+        world = createWorld();
         GUI gui = GUI.getInstanceOrChangeWorld(world);
         gui.run();
     }
