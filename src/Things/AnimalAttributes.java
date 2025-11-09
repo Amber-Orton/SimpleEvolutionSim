@@ -120,7 +120,7 @@ public class AnimalAttributes {
                     for (int j = 0; j < newWeightsAndBias[0].length-1; j++) {
                         newWeightsAndBias[0][j] = oldWeightsAndBias[0][j];
                     }
-                    newWeightsAndBias[0][-1] = random.nextFloat()*mutationFactor;//add the new weight
+                    newWeightsAndBias[0][newWeightsAndBias[0].length-1] = random.nextFloat()*mutationFactor;//add the new weight
                     newWeightsAndBias[1][0] = oldWeightsAndBias[1][0];//copy the old bias
                     neuralNetNodesWeightsAndBiases.get(layer + 1).set(i, newWeightsAndBias);//put the new weights and bias back in the list
                 }

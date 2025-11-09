@@ -44,7 +44,7 @@ public class Animal extends Edible{
     @Override
     public void doAction(){
         if (!isAlive) {return;}
-        System.out.println(this.toString() + " is doing action: " + action);
+        //System.out.println(this.toString() + " is doing action: " + action);
         switch (action) {
             case TURN_LEFT:
                 facing = facing.turnLeft();

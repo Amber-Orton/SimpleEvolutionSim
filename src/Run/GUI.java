@@ -178,6 +178,16 @@ public class GUI {
         tickButton.addActionListener(e -> tick());
         tickPanel.add(tickButton);
 
+        JButton debugButton = new JButton("show debug info");
+        debugButton.addActionListener(e -> {;
+            // Show debug information
+            System.out.println("Debug Info:");
+            System.out.println("Tick Count: " + world.getTickCount());
+            System.out.println("Things in World: " + world.getThings().size());
+            System.out.println("Ready to Tick: " + Main.world.readyToTick);
+        });
+        tickPanel.add(debugButton);
+
         return tickPanel;
     }
     

@@ -50,7 +50,6 @@ public class World implements Runnable {
     protected void doTickAndUpdateGUI() {
         tick();
         GUI.getInstance().updateAfterTick();
-        readyToTick = true;
     }
 
     /**
@@ -83,10 +82,10 @@ public class World implements Runnable {
             try {
                 t.join();
             } catch (InterruptedException e) {
-                System.out.println(t.toString() + " interrupted");
                 e.printStackTrace();
             }
         }
+
 
         thingsToUpdate = new HashSet<>();
         eggsToUpdate = new HashSet<>();
@@ -100,6 +99,7 @@ public class World implements Runnable {
             }
         }
 
+
         thingsDoAction(thingsToUpdate);
         thingsDoAction(eggsToUpdate);
         thingsDoAction(nothingToUpdate);
@@ -110,7 +110,9 @@ public class World implements Runnable {
     private void thingsDoAction(Set<Thing> things) {
         while (things.iterator().hasNext()) {
             Thing thing = things.iterator().next();
-            thing.doAction();
+            if (thing.isAlive()) {
+                thing.doAction();
+            }
             things.remove(thing);
         }
     }

@@ -22,15 +22,15 @@ public class Main {
     protected static float NEW_FOOD_ENERGY = 10;
     protected static int WORLD_WIDTH = 10;
     protected static int WORLD_HEIGHT = 10;
-    protected static float INITIAL_ANIMAL_DENSITY = 0.1f;
+    protected static float INITIAL_ANIMAL_DENSITY = 0.8f;
     protected static float INITIAL_NEURAL_NET_RANDOMNESS = 0.1f;
 
 
-    protected static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false;
+    protected static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = true;
 
 
     protected static volatile boolean play = false;
-    protected static volatile int tickMillis = 1000;
+    protected static volatile int tickMillis = 0;
     protected static World world;
 
     //do not change unless you know what youre doing
