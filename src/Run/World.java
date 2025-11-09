@@ -115,15 +115,7 @@ public class World implements Runnable {
         }
     }
 
-    private void toUpdateRemove(Thing thing) {
-        if (thing instanceof Egg) {
-            eggsToUpdate.remove(thing);
-        } else if (thing instanceof Nothing) {
-            nothingToUpdate.remove(thing);
-        } else {
-            thingsToUpdate.remove(thing);
-        }
-    }
+
 
     /** 
      * Set a Thing at a specific location in the grid.
