@@ -1,8 +1,5 @@
 package Things;
 import java.awt.Color;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.util.Random;
 
 import Run.Main;
 import Run.World;

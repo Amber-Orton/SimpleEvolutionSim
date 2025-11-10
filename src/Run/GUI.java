@@ -15,7 +15,6 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Consumer;
-import java.util.jar.Attributes.Name;
 
 /**
  * Main GUI for the Simple Evolution Simulation.
