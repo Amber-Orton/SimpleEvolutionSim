@@ -222,7 +222,7 @@ public class GUI {
         System.out.println();
         System.out.println("----------- DEBUG INFO -----------");
         System.out.println();
-        System.out.println("Last Tick Time (ns): " + Main.lastTickTime + " seconds: " + (Main.lastTickTime / 1_000_000_000.0));
+        System.out.println("Tick Time (see below if using Auto Debug) (ns): " + Main.lastTickTime + " seconds: " + (Main.lastTickTime / 1_000_000_000.0));
         System.out.println("Tick Count: " + world.getTickCount());
         System.out.println("Things in World: " + world.getThings().size());
         System.out.println("Ready to Tick: " + Main.world.readyToTick);
@@ -233,7 +233,7 @@ public class GUI {
             System.out.println("------------- WORLD DEBUG INFO -------------");
             System.out.println();
             System.out.println("tick() debug times: ");
-            System.out.println("debug times are: tick start : remove dead things : create threads : wait for threads to think : update things : update eggs : update nothing");
+            System.out.println("debug times are: tick start : remove dead things : create threads : wait for threads to think : create doAction sets : update things : update eggs : update nothing");
             System.out.println("world debug Times ns (absolute): " + world.tickDebugTimes);
             System.out.print("world debug Times ns (differences): [");
             for (int i = 0; i < world.tickDebugTimes.size(); i++) {
@@ -285,9 +285,10 @@ public class GUI {
         synchronized (world) {
             long startTime = System.nanoTime();
             world.tick();
+            Main.lastTickTime = System.nanoTime() - startTime;
             updateAfterTick();
             Main.lastTickTime = System.nanoTime() - startTime;
-            System.out.println("Ticked!");
+            System.out.println("Ticked! in: " + (Main.lastTickTime / 1_000_000_000.0) + " seconds");
         }
     }
 

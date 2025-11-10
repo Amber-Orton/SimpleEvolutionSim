@@ -52,18 +52,19 @@ public class World implements Runnable {
      */
     public void run() {
         long startTime = System.nanoTime();
-        doTickAndUpdateGUI();  // Do the tick
+        doTickAndUpdateGUI(startTime);  // Do the tick
 
         synchronized (this) {
             readyToTick = true;
             notifyAll();
         }
         Main.lastTickTime = System.nanoTime() - startTime;
-        System.out.println("Ticked!");
+        System.out.println("Ticked! in: " + (Main.lastTickTime / 1_000_000_000.0) + " seconds");
     }
 
-    protected void doTickAndUpdateGUI() {
+    protected void doTickAndUpdateGUI(long startTime) {
         tick();
+        Main.lastTickTime = System.nanoTime() - startTime;
         SwingUtilities.invokeLater(() -> GUI.getInstance().updateAfterTick());
     }
 
@@ -106,7 +107,6 @@ public class World implements Runnable {
             t.start();
         }
 
-        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
 
         // Wait for all threads to finish
         for (Thread t : threads) {
