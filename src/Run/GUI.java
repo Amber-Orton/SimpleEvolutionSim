@@ -62,10 +62,8 @@ public class GUI {
                 try {
                     Main.play = false;
                     System.out.println("Game stopped!");
-                    NameCreator.close();  // close your file here
-                    System.out.println("File reader closed!");
+                    NameCreator.close();
                     Main.executorService.shutdown();
-                    System.out.println("Executor service shut down!");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -73,7 +71,8 @@ public class GUI {
         });
         frame.setSize(900, 700);
 
-        frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
+        // Use BorderLayout so right panel does not slide when grid world size changes.
+        frame.getContentPane().setLayout(new BorderLayout());
 
         // LEFT (grid + tick)
         JPanel leftPanel = new JPanel(new BorderLayout());
@@ -83,14 +82,17 @@ public class GUI {
         leftPanel.add(gridPanel, BorderLayout.CENTER);
         JPanel resetPanel = createResetPanel();
         leftPanel.add(resetPanel, BorderLayout.SOUTH);
+        // Fix a reasonable minimum width; remaining space flexes without pushing right panel.
+        leftPanel.setMinimumSize(new Dimension(300, 300));
 
         // RIGHT (controls)
         JPanel rightPanel = new JPanel();
         rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
+        rightPanel.setPreferredSize(new Dimension(400, 700)); // fixed width, prevents sliding
         createControlPanel(rightPanel);
 
-        frame.getContentPane().add(leftPanel);
-        frame.getContentPane().add(rightPanel);
+        frame.getContentPane().add(leftPanel, BorderLayout.CENTER);
+        frame.getContentPane().add(rightPanel, BorderLayout.EAST);
 
         frame.setVisible(true);
 
@@ -429,109 +431,141 @@ public class GUI {
 class WorldGridPanel extends JPanel {
     private final World world;
     private final java.util.function.BiConsumer<Integer, Integer> onCellClick;
-    private int cellSize = 20;
+
+    // Use continuous (double) cell size; no integer truncation that froze large worlds.
+    private double cellSize = 20.0;
     private int xOffset = 0;
     private int yOffset = 0;
+    private double lastCellSize = -1;
+    private int lastPanelW = -1;
+    private int lastPanelH = -1;
 
     public WorldGridPanel(World world, java.util.function.BiConsumer<Integer, Integer> onCellClick) {
         this.world = world;
         this.onCellClick = onCellClick;
         setBackground(Color.LIGHT_GRAY);
         addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                handleClick(e.getX(), e.getY());
+            @Override public void mouseClicked(MouseEvent e) { handleClick(e.getX(), e.getY()); }
+        });
+        addComponentListener(new ComponentAdapter() {
+            @Override public void componentResized(ComponentEvent e) {
+                lastCellSize = -1;
+                repaint();
             }
         });
     }
 
-    public void updateGrid() {
-        // Only repaint changed cells
+    private void computeMetrics() {
         int rows = world.getHeight();
         int cols = world.getWidth();
-        
+        int w = getWidth();
+        int h = getHeight();
+        if (w <= 0 || h <= 0 || rows <= 0 || cols <= 0) {
+            cellSize = 1.0;
+            xOffset = yOffset = 0;
+            return;
+        }
+        double cw = w / (double) cols;
+        double ch = h / (double) rows;
+        // keep square cells – pick smaller dimension
+        cellSize = Math.max(0.25, Math.min(cw, ch)); // allow fractional scaling smoothly (down to 0.25 px logical)
+        double gridW = cellSize * cols;
+        double gridH = cellSize * rows;
+        xOffset = (int) Math.round((w - gridW) / 2.0);
+        yOffset = (int) Math.round((h - gridH) / 2.0);
+    }
+
+    // Map cell edge (column index) to pixel x (rounded so whole grid fills space smoothly)
+    private int toX(int col) {
+        return xOffset + (int) Math.round(col * cellSize);
+    }
+    private int toY(int row) {
+        return yOffset + (int) Math.round(row * cellSize);
+    }
+
+    public void updateGrid() {
+        computeMetrics();
+        int rows = world.getHeight();
+        int cols = world.getWidth();
+        boolean sizeChanged = (cellSize != lastCellSize) ||
+                              getWidth() != lastPanelW ||
+                              getHeight() != lastPanelH;
+        lastCellSize = cellSize;
+        lastPanelW = getWidth();
+        lastPanelH = getHeight();
+
+        if (sizeChanged) {
+            // Coordinates of every cell changed – repaint all.
+            repaint();
+            world.updateChangedGrid();
+            return;
+        }
+
+        // Targeted repaint only for changed cells using precise edges
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 if (world.changedGrid[r][c]) {
-                    int x = xOffset + c * cellSize;
-                    int y = yOffset + r * cellSize;
-                    repaint(x, y, cellSize + 1, cellSize + 1);
+                    int x1 = toX(c);
+                    int y1 = toY(r);
+                    int x2 = toX(c + 1);
+                    int y2 = toY(r + 1);
+                    int w = Math.max(1, x2 - x1);
+                    int h = Math.max(1, y2 - y1);
+                    repaint(x1, y1, w, h);
                 }
             }
         }
-        
         world.updateChangedGrid();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
+        computeMetrics();
         int rows = world.getHeight();
         int cols = world.getWidth();
-        
-        int availableWidth = getWidth();
-        int availableHeight = getHeight();
-        
-        if (availableWidth <= 0 || availableHeight <= 0) return;
-        
-        cellSize = Math.min(availableWidth / cols, availableHeight / rows);
-        if (cellSize <= 0) cellSize = 1;
-        
-        int gridWidth = cellSize * cols;
-        int gridHeight = cellSize * rows;
-        xOffset = (availableWidth - gridWidth) / 2;
-        yOffset = (availableHeight - gridHeight) / 2;
-        
-        Graphics2D g2d = (Graphics2D) g;
-        
-        // Get clip bounds to only draw visible cells
-        Rectangle clip = g2d.getClipBounds();
-        
-        // Draw cells
+
+        Graphics2D g2 = (Graphics2D) g;
+        Rectangle clip = g2.getClipBounds();
+
         for (int r = 0; r < rows; r++) {
+            int y1 = toY(r);
+            int y2 = toY(r + 1);
+            int h = Math.max(1, y2 - y1);
+            if (clip != null && (y2 < clip.y || y1 > clip.y + clip.height)) continue;
+
             for (int c = 0; c < cols; c++) {
-                int x = xOffset + c * cellSize;
-                int y = yOffset + r * cellSize;
-                
-                // Skip cells outside clip region
-                if (clip != null && !clip.intersects(x, y, cellSize, cellSize)) {
-                    continue;
-                }
-                
-                g2d.setColor(world.colorGrid[r][c]);
-                g2d.fillRect(x, y, cellSize, cellSize);
-                
-                // Draw border
-                g2d.setColor(Color.DARK_GRAY);
-                g2d.drawRect(x, y, cellSize, cellSize);
+                int x1 = toX(c);
+                int x2 = toX(c + 1);
+                int w = Math.max(1, x2 - x1);
+                if (clip != null && (x2 < clip.x || x1 > clip.x + clip.width)) continue;
+
+                g2.setColor(world.colorGrid[r][c]);
+                g2.fillRect(x1, y1, w, h);
+                g2.setColor(Color.DARK_GRAY);
+                g2.drawRect(x1, y1, w, h);
             }
         }
     }
-    
-    private void handleClick(int mouseX, int mouseY) {
+
+    private void handleClick(int mx, int my) {
         int rows = world.getHeight();
         int cols = world.getWidth();
-        
-        int availableWidth = getWidth();
-        int availableHeight = getHeight();
-        
-        int gridWidth = cellSize * cols;
-        int gridHeight = cellSize * rows;
-        int xOffset = (availableWidth - gridWidth) / 2;
-        int yOffset = (availableHeight - gridHeight) / 2;
-        
-        int col = (mouseX - xOffset) / cellSize;
-        int row = (mouseY - yOffset) / cellSize;
-        
+        if (mx < xOffset || my < yOffset) return;
+
+        // Inverse mapping: binary search could be used, but linear math works with uniform spacing.
+        // col ≈ (mx - xOffset) / cellSize
+        int col = (int) Math.floor((mx - xOffset) / cellSize);
+        int row = (int) Math.floor((my - yOffset) / cellSize);
         if (row >= 0 && row < rows && col >= 0 && col < cols) {
             onCellClick.accept(row, col);
         }
     }
-    
+
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(world.getWidth() * 20, world.getHeight() * 20);
+        // Allow growth; initial hint only.
+        return new Dimension(600, 600);
     }
 }
 
