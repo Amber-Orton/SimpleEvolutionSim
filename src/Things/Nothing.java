@@ -24,14 +24,20 @@ public class Nothing extends Thing {
     }
 
     @Override
+    public boolean needsToTick() {
+        return false;
+    }
+
+    @Override
+    public boolean needsToDoAction() {
+        return true;
+    }
+
+    @Override
     public String getName() {
         return "Nothing";
     }
 
-    @Override
-    public void run() {
-        super.run();
-    }
     
     @Override
     public void doAction() {

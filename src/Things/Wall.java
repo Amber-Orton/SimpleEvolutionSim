@@ -20,6 +20,16 @@ public class Wall extends Thing {
     }
 
     @Override
+    public boolean needsToTick() {
+        return false;
+    }
+
+    @Override
+    public boolean needsToDoAction() {
+        return false;
+    }
+
+    @Override
     public String getName() {
         return "Wall";
     }

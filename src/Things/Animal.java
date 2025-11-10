@@ -354,6 +354,16 @@ public class Animal extends Edible{
     }
 
     @Override
+    public boolean needsToTick() {
+        return true;
+    }
+
+    @Override
+    public boolean needsToDoAction() {
+        return true;
+    }
+
+    @Override
     protected int getasInt() {
         return 4;
     }

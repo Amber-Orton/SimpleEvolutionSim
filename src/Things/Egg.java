@@ -74,6 +74,16 @@ public class Egg extends Edible{
     }
 
     @Override
+    public boolean needsToDoAction() {
+        return true;
+    }
+
+    @Override
+    public boolean needsToTick() {
+        return true;
+    }
+
+    @Override
     public String getName() {
         return "Egg";
     }

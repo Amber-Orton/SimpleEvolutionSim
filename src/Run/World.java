@@ -88,14 +88,15 @@ public class World implements Runnable {
 
         if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
 
-        Thread[] threads = new Thread[things.size()];
-        int i = 0;
+        ArrayList<Thread> threads = new ArrayList<>(things.size());
 
         //create the threads
         for (Thing thing : things) {
-            Thread t = new Thread(thing);
-            thing.setThread(t);
-            threads[i++] = t;
+            if (thing.needsToTick()) {
+                Thread t = new Thread(thing);
+                thing.setThread(t);
+                threads.add(t);
+            }
         }
 
         if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
@@ -121,12 +122,14 @@ public class World implements Runnable {
         thingsToUpdate = new HashSet<>();
         eggsToUpdate = new HashSet<>();
         for (Thing thing : things) {
-            if (thing instanceof Egg) {
-                eggsToUpdate.add(thing);
-            } else if (thing instanceof Nothing) {
-                nothingToUpdate.add(thing);
-            } else {
-                thingsToUpdate.add(thing);
+            if (thing.needsToDoAction()) {
+                if (thing instanceof Egg) {
+                    eggsToUpdate.add(thing);
+                } else if (thing instanceof Nothing) {
+                    nothingToUpdate.add(thing);
+                } else {
+                    thingsToUpdate.add(thing);
+                }
             }
         }
 

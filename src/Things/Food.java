@@ -15,6 +15,16 @@ public class Food extends Edible{
     }
 
     @Override
+    public boolean needsToTick() {
+        return false;
+    }
+
+    @Override
+    public boolean needsToDoAction() {
+        return false;
+    }
+
+    @Override
     public String getName() {
         return "Food";
     }

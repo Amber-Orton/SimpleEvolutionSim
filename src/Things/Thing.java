@@ -96,4 +96,8 @@ public abstract class Thing implements Runnable {
     public void die(){
         isAlive= false;
     }
+
+    public abstract boolean needsToTick();
+
+    public abstract boolean needsToDoAction();
 }
