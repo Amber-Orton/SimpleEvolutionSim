@@ -59,6 +59,7 @@ public class World implements Runnable {
             notifyAll();
         }
         Main.lastTickTime = System.nanoTime() - startTime;
+        System.out.println("Ticked!");
     }
 
     protected void doTickAndUpdateGUI() {

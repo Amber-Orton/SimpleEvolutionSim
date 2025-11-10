@@ -1,5 +1,8 @@
 package Things;
 import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.util.Random;
 
 import Run.Main;
 import Run.World;
@@ -9,6 +12,7 @@ public class Animal extends Edible{
 
     protected AnimalAttributes attributes;
     protected float health;
+    protected String name;
 
     protected ACTION action;
     protected DIRECTION facing;
@@ -32,6 +36,15 @@ public class Animal extends Edible{
             this.facing = parent.facing; // Inherit facing direction from parent
             this.energy = parent.attributes.getReproductionCost();
         }
+        int targetLine = new Random().nextInt(150000);
+        try (BufferedReader reader = new BufferedReader(new FileReader("assets/names.txt"))) {
+            for (int i = 0; i < targetLine; i++) reader.readLine();
+            this.name = reader.readLine() + " " + (parent != null ? parent.getName().split(" ")[0] + "son" : "NoParent");
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.name = "Animal_errorname " + (parent != null ? parent.getName().split(" ")[0] + "son" : "NoParent");
+        }
+        System.out.println(getName() + " is born");
     }
 
     @Override
@@ -44,7 +57,6 @@ public class Animal extends Edible{
     @Override
     public void doAction(){
         if (!isAlive) {return;}
-        //System.out.println(this.toString() + " is doing action: " + action);
         switch (action) {
             case TURN_LEFT:
                 facing = facing.turnLeft();
@@ -313,7 +325,7 @@ public class Animal extends Edible{
     }
 
     public String getName() {
-        return this.toString();
+        return name;
     }
 
     public ACTION getAction() {
@@ -322,7 +334,7 @@ public class Animal extends Edible{
 
     @Override
     public void die() {
-        System.out.println(this + " has died.");
+        System.out.println(getName() + " has died.");
         super.die();
     }
 
