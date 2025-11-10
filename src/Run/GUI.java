@@ -7,12 +7,15 @@ import Things.Egg;
 import Things.Food;
 import Things.Thing;
 import Things.Wall;
+import Things.Helpers.NameCreator;
 import Things.Helpers.Position;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.util.jar.Attributes.Name;
 
 /**
  * Main GUI for the Simple Evolution Simulation.
@@ -53,6 +56,17 @@ public class GUI {
     public void run() {
         JFrame frame = new JFrame("Simple Evolution Sim");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                try {
+                    NameCreator.close();  // close your file here
+                    System.out.println("File reader closed!");
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
         frame.setSize(900, 700);
 
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.X_AXIS));
@@ -209,7 +223,7 @@ public class GUI {
         System.out.println();
         System.out.println("----------- DEBUG INFO -----------");
         System.out.println();
-        System.out.println("Last Tick Time (ns): " + Main.lastTickTime);
+        System.out.println("Last Tick Time (ns): " + Main.lastTickTime + " seconds: " + (Main.lastTickTime / 1_000_000_000.0));
         System.out.println("Tick Count: " + world.getTickCount());
         System.out.println("Things in World: " + world.getThings().size());
         System.out.println("Ready to Tick: " + Main.world.readyToTick);

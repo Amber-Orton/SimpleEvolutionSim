@@ -1,6 +1,9 @@
 package Run;
+import java.io.IOException;
+
 import Things.Nothing;
 import Things.Helpers.AnimalAttributes;
+import Things.Helpers.NameCreator;
 
 public class Main {
 
@@ -42,6 +45,12 @@ public class Main {
     public static final int NEURAL_NET_OUTPUT_SIZE = 7;
 
     public static void main(String[] args) {
+        try {
+            NameCreator.open();
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
         updateAttributes();
         world = createWorld();
         GUI gui = GUI.getInstanceOrChangeWorld(world);

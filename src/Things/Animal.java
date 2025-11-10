@@ -9,6 +9,7 @@ import Run.World;
 import Things.Helpers.ACTION;
 import Things.Helpers.AnimalAttributes;
 import Things.Helpers.DIRECTION;
+import Things.Helpers.NameCreator;
 import Things.Helpers.Position;
 
 
@@ -40,13 +41,11 @@ public class Animal extends Edible{
             this.facing = parent.facing; // Inherit facing direction from parent
             this.energy = parent.attributes.getReproductionCost();
         }
-        int targetLine = new Random().nextInt(150000);
-        try (BufferedReader reader = new BufferedReader(new FileReader("assets/names.txt"))) {
-            for (int i = 0; i < targetLine; i++) reader.readLine();
-            this.name = reader.readLine() + " " + (parent != null ? parent.getName().split(" ")[0] + "son" : "NoParent");
+        try {
+            this.name = NameCreator.nextLine() + " " + (parent != null ? parent.getName().split(" ")[0]: "NoParent");
         } catch (Exception e) {
             e.printStackTrace();
-            this.name = "Animal_errorname " + (parent != null ? parent.getName().split(" ")[0] + "son" : "NoParent");
+            this.name = "Animal_errorname " + (parent != null ? parent.getName().split(" ")[0]: "NoParent");
         }
         System.out.println(getName() + " is born");
     }
