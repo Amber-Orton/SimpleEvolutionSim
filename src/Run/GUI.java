@@ -206,7 +206,7 @@ public class GUI {
             System.out.println("------------- WORLD DEBUG INFO -------------");
             System.out.println();
             System.out.println("tick() debug times: ");
-            System.out.println("debug times are: tick start : remove dead things : create threads : wait for threads to think : create doAction sets : update things : update eggs : update nothing");
+            System.out.println("debug times are: tick start : remove dead things : wait for threads to think : create doAction sets : update things : update eggs : update nothing");
             System.out.println("world debug Times ns (absolute): " + world.tickDebugTimes);
             System.out.print("world debug Times ns (differences): [");
             for (int i = 0; i < world.tickDebugTimes.size(); i++) {
@@ -432,29 +432,27 @@ class WorldGridPanel extends JPanel {
     private final World world;
     private final java.util.function.BiConsumer<Integer, Integer> onCellClick;
 
-    // Use continuous (double) cell size; no integer truncation that froze large worlds.
+    // Continuous scaling so large worlds resize smoothly
     private double cellSize = 20.0;
     private int xOffset = 0;
     private int yOffset = 0;
-    private double lastCellSize = -1;
-    private int lastPanelW = -1;
-    private int lastPanelH = -1;
 
     public WorldGridPanel(World world, java.util.function.BiConsumer<Integer, Integer> onCellClick) {
         this.world = world;
         this.onCellClick = onCellClick;
         setBackground(Color.LIGHT_GRAY);
+
         addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent e) { handleClick(e.getX(), e.getY()); }
         });
+
+        // On window/panel resize, repaint whole grid (no extra tracking needed)
         addComponentListener(new ComponentAdapter() {
-            @Override public void componentResized(ComponentEvent e) {
-                lastCellSize = -1;
-                repaint();
-            }
+            @Override public void componentResized(ComponentEvent e) { repaint(); }
         });
     }
 
+    // Compute cell size and centering offsets; fills at least one axis
     private void computeMetrics() {
         int rows = world.getHeight();
         int cols = world.getWidth();
@@ -467,41 +465,34 @@ class WorldGridPanel extends JPanel {
         }
         double cw = w / (double) cols;
         double ch = h / (double) rows;
-        // keep square cells – pick smaller dimension
-        cellSize = Math.max(0.25, Math.min(cw, ch)); // allow fractional scaling smoothly (down to 0.25 px logical)
+        cellSize = Math.max(0.25, Math.min(cw, ch)); // square cells, smooth fractional scaling
+
         double gridW = cellSize * cols;
         double gridH = cellSize * rows;
         xOffset = (int) Math.round((w - gridW) / 2.0);
         yOffset = (int) Math.round((h - gridH) / 2.0);
     }
 
-    // Map cell edge (column index) to pixel x (rounded so whole grid fills space smoothly)
-    private int toX(int col) {
-        return xOffset + (int) Math.round(col * cellSize);
+    // Map logical edge to pixel
+    private int toX(int col) { return xOffset + (int) Math.round(col * cellSize); }
+    private int toY(int row) { return yOffset + (int) Math.round(row * cellSize); }
+
+    // Map pixel to logical index (clamped)
+    private int colFromX(int x) {
+        int col = (int) Math.floor((x - xOffset) / cellSize);
+        return Math.min(Math.max(col, 0), world.getWidth() - 1);
     }
-    private int toY(int row) {
-        return yOffset + (int) Math.round(row * cellSize);
+    private int rowFromY(int y) {
+        int row = (int) Math.floor((y - yOffset) / cellSize);
+        return Math.min(Math.max(row, 0), world.getHeight() - 1);
     }
 
+    // Called after a tick to repaint only changed cells
     public void updateGrid() {
         computeMetrics();
         int rows = world.getHeight();
         int cols = world.getWidth();
-        boolean sizeChanged = (cellSize != lastCellSize) ||
-                              getWidth() != lastPanelW ||
-                              getHeight() != lastPanelH;
-        lastCellSize = cellSize;
-        lastPanelW = getWidth();
-        lastPanelH = getHeight();
 
-        if (sizeChanged) {
-            // Coordinates of every cell changed – repaint all.
-            repaint();
-            world.updateChangedGrid();
-            return;
-        }
-
-        // Targeted repaint only for changed cells using precise edges
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
                 if (world.changedGrid[r][c]) {
@@ -522,41 +513,46 @@ class WorldGridPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         computeMetrics();
+
         int rows = world.getHeight();
         int cols = world.getWidth();
 
         Graphics2D g2 = (Graphics2D) g;
         Rectangle clip = g2.getClipBounds();
 
-        for (int r = 0; r < rows; r++) {
+        // Convert clip to row/col range so we don’t loop the whole grid
+        int cStart = colFromX(clip.x);
+        int cEnd = colFromX(clip.x + clip.width);
+        int rStart = rowFromY(clip.y);
+        int rEnd = rowFromY(clip.y + clip.height);
+
+        for (int r = rStart; r <= rEnd; r++) {
             int y1 = toY(r);
             int y2 = toY(r + 1);
             int h = Math.max(1, y2 - y1);
-            if (clip != null && (y2 < clip.y || y1 > clip.y + clip.height)) continue;
 
-            for (int c = 0; c < cols; c++) {
+            for (int c = cStart; c <= cEnd; c++) {
                 int x1 = toX(c);
                 int x2 = toX(c + 1);
                 int w = Math.max(1, x2 - x1);
-                if (clip != null && (x2 < clip.x || x1 > clip.x + clip.width)) continue;
 
                 g2.setColor(world.colorGrid[r][c]);
                 g2.fillRect(x1, y1, w, h);
-                g2.setColor(Color.DARK_GRAY);
-                g2.drawRect(x1, y1, w, h);
+
+                // Only draw borders when cells are large enough
+                if (w >= 3 && h >= 3) {
+                    g2.setColor(Color.DARK_GRAY);
+                    g2.drawRect(x1, y1, w, h);
+                }
             }
         }
     }
 
     private void handleClick(int mx, int my) {
-        int rows = world.getHeight();
         int cols = world.getWidth();
-        if (mx < xOffset || my < yOffset) return;
-
-        // Inverse mapping: binary search could be used, but linear math works with uniform spacing.
-        // col ≈ (mx - xOffset) / cellSize
-        int col = (int) Math.floor((mx - xOffset) / cellSize);
-        int row = (int) Math.floor((my - yOffset) / cellSize);
+        int rows = world.getHeight();
+        int col = colFromX(mx);
+        int row = rowFromY(my);
         if (row >= 0 && row < rows && col >= 0 && col < cols) {
             onCellClick.accept(row, col);
         }
@@ -564,7 +560,7 @@ class WorldGridPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        // Allow growth; initial hint only.
+        // Stable hint; BorderLayout CENTER will expand it
         return new Dimension(600, 600);
     }
 }
