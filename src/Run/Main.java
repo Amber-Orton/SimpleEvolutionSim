@@ -1,5 +1,7 @@
 package Run;
 import java.io.IOException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import Things.Nothing;
 import Things.Helpers.AnimalAttributes;
@@ -29,16 +31,22 @@ public class Main {
     protected static float INITIAL_NEURAL_NET_RANDOMNESS = 0.1f;
 
 
+    /**
+     * other options
+     */
     protected static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = true;
     public static boolean IN_DEPTH_DEBUG_MODE = false;
     public static boolean autoDebug = false;
 
+
+    /**
+     * Critical information for running the simulation
+     */
     protected static long lastTickTime;
-
-
     protected static volatile boolean play = false;
     protected static volatile int tickMillis = 0;
     protected static World world;
+    protected static final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
     //do not change unless you know what youre doing
     public static final int NEURAL_NET_INPUT_SIZE = 18;

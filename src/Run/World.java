@@ -3,7 +3,11 @@ import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 import javax.swing.SwingUtilities;
 
 import Things.Egg;
@@ -89,30 +93,21 @@ public class World implements Runnable {
 
         if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
 
-        ArrayList<Thread> threads = new ArrayList<>(things.size());
+        List<Future<?>> futures = new ArrayList<>(things.size());
 
-        //create the threads
+        //dispatch the Things
         for (Thing thing : things) {
             if (thing.needsToTick()) {
-                Thread t = new Thread(thing);
-                thing.setThread(t);
-                threads.add(t);
+                futures.add(Main.executorService.submit(thing));
             }
-        }
-
-        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
-
-        // Start all threads
-        for (Thread t : threads){
-            t.start();
         }
 
 
         // Wait for all threads to finish
-        for (Thread t : threads) {
+        for (Future<?> future : futures) {
             try {
-                t.join();
-            } catch (InterruptedException e) {
+                future.get();
+            } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
         }
@@ -245,9 +240,6 @@ public class World implements Runnable {
     public void killThing(Thing thing) {
         removeThing(thing);
         thing.die();
-        if (thing.thread != null){
-            thing.thread.interrupt();
-        }
     }
 
     /**

@@ -14,6 +14,7 @@ public class Nothing extends Thing {
     private static final Random random = new Random();
     private static float foodGrowRate;
     private static float newFoodEnergy;
+    private boolean willGrow;
 
     public Nothing(World world, Position pos) {
         super(Color.WHITE, world, pos);
@@ -25,13 +26,23 @@ public class Nothing extends Thing {
     }
 
     @Override
+    public void run() {
+        if (random.nextFloat() <= foodGrowRate) {
+            willGrow = true;
+        } else {
+            willGrow = false;
+        }
+        super.run();
+    }
+
+    @Override
     public boolean needsToTick() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean needsToDoAction() {
-        return true;
+        return willGrow;
     }
 
     @Override
@@ -41,10 +52,11 @@ public class Nothing extends Thing {
 
     
     @Override
+    /**
+     * this is only called if the Nothing is set to grow.
+     */
     public void doAction() {
-        if (random.nextFloat() <= foodGrowRate) {
-            world.replaceThing(this, new Food(world, pos, newFoodEnergy));
-        }
+        world.replaceThing(this, new Food(world, pos, newFoodEnergy));
     }
 
     @Override

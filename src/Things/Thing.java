@@ -7,7 +7,6 @@ import Things.Helpers.Position;
 public abstract class Thing implements Runnable {
 
     protected Position pos;
-    public Thread thread;
     protected World world;
     protected boolean isAlive;
 
@@ -30,7 +29,6 @@ public abstract class Thing implements Runnable {
         if (!isAlive){
             world = null;
         }
-        thread = null;
     }
 
     public void doAction() {
@@ -65,25 +63,11 @@ public abstract class Thing implements Runnable {
         this.world = world;
     }
 
-    public void interrupt() {
-        if (thread != null) {
-            thread.interrupt();
-            thread = null;
-        }
-    }
 
     public void removeHealth (float amount){
         // default do nothing
     }
-
     
-    public void setThread(Thread thread) {
-        this.thread = thread;
-    }
-    
-    public Thread getThread() {
-        return thread;
-    }
 
     public boolean isAlive() {
         return isAlive;

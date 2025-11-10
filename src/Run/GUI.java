@@ -61,6 +61,8 @@ public class GUI {
                 try {
                     NameCreator.close();  // close your file here
                     System.out.println("File reader closed!");
+                    Main.executorService.shutdown();
+                    System.out.println("Executor service shut down!");
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
