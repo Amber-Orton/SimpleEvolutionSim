@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.util.Random;
 
 import Run.World;
+import Things.Helpers.Position;
 
 /**
  * Represents an empty space in the world.

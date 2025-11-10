@@ -5,9 +5,9 @@ import javax.swing.*;
 import Things.Animal;
 import Things.Egg;
 import Things.Food;
-import Things.Position;
 import Things.Thing;
 import Things.Wall;
+import Things.Helpers.Position;
 
 import java.awt.*;
 import java.awt.event.*;

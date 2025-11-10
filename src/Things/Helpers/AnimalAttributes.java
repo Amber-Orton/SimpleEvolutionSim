@@ -1,4 +1,4 @@
-package Things;
+package Things.Helpers;
 import java.util.ArrayList;
 import java.util.Random;
 

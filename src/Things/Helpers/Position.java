@@ -1,4 +1,4 @@
-package Things;
+package Things.Helpers;
 public class Position {
     private int row;
     private int col;

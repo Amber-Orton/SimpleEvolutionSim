@@ -6,6 +6,10 @@ import java.util.Random;
 
 import Run.Main;
 import Run.World;
+import Things.Helpers.ACTION;
+import Things.Helpers.AnimalAttributes;
+import Things.Helpers.DIRECTION;
+import Things.Helpers.Position;
 
 
 public class Animal extends Edible{

@@ -1,6 +1,6 @@
 package Run;
-import Things.AnimalAttributes;
 import Things.Nothing;
+import Things.Helpers.AnimalAttributes;
 
 public class Main {
 

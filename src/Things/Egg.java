@@ -2,6 +2,8 @@ package Things;
 import java.awt.Color;
 
 import Run.World;
+import Things.Helpers.AnimalAttributes;
+import Things.Helpers.Position;
 
 public class Egg extends Edible{
     private AnimalAttributes attributes;

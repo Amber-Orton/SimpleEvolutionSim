@@ -1,4 +1,4 @@
-package Things;
+package Things.Helpers;
 public enum DIRECTION {
     NORTH, EAST, SOUTH, WEST;
 

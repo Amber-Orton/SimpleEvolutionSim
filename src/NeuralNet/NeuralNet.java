@@ -2,7 +2,7 @@ package NeuralNet;
 
 import java.util.ArrayList;
 
-import Things.ACTION;
+import Things.Helpers.ACTION;
 
 public class NeuralNet {
 

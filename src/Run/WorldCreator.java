@@ -5,9 +5,9 @@ import java.util.Random;
 
 import NeuralNet.NeuralNet;
 import Things.Animal;
-import Things.AnimalAttributes;
 import Things.Nothing;
-import Things.Position;
+import Things.Helpers.AnimalAttributes;
+import Things.Helpers.Position;
 
 public class WorldCreator {
     private static final int INPUT_SIZE = Main.NEURAL_NET_INPUT_SIZE;

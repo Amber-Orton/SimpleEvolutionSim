@@ -2,6 +2,7 @@ package Things;
 import java.awt.Color;
 
 import Run.World;
+import Things.Helpers.Position;
 
 public abstract class Thing implements Runnable {
 

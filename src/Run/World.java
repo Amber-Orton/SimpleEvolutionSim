@@ -8,9 +8,9 @@ import javax.swing.SwingUtilities;
 
 import Things.Egg;
 import Things.Nothing;
-import Things.Position;
 import Things.Thing;
 import Things.Wall;
+import Things.Helpers.Position;
 
 public class World implements Runnable {
     private int width;

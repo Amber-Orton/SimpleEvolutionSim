@@ -1,4 +1,4 @@
-package Things;
+package Things.Helpers;
 public enum ACTION {
     TURN_LEFT,
     TURN_RIGHT,
