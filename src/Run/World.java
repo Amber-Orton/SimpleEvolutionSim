@@ -69,7 +69,7 @@ public class World implements Runnable {
     protected void doTickAndUpdateGUI(long startTime) {
         tick();
         Main.lastTickTime = System.nanoTime() - startTime;
-        SwingUtilities.invokeLater(() -> GUI.getInstance().updateAfterTick());
+        SwingUtilities.invokeLater(() -> GUI.getInstance().updateAfterTick(startTime));
     }
 
     /**

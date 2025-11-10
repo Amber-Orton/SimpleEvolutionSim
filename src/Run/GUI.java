@@ -28,6 +28,7 @@ public class GUI {
     private JTextArea selectedThingNameText;
     private JTextArea selectedThingInfoTextLeft;
     private JTextArea selectedThingInfoTextRight;
+    private JLabel reportedmspt;
     private Thing selectedThing;
 
     private final WorldPlayer worldPlayer = new WorldPlayer();
@@ -59,6 +60,8 @@ public class GUI {
             @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 try {
+                    Main.play = false;
+                    System.out.println("Game stopped!");
                     NameCreator.close();  // close your file here
                     System.out.println("File reader closed!");
                     Main.executorService.shutdown();
@@ -288,13 +291,13 @@ public class GUI {
             long startTime = System.nanoTime();
             world.tick();
             Main.lastTickTime = System.nanoTime() - startTime;
-            updateAfterTick();
+            updateAfterTick(startTime);
             Main.lastTickTime = System.nanoTime() - startTime;
             System.out.println("Ticked! in: " + (Main.lastTickTime / 1_000_000_000.0) + " seconds");
         }
     }
 
-    protected void updateAfterTick() {
+    protected void updateAfterTick(long startTime) {
         if (Main.IN_DEPTH_DEBUG_MODE) {
             updateAfterTickDebugTimes.clear();
             updateAfterTickDebugTimes.add(System.nanoTime());
@@ -304,6 +307,8 @@ public class GUI {
         updateSelectedThingInfo(selectedThing);
         if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
         tickCountDisplay.setText("Tick Count: " + world.getTickCount());
+        Main.lastTickTime = System.nanoTime() - startTime;
+        reportedmspt.setText("Actual: MSPT: " + Main.lastTickTime / 1_000_000.0 + ", TPS: " + 1_000_000_000.0 / Main.lastTickTime);
         if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
         if (Main.autoDebug) {
             printDebugInfo();
@@ -318,6 +323,7 @@ public class GUI {
         JPanel newWorldRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
         JButton newWorldButton = new JButton("New World...");
         JButton playPauseButton = new JButton(Main.play ? "Pause" : "Play");
+        reportedmspt = new JLabel("Actual: MSPT: " + Main.lastTickTime / 1_000_000.0 + ", TPS: " + 1_000_000_000.0 / Main.lastTickTime);
         newWorldRow.add(newWorldButton);
         content.add(newWorldRow);
 
@@ -327,7 +333,7 @@ public class GUI {
         });
 
         JPanel msptPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
-        msptPanel.setBorder(BorderFactory.createTitledBorder("Target MSPT"));
+        msptPanel.setBorder(BorderFactory.createTitledBorder("MSPT"));
         
         JTextField msptField = new JTextField(Integer.toString(Main.tickMillis), 8);
         msptField.setMaximumSize(new Dimension(100, 28));
@@ -349,8 +355,8 @@ public class GUI {
                 applyMspt.run();
             }
         });
-        
-        msptPanel.add(new JLabel("Value: "));
+
+        msptPanel.add(new JLabel("Target: "));
         msptPanel.add(msptField);
         
          playPauseButton.addActionListener(e -> {
@@ -362,6 +368,7 @@ public class GUI {
              }
          });
          msptPanel.add(playPauseButton);
+         msptPanel.add(reportedmspt);
         
          content.add(msptPanel);
 
