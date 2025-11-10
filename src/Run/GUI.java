@@ -209,6 +209,7 @@ public class GUI {
         System.out.println();
         System.out.println("----------- DEBUG INFO -----------");
         System.out.println();
+        System.out.println("Last Tick Time (ns): " + Main.lastTickTime);
         System.out.println("Tick Count: " + world.getTickCount());
         System.out.println("Things in World: " + world.getThings().size());
         System.out.println("Ready to Tick: " + Main.world.readyToTick);
@@ -269,10 +270,11 @@ public class GUI {
 
     private void tick() {
         synchronized (world) {
-            long startTime = System.currentTimeMillis();
+            long startTime = System.nanoTime();
             world.tick();
             updateAfterTick();
-            System.out.println("MSPT: " + (System.currentTimeMillis() - startTime));
+            Main.lastTickTime = System.nanoTime() - startTime;
+            System.out.println("Ticked!");
         }
     }
 

@@ -51,12 +51,14 @@ public class World implements Runnable {
      * The caller must first check and set readyToTick to false before calling
      */
     public void run() {
+        long startTime = System.nanoTime();
         doTickAndUpdateGUI();  // Do the tick
 
         synchronized (this) {
             readyToTick = true;
             notifyAll();
         }
+        Main.lastTickTime = System.nanoTime() - startTime;
     }
 
     protected void doTickAndUpdateGUI() {
@@ -135,8 +137,6 @@ public class World implements Runnable {
         if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
         thingsDoAction(nothingToUpdate);
         if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
-
-        System.out.println("ticked!");
     }
 
     private void thingsDoAction(Set<Thing> things) {

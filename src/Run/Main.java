@@ -30,6 +30,8 @@ public class Main {
     public static boolean IN_DEPTH_DEBUG_MODE = false;
     public static boolean autoDebug = false;
 
+    protected static long lastTickTime;
+
 
     protected static volatile boolean play = false;
     protected static volatile int tickMillis = 0;

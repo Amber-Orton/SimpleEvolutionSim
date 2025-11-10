@@ -84,6 +84,7 @@ public class Animal extends Edible{
 
 
     protected ACTION think() {
+        System.out.println(this.getName() + " is thinking.");
         float[] thinkingInputs = new float[Main.NEURAL_NET_INPUT_SIZE];
         if (world == null) {
             System.out.println("World is not initialized for : " + this);
@@ -312,7 +313,7 @@ public class Animal extends Edible{
     }
 
     public String getName() {
-        return "Animal";
+        return this.toString();
     }
 
     public ACTION getAction() {
