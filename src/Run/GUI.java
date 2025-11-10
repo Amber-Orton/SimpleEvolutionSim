@@ -22,7 +22,7 @@ import java.util.function.Consumer;
 public class GUI {
     private World world;
     private static GUI instance;
-    private JPanel[][] gridPanels;
+    private WorldGridPanel worldGridPanel;
 
     private JTextField tickCountDisplay;
     private JTextArea selectedThingNameText;
@@ -101,48 +101,14 @@ public class GUI {
     }
 
     private void updateWorldView() {
-        int rows = world.getHeight();
-        int cols = world.getWidth();
-
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                if (gridPanels != null && r < gridPanels.length && c < gridPanels[r].length && world.changedGrid[r][c]) {
-                    gridPanels[r][c].setBackground(world.colorGrid[r][c]);
-                }
-            }
+        if (worldGridPanel != null) {
+            worldGridPanel.updateGrid();
         }
-
-        world.updateChangedGrid();
     }
 
     private JPanel createGridPanel() {
-        int rows = world.getHeight();
-        int cols = world.getWidth();
-
-        JPanel gridPanel = new JPanel(new SquareGridLayout(rows, cols));
-        gridPanels = new JPanel[rows][cols];
-
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                JPanel cell = new JPanel();
-                cell.setBackground(Color.LIGHT_GRAY);
-                cell.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 1));
-                gridPanels[r][c] = cell;
-                gridPanel.add(cell);
-
-                final int rr = r;
-                final int cc = c;
-                cell.addMouseListener(new MouseAdapter() {
-                    @Override
-                    public void mouseClicked(MouseEvent e) {
-                        displayThingInfo(rr, cc);
-                    }
-                });
-            }
-        }
-
-        updateWorldView();
-        return gridPanel;
+        worldGridPanel = new WorldGridPanel(world, this::displayThingInfo);
+        return worldGridPanel;
     }
 
     private void createControlPanel(JPanel panel) {
@@ -458,61 +424,115 @@ public class GUI {
 }
 
 /**
- * Custom layout manager that arranges components in a grid where each cell is square.
- * Grid is centered in available area with padding if aspect ratio differs.
+ * Custom JPanel that paints the entire world grid.
  */
-class SquareGridLayout implements LayoutManager {
-    private final int rows;
-    private final int cols;
+class WorldGridPanel extends JPanel {
+    private final World world;
+    private final java.util.function.BiConsumer<Integer, Integer> onCellClick;
+    private int cellSize = 20;
+    private int xOffset = 0;
+    private int yOffset = 0;
 
-    public SquareGridLayout(int rows, int cols) {
-        this.rows = Math.max(1, rows);
-        this.cols = Math.max(1, cols);
+    public WorldGridPanel(World world, java.util.function.BiConsumer<Integer, Integer> onCellClick) {
+        this.world = world;
+        this.onCellClick = onCellClick;
+        setBackground(Color.LIGHT_GRAY);
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                handleClick(e.getX(), e.getY());
+            }
+        });
     }
 
-    @Override
-    public void layoutContainer(Container parent) {
-        int totalW = parent.getWidth();
-        int totalH = parent.getHeight();
-
-        if (totalW <= 0 || totalH <= 0) return;
-
-        int cellSize = Math.min(totalW / cols, totalH / rows);
-        if (cellSize <= 0) return;
-
-        int gridW = cellSize * cols;
-        int gridH = cellSize * rows;
-
-        int xOffset = (totalW - gridW) / 2;
-        int yOffset = (totalH - gridH) / 2;
-
+    public void updateGrid() {
+        // Only repaint changed cells
+        int rows = world.getHeight();
+        int cols = world.getWidth();
+        
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                int idx = r * cols + c;
-                if (idx < parent.getComponentCount()) {
-                    Component comp = parent.getComponent(idx);
+                if (world.changedGrid[r][c]) {
                     int x = xOffset + c * cellSize;
                     int y = yOffset + r * cellSize;
-                    comp.setBounds(x, y, cellSize, cellSize);
+                    repaint(x, y, cellSize + 1, cellSize + 1);
                 }
             }
         }
+        
+        world.updateChangedGrid();
     }
 
     @Override
-    public Dimension preferredLayoutSize(Container parent) {
-        return new Dimension(cols * 20, rows * 20);
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        
+        int rows = world.getHeight();
+        int cols = world.getWidth();
+        
+        int availableWidth = getWidth();
+        int availableHeight = getHeight();
+        
+        if (availableWidth <= 0 || availableHeight <= 0) return;
+        
+        cellSize = Math.min(availableWidth / cols, availableHeight / rows);
+        if (cellSize <= 0) cellSize = 1;
+        
+        int gridWidth = cellSize * cols;
+        int gridHeight = cellSize * rows;
+        xOffset = (availableWidth - gridWidth) / 2;
+        yOffset = (availableHeight - gridHeight) / 2;
+        
+        Graphics2D g2d = (Graphics2D) g;
+        
+        // Get clip bounds to only draw visible cells
+        Rectangle clip = g2d.getClipBounds();
+        
+        // Draw cells
+        for (int r = 0; r < rows; r++) {
+            for (int c = 0; c < cols; c++) {
+                int x = xOffset + c * cellSize;
+                int y = yOffset + r * cellSize;
+                
+                // Skip cells outside clip region
+                if (clip != null && !clip.intersects(x, y, cellSize, cellSize)) {
+                    continue;
+                }
+                
+                g2d.setColor(world.colorGrid[r][c]);
+                g2d.fillRect(x, y, cellSize, cellSize);
+                
+                // Draw border
+                g2d.setColor(Color.DARK_GRAY);
+                g2d.drawRect(x, y, cellSize, cellSize);
+            }
+        }
     }
-
-    @Override
-    public Dimension minimumLayoutSize(Container parent) {
-        return new Dimension(cols * 5, rows * 5);
+    
+    private void handleClick(int mouseX, int mouseY) {
+        int rows = world.getHeight();
+        int cols = world.getWidth();
+        
+        int availableWidth = getWidth();
+        int availableHeight = getHeight();
+        
+        int gridWidth = cellSize * cols;
+        int gridHeight = cellSize * rows;
+        int xOffset = (availableWidth - gridWidth) / 2;
+        int yOffset = (availableHeight - gridHeight) / 2;
+        
+        int col = (mouseX - xOffset) / cellSize;
+        int row = (mouseY - yOffset) / cellSize;
+        
+        if (row >= 0 && row < rows && col >= 0 && col < cols) {
+            onCellClick.accept(row, col);
+        }
     }
-
+    
     @Override
-    public void addLayoutComponent(String name, Component comp) { }
-    @Override
-    public void removeLayoutComponent(Component comp) { }
+    public Dimension getPreferredSize() {
+        return new Dimension(world.getWidth() * 20, world.getHeight() * 20);
+    }
 }
 
 /**
