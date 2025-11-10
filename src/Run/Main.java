@@ -27,6 +27,8 @@ public class Main {
 
 
     protected static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = true;
+    public static boolean IN_DEPTH_DEBUG_MODE = false;
+    public static boolean autoDebug = false;
 
 
     protected static volatile boolean play = false;

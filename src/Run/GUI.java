@@ -11,7 +11,7 @@ import Things.Wall;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.function.Consumer;
 
 /**
@@ -30,6 +30,8 @@ public class GUI {
 
     private final WorldPlayer worldPlayer = new WorldPlayer();
     private static boolean optionsShown = false;
+
+    private ArrayList<Long> updateAfterTickDebugTimes = new ArrayList<>();
 
     public static GUI getInstance() {
         return instance;
@@ -81,17 +83,18 @@ public class GUI {
     }
 
     private void updateWorldView() {
-        Color[][] grid = world.getGridOfColors();
         int rows = world.getHeight();
         int cols = world.getWidth();
 
         for (int r = 0; r < rows; r++) {
             for (int c = 0; c < cols; c++) {
-                if (gridPanels != null && r < gridPanels.length && c < gridPanels[r].length) {
-                    gridPanels[r][c].setBackground(grid[r][c]);
+                if (gridPanels != null && r < gridPanels.length && c < gridPanels[r].length && world.changedGrid[r][c]) {
+                    gridPanels[r][c].setBackground(world.colorGrid[r][c]);
                 }
             }
         }
+
+        world.updateChangedGrid();
     }
 
     private JPanel createGridPanel() {
@@ -180,17 +183,74 @@ public class GUI {
         tickPanel.add(tickButton);
 
         JButton debugButton = new JButton("show debug info");
-        debugButton.addActionListener(e -> {;
-            // Show debug information
-            System.out.println("Debug Info:");
-            System.out.println("Tick Count: " + world.getTickCount());
-            System.out.println("Things in World: " + world.getThings().size());
-            System.out.println("Ready to Tick: " + Main.world.readyToTick);
-            System.out.println("Nothing Grid: " + Arrays.deepToString(world.nothingGrid));
+        debugButton.addActionListener(e -> {
+            printDebugInfo();
         });
         tickPanel.add(debugButton);
 
+        JButton toggleDebugButton = new JButton(Main.IN_DEPTH_DEBUG_MODE ? "Disable in-depth Debug" : "Enable in-depth Debug");
+        toggleDebugButton.addActionListener(e -> {
+            Main.IN_DEPTH_DEBUG_MODE = !Main.IN_DEPTH_DEBUG_MODE;
+            toggleDebugButton.setText(Main.IN_DEPTH_DEBUG_MODE ? "Disable in-depth Debug" : "Enable in-depth Debug");
+        });
+        tickPanel.add(toggleDebugButton);
+
+        JButton toggleAutoDebugButton = new JButton(Main.autoDebug ? "Disable Auto Debug" : "Enable Auto Debug");
+        toggleAutoDebugButton.addActionListener(e -> {
+            Main.autoDebug = !Main.autoDebug;
+            toggleAutoDebugButton.setText(Main.autoDebug ? "Disable Auto Debug" : "Enable Auto Debug");
+        });
+        tickPanel.add(toggleAutoDebugButton);
+
         return tickPanel;
+    }
+
+    private void printDebugInfo() {
+        System.out.println();
+        System.out.println("----------- DEBUG INFO -----------");
+        System.out.println();
+        System.out.println("Tick Count: " + world.getTickCount());
+        System.out.println("Things in World: " + world.getThings().size());
+        System.out.println("Ready to Tick: " + Main.world.readyToTick);
+        //System.out.println("Nothing Grid: " + Arrays.deepToString(world.nothingGrid));
+        //System.out.println("Changed Grid: " + Arrays.deepToString(world.changedGrid));
+        if (Main.IN_DEPTH_DEBUG_MODE) {
+            System.out.println();
+            System.out.println("------------- WORLD DEBUG INFO -------------");
+            System.out.println();
+            System.out.println("tick() debug times: ");
+            System.out.println("debug times are: tick start : remove dead things : create threads : wait for threads to think : update things : update eggs : update nothing");
+            System.out.println("world debug Times ns (absolute): " + world.tickDebugTimes);
+            System.out.print("world debug Times ns (differences): [");
+            for (int i = 0; i < world.tickDebugTimes.size(); i++) {
+                System.out.print((i > 0 ? world.tickDebugTimes.get(i) -  world.tickDebugTimes.get(i-1) : 0) + ", ");
+            }
+            System.out.println("]");
+            System.out.print("world debug Times ms (differences): [");
+            for (int i = 0; i < world.tickDebugTimes.size(); i++) {
+                System.out.print((i > 0 ? (world.tickDebugTimes.get(i) -  world.tickDebugTimes.get(i-1)) / 1000000 : 0) + ", ");
+            }
+            System.out.println("]");
+            System.out.println();
+            System.out.println("------------- UPDATE AFTER TICK DEBUG INFO -------------");
+            System.out.println();
+            System.out.println("updateAfterTick() debug times: ");
+            System.out.println("debug times are: update start : update world view : update selected thing info : update tick count in GUI");
+            System.out.println("updateAfterTick debug Times ns (absolute): " + updateAfterTickDebugTimes);
+            System.out.print("updateAfterTick Times ns (differences): [");
+            for (int i = 0; i < updateAfterTickDebugTimes.size(); i++) {
+                System.out.print((i > 0 ? updateAfterTickDebugTimes.get(i) -  updateAfterTickDebugTimes.get(i-1) : 0) + ", ");
+            }
+            System.out.println("]");
+            System.out.print("updateAfterTick Times ms (differences): [");
+            for (int i = 0; i < updateAfterTickDebugTimes.size(); i++) {
+                System.out.print((i > 0 ? (updateAfterTickDebugTimes.get(i) -  updateAfterTickDebugTimes.get(i-1)) / 1000000 : 0) + ", ");
+            }
+            System.out.println("]");
+        } else {
+            System.out.println("for more indepth debugging information, enable in-depth debug mode.");
+        }
+
     }
     
     private void displayThingInfo(int row, int col){
@@ -209,15 +269,27 @@ public class GUI {
 
     private void tick() {
         synchronized (world) {
+            long startTime = System.currentTimeMillis();
             world.tick();
             updateAfterTick();
+            System.out.println("MSPT: " + (System.currentTimeMillis() - startTime));
         }
     }
 
     protected void updateAfterTick() {
+        if (Main.IN_DEPTH_DEBUG_MODE) {
+            updateAfterTickDebugTimes.clear();
+            updateAfterTickDebugTimes.add(System.nanoTime());
+        }
         updateWorldView();
-            updateSelectedThingInfo(selectedThing);
-            tickCountDisplay.setText("Tick Count: " + world.getTickCount());
+        if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+        updateSelectedThingInfo(selectedThing);
+        if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+        tickCountDisplay.setText("Tick Count: " + world.getTickCount());
+        if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+        if (Main.autoDebug) {
+            printDebugInfo();
+        }
     }
 
     private JPanel createResetPanel() {
@@ -227,7 +299,7 @@ public class GUI {
 
         JPanel newWorldRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
         JButton newWorldButton = new JButton("New World...");
-        JButton playPauseButton = new JButton("Play");
+        JButton playPauseButton = new JButton(Main.play ? "Pause" : "Play");
         newWorldRow.add(newWorldButton);
         content.add(newWorldRow);
 

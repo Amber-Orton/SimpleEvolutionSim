@@ -1,8 +1,10 @@
 package Run;
 import java.awt.Color;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.SwingUtilities;
 
 import Things.Egg;
 import Things.Nothing;
@@ -18,12 +20,17 @@ public class World implements Runnable {
     private Set<Thing> eggsToUpdate = new HashSet<>();
     private Set<Thing> nothingToUpdate = new HashSet<>();
     protected Thing[][] grid;
+    protected Color[][] colorGrid;
+    protected boolean[][] changedGrid;
     protected Nothing[][] nothingGrid;
     private final Wall DEFAULTWALL = new Wall();
     private int tickCount = 0;
-
-
     protected boolean readyToTick = true;
+
+
+    protected ArrayList<Long> tickDebugTimes = new ArrayList<>();
+
+
 
 
     protected World(int width, int height) {
@@ -31,6 +38,11 @@ public class World implements Runnable {
         this.height = height;
         this.grid = new Thing[height][width];
         this.nothingGrid = new Nothing[height][width];
+        colorGrid = new Color[height][width];
+        changedGrid = new boolean[height][width];
+        for (boolean[] row : changedGrid) {
+            Arrays.fill(row, true);//initialise to true since the world has changed from completly empty to populated on boot
+        }
     }
 
 
@@ -49,7 +61,7 @@ public class World implements Runnable {
 
     protected void doTickAndUpdateGUI() {
         tick();
-        GUI.getInstance().updateAfterTick();
+        SwingUtilities.invokeLater(() -> GUI.getInstance().updateAfterTick());
     }
 
     /**
@@ -57,6 +69,10 @@ public class World implements Runnable {
      * then one thread for updating the world with the actions of the Things.
      */
     public synchronized void tick() {
+        if (Main.IN_DEPTH_DEBUG_MODE) {
+            tickDebugTimes.clear();
+            tickDebugTimes.add(System.nanoTime());
+        }
         tickCount++;
 
         // Remove dead things before ticking
@@ -67,6 +83,8 @@ public class World implements Runnable {
             }
         }
 
+        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
+
         Thread[] threads = new Thread[things.size()];
         int i = 0;
 
@@ -76,11 +94,15 @@ public class World implements Runnable {
             thing.setThread(t);
             threads[i++] = t;
         }
-        
+
+        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
+
         // Start all threads
         for (Thread t : threads){
             t.start();
         }
+
+        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
 
         // Wait for all threads to finish
         for (Thread t : threads) {
@@ -91,6 +113,7 @@ public class World implements Runnable {
             }
         }
 
+        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
 
         thingsToUpdate = new HashSet<>();
         eggsToUpdate = new HashSet<>();
@@ -104,10 +127,14 @@ public class World implements Runnable {
             }
         }
 
+        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
 
         thingsDoAction(thingsToUpdate);
+        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
         thingsDoAction(eggsToUpdate);
+        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
         thingsDoAction(nothingToUpdate);
+        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
 
         System.out.println("ticked!");
     }
@@ -138,7 +165,7 @@ public class World implements Runnable {
         addThing(pos, thing);
 
         if (thing.getClass() != Egg.class || posIsNothing(pos)){//dont attempt to put Egg in grid if something else is aready there
-            grid[pos.getPos()[0]][pos.getPos()[1]] = thing;
+            changeGridAt(pos, thing);
         }
     }
 
@@ -160,19 +187,10 @@ public class World implements Runnable {
         things.add(thing);
     }
 
-    /** 
-     * Get a 2D array representing the colors of the grid.
-     * Empty cells are represented by DEFAULTCOLOR.
-     * @return A 2D array of Colors representing the grid
-     */
-    public Color[][] getGridOfColors() {
-        Color[][] colorGrid = new Color[height][width];
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
-                colorGrid[row][col] = grid[row][col].getColor();
-            }
+    public void updateChangedGrid() {
+        for (boolean[] row : changedGrid) {
+            Arrays.fill(row, false);
         }
-        return colorGrid;
     }
 
     public Thing getThingAt(Position pos) {
@@ -197,7 +215,7 @@ public class World implements Runnable {
     public boolean replaceThing(Thing origionalThing, Thing newThing){
         things.remove(origionalThing);
         if (getThingAt(origionalThing.getPos()) == origionalThing){
-            grid[origionalThing.getPos().getRow()][origionalThing.getPos().getCol()] = null;
+            changeGridAt(origionalThing.getPos(), null);
             putThingAt(origionalThing.getPos(), newThing);
             return true;
         } else {
@@ -225,6 +243,25 @@ public class World implements Runnable {
         thing.die();
         if (thing.thread != null){
             thing.thread.interrupt();
+        }
+    }
+
+    /**
+     * Changes the Thing at the specified position in the grid.
+     * updates the colour grid accordingly
+     * caller responsible for all other actions only checks if the position is valid.
+     * careful when calling can end up with duplicate entries in grid[][]
+     *      does not update thing to reflect this change
+     * @param pos the position to update
+     * @param thing the thing to place at the position
+     */
+    private void changeGridAt(Position pos, Thing thing) {
+        if (posIsInBounds(pos)) {
+            grid[pos.getRow()][pos.getCol()] = thing;
+            if (thing != null) {
+                colorGrid[pos.getRow()][pos.getCol()] = thing.getColor();
+            }
+            changedGrid[pos.getRow()][pos.getCol()] = true;
         }
     }
 
