@@ -10,22 +10,12 @@ public class WorldPlayer implements Runnable {
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         try {
             while (Main.play) {
-                synchronized (Main.world) {
-                    while (!Main.world.readyToTick) {
-                        try {
-                            Main.world.wait();
-                        } catch (InterruptedException e) {
-                            Thread.currentThread().interrupt();
-                            return;
-                        }
-                    }
-                    Main.world.readyToTick = false;
-                }
+                long startTime = System.currentTimeMillis();
 
-                executor.submit(Main.world::run);
+                Main.world.run();
 
-
-                int sleepMs = Main.tickMillis;
+                long elapsedTime = System.currentTimeMillis() - startTime;
+                int sleepMs = Main.tickMillis - (int) elapsedTime;
                 if (sleepMs > 0) {
                     try {
                         Thread.sleep(sleepMs);
@@ -33,10 +23,15 @@ public class WorldPlayer implements Runnable {
                         Thread.currentThread().interrupt();
                         return;
                     }
-                } // if 0, run as fast as readyToTick allows (no sleep)
+                }
             }
         } finally {
             executor.shutdown();
         }
+    }
+
+    public void once() {
+        Thread thread = new Thread(() -> Main.world.run());
+        thread.start();
     }
 }

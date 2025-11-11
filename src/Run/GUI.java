@@ -198,7 +198,6 @@ public class GUI {
         System.out.println("Tick Time (see below if using Auto Debug) (ns): " + Main.lastTickTime + " seconds: " + (Main.lastTickTime / 1_000_000_000.0));
         System.out.println("Tick Count: " + world.getTickCount());
         System.out.println("Things in World: " + world.getThings().size());
-        System.out.println("Ready to Tick: " + Main.world.readyToTick);
         //System.out.println("Nothing Grid: " + Arrays.deepToString(world.nothingGrid));
         //System.out.println("Changed Grid: " + Arrays.deepToString(world.changedGrid));
         if (Main.IN_DEPTH_DEBUG_MODE) {
@@ -257,7 +256,7 @@ public class GUI {
     private void tick() {
         synchronized (world) {
             long startTime = System.nanoTime();
-            world.tick();
+            worldPlayer.once();
             Main.lastTickTime = System.nanoTime() - startTime;
             updateAfterTick(startTime);
             Main.lastTickTime = System.nanoTime() - startTime;
@@ -514,8 +513,6 @@ class WorldGridPanel extends JPanel {
         super.paintComponent(g);
         computeMetrics();
 
-        int rows = world.getHeight();
-        int cols = world.getWidth();
 
         Graphics2D g2 = (Graphics2D) g;
         Rectangle clip = g2.getClipBounds();

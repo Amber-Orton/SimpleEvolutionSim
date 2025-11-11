@@ -29,7 +29,7 @@ public class World implements Runnable {
     protected Nothing[][] nothingGrid;
     private final Wall DEFAULTWALL = new Wall();
     private int tickCount = 0;
-    protected boolean readyToTick = true;
+
 
 
     protected ArrayList<Long> tickDebugTimes = new ArrayList<>();
@@ -54,19 +54,14 @@ public class World implements Runnable {
      * Used to tick automatically on time
      * The caller must first check and set readyToTick to false before calling
      */
-    public void run() {
+    public synchronized void run() {
         long startTime = System.nanoTime();
         doTickAndUpdateGUI(startTime);  // Do the tick
-
-        synchronized (this) {
-            readyToTick = true;
-            notifyAll();
-        }
         Main.lastTickTime = System.nanoTime() - startTime;
         System.out.println("Ticked! in: " + (Main.lastTickTime / 1_000_000_000.0) + " seconds");
     }
 
-    protected void doTickAndUpdateGUI(long startTime) {
+    private void doTickAndUpdateGUI(long startTime) {
         tick();
         Main.lastTickTime = System.nanoTime() - startTime;
         SwingUtilities.invokeLater(() -> GUI.getInstance().updateAfterTick(startTime));
@@ -76,7 +71,7 @@ public class World implements Runnable {
      * Advance the world by one tick, running each Thing in its own thread to think 
      * then one thread for updating the world with the actions of the Things.
      */
-    public synchronized void tick() {
+    private synchronized void tick() {
         if (Main.IN_DEPTH_DEBUG_MODE) {
             tickDebugTimes.clear();
             tickDebugTimes.add(System.nanoTime());
