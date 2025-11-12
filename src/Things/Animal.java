@@ -1,13 +1,11 @@
 package Things;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 
 import Run.Main;
 import Run.World;
 import Things.Helpers.ACTION;
 import Things.Helpers.AnimalAttributes;
-import Things.Helpers.Appearance;
 import Things.Helpers.DIRECTION;
 import Things.Helpers.HasAppearance;
 import Things.Helpers.NameCreator;

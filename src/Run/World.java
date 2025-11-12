@@ -8,7 +8,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-import javax.swing.SwingUtilities;
 
 import Things.Egg;
 import Things.Nothing;
@@ -64,7 +63,7 @@ public class World implements Runnable {
     private void doTickAndUpdateGUI(long startTime) {
         tick();
         Main.lastTickTime = System.nanoTime() - startTime;
-        SwingUtilities.invokeLater(() -> GUI.getInstance().updateAfterTick(startTime));
+        GUI.getInstance().updateAfterTick(startTime);
     }
 
     /**

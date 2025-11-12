@@ -50,6 +50,8 @@ public class Main {
      * Critical information for running the simulation
      */
     protected static long lastTickTime;
+    protected static long lastUpdateWorldViewTime;
+    protected static long lastUpdateWorldViewStartTime;
     protected static volatile boolean play = false;
     protected static volatile int tickMillis = 0;
     protected static World world;

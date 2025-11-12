@@ -1,7 +1,6 @@
 package Run;
 
 import javax.swing.*;
-import javax.xml.crypto.dsig.Transform;
 
 import Things.Animal;
 import Things.Egg;
@@ -18,6 +17,10 @@ import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Consumer;
+import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * Main GUI for the Simple Evolution Simulation.
@@ -38,6 +41,7 @@ public class GUI {
     private static boolean optionsShown = false;
 
     private ArrayList<Long> updateAfterTickDebugTimes = new ArrayList<>();
+    private boolean updateWorldViewWorking = false;
 
     public static GUI getInstance() {
         return instance;
@@ -105,9 +109,15 @@ public class GUI {
         }
     }
 
-    private void updateWorldView() {
+    private void updateWorldView(long startTime) {
         if (worldGridPanel != null) {
-            worldGridPanel.updateGrid();
+            // Render off the EDT and update UI when done.
+            worldGridPanel.renderWorldAsync(startTime, () -> {
+                updateWorldViewWorking = false;
+            });
+        } else {
+            Main.lastUpdateWorldViewTime = System.nanoTime() - startTime;
+            updateWorldViewWorking = false;
         }
     }
 
@@ -272,13 +282,18 @@ public class GUI {
             updateAfterTickDebugTimes.clear();
             updateAfterTickDebugTimes.add(System.nanoTime());
         }
-        updateWorldView();
+
+        if (!updateWorldViewWorking) {
+            updateWorldViewWorking = true;
+            Main.lastUpdateWorldViewStartTime = System.nanoTime();
+            SwingUtilities.invokeLater(() -> updateWorldView(Main.lastUpdateWorldViewStartTime));
+        }
         if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
         updateSelectedThingInfo(selectedThing);
         if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
         tickCountDisplay.setText("Tick Count: " + world.getTickCount());
         Main.lastTickTime = System.nanoTime() - startTime;
-        reportedmspt.setText("Actual: MSPT: " + Main.lastTickTime / 1_000_000.0 + ", TPS: " + 1_000_000_000.0 / Main.lastTickTime);
+        reportedmspt.setText("Actual: MSPT: " + Main.lastTickTime / 1_000_000.0 + ", TPS: " + 1_000_000_000.0 / Main.lastTickTime + ", Last render time(ms): " + Main.lastUpdateWorldViewTime / 1_000_000.0 + ", Current render time(ms): " + (System.nanoTime() - Main.lastUpdateWorldViewStartTime) / 1_000_000.0);
         if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
         if (Main.autoDebug) {
             printDebugInfo();
@@ -439,6 +454,14 @@ class WorldGridPanel extends JPanel {
     private int xOffset = 0;
     private int yOffset = 0;
 
+    // Off-EDT buffered rendering
+    private final ExecutorService renderExecutor = Executors.newSingleThreadExecutor(r -> {
+        Thread t = new Thread(r, "WorldRenderer");
+        t.setDaemon(true);
+        return t;
+    });
+    private volatile BufferedImage backBuffer;
+
     public WorldGridPanel(World world, java.util.function.BiConsumer<Integer, Integer> onCellClick) {
         this.world = world;
         this.onCellClick = onCellClick;
@@ -448,13 +471,15 @@ class WorldGridPanel extends JPanel {
             @Override public void mouseClicked(MouseEvent e) { handleClick(e.getX(), e.getY()); }
         });
 
-        // On window/panel resize, repaint whole grid (no extra tracking needed)
         addComponentListener(new ComponentAdapter() {
-            @Override public void componentResized(ComponentEvent e) { repaint(); }
+            @Override public void componentResized(ComponentEvent e) {
+                computeMetrics();
+                repaint(); 
+            }
         });
     }
 
-    // Compute cell size and centering offsets; fills at least one axis
+    // Compute cell size and centering offsets
     private void computeMetrics() {
         int rows = world.getHeight();
         int cols = world.getWidth();
@@ -467,7 +492,7 @@ class WorldGridPanel extends JPanel {
         }
         double cw = w / (double) cols;
         double ch = h / (double) rows;
-        cellSize = Math.max(0.25, Math.min(cw, ch)); // square cells, smooth fractional scaling
+        cellSize = Math.max(0.25, Math.min(cw, ch)); // square cells
 
         double gridW = cellSize * cols;
         double gridH = cellSize * rows;
@@ -489,38 +514,114 @@ class WorldGridPanel extends JPanel {
         return Math.min(Math.max(row, 0), world.getHeight() - 1);
     }
 
-    // Called after a tick to repaint only changed cells
-    public void updateGrid() {
-        computeMetrics();
-        int rows = world.getHeight();
-        int cols = world.getWidth();
 
-        for (int r = 0; r < rows; r++) {
-            for (int c = 0; c < cols; c++) {
-                if (world.changedGrid[r][c]) {
-                    int x1 = toX(c);
-                    int y1 = toY(r);
-                    int x2 = toX(c + 1);
-                    int y2 = toY(r + 1);
-                    int w = Math.max(1, x2 - x1);
-                    int h = Math.max(1, y2 - y1);
-                    repaint(x1, y1, w, h);
-                }
-            }
+    // Off-EDT full-frame render into a BufferedImage, then swap on EDT and repaint.
+    public void renderWorldAsync(long startTime, Runnable onDone) {
+        final Dimension size = getSize();
+        if (size.width <= 0 || size.height <= 0) {
+            SwingUtilities.invokeLater(() -> {
+                repaint();
+                if (onDone != null) onDone.run();
+            });
+            return;
         }
-        world.updateChangedGrid();
+
+        final int panelW = size.width;
+        final int panelH = size.height;
+        final int rows = world.getHeight();
+        final int cols = world.getWidth();
+
+        renderExecutor.submit(() -> {
+            BufferedImage img = new BufferedImage(panelW, panelH, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2 = img.createGraphics();
+            try {
+                // Background
+                g2.setColor(getBackground());
+                g2.fillRect(0, 0, panelW, panelH);
+
+                // Compute metrics for this render
+                double cw = panelW / (double) cols;
+                double ch = panelH / (double) rows;
+                double localCell = Math.max(0.25, Math.min(cw, ch));
+                double gridW = localCell * cols;
+                double gridH = localCell * rows;
+                int localXOffset = (int) Math.round((panelW - gridW) / 2.0);
+                int localYOffset = (int) Math.round((panelH - gridH) / 2.0);
+
+                // Draw world
+                for (int r = 0; r < rows; r++) {
+                    int y1 = localYOffset + (int) Math.round(r * localCell);
+                    int y2 = localYOffset + (int) Math.round((r + 1) * localCell);
+                    int h = Math.max(1, y2 - y1);
+
+                    for (int c = 0; c < cols; c++) {
+                        int x1 = localXOffset + (int) Math.round(c * localCell);
+                        int x2 = localXOffset + (int) Math.round((c + 1) * localCell);
+                        int w = Math.max(1, x2 - x1);
+
+                        Color cellColor = world.colorGrid[r][c];
+                        if (cellColor == null) {
+                            Thing t = world.getThingAt(r, c);
+                            if (t instanceof HasAppearance) {
+                                RenderedImage imgCell = ((HasAppearance) t).getImage(w);
+                                if (imgCell != null) {
+                                    g2.drawRenderedImage(imgCell, AffineTransform.getTranslateInstance(x1, y1));
+                                } else {
+                                    // Fallback if no image available
+                                    g2.setColor(Color.GRAY);
+                                    g2.fillRect(x1, y1, w, h);
+                                }
+                            } else {
+                                g2.setColor(Color.GRAY);
+                                g2.fillRect(x1, y1, w, h);
+                            }
+                        } else {
+                            g2.setColor(cellColor);
+                            g2.fillRect(x1, y1, w, h);
+                        }
+
+                        // Only draw borders when cells are large enough
+                        if (w >= 3 && h >= 3) {
+                            g2.setColor(Color.DARK_GRAY);
+                            g2.drawRect(x1, y1, w, h);
+                        }
+                    }
+                }
+            } finally {
+                g2.dispose();
+            }
+
+            // Swap buffer and update UI on EDT
+            SwingUtilities.invokeLater(() -> {
+                backBuffer = img;
+                // Reset changed grid now that we committed a new frame
+                world.updateChangedGrid();
+                // Track total render time based on the passed-in startTime
+                Main.lastUpdateWorldViewTime = System.nanoTime() - startTime;
+                repaint();
+                if (onDone != null) onDone.run();
+            });
+        });
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        computeMetrics();
 
+        // If we have a buffered frame, draw it scaled to current size.
+        BufferedImage buf = backBuffer;
+        if (buf != null) {
+            g.drawImage(buf, 0, 0, getWidth(), getHeight(), null);
+            return;
+        }
+
+        // Fallback: immediate painting path (used for first paint)
+        computeMetrics();
 
         Graphics2D g2 = (Graphics2D) g;
         Rectangle clip = g2.getClipBounds();
 
-        // Convert clip to row/col range so we don’t loop the whole grid
+        // Convert clip to row/col range so don’t loop the whole grid
         int cStart = colFromX(clip.x);
         int cEnd = colFromX(clip.x + clip.width);
         int rStart = rowFromY(clip.y);
@@ -543,7 +644,6 @@ class WorldGridPanel extends JPanel {
                     g2.fillRect(x1, y1, w, h);
                 }
 
-                // Only draw borders when cells are large enough
                 if (w >= 3 && h >= 3) {
                     g2.setColor(Color.DARK_GRAY);
                     g2.drawRect(x1, y1, w, h);
