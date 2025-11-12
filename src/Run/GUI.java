@@ -1,17 +1,20 @@
 package Run;
 
 import javax.swing.*;
+import javax.xml.crypto.dsig.Transform;
 
 import Things.Animal;
 import Things.Egg;
 import Things.Food;
 import Things.Thing;
 import Things.Wall;
+import Things.Helpers.HasAppearance;
 import Things.Helpers.NameCreator;
 import Things.Helpers.Position;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.AffineTransform;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.function.Consumer;
@@ -533,8 +536,12 @@ class WorldGridPanel extends JPanel {
                 int x2 = toX(c + 1);
                 int w = Math.max(1, x2 - x1);
 
-                g2.setColor(world.colorGrid[r][c]);
-                g2.fillRect(x1, y1, w, h);
+                if (world.colorGrid[r][c] == null) {
+                    g2.drawRenderedImage(((HasAppearance)world.getThingAt(r, c)).getImage(w), AffineTransform.getTranslateInstance(x1, y1));
+                } else {
+                    g2.setColor(world.colorGrid[r][c]);
+                    g2.fillRect(x1, y1, w, h);
+                }
 
                 // Only draw borders when cells are large enough
                 if (w >= 3 && h >= 3) {

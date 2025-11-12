@@ -1,7 +1,7 @@
 package Things;
 import java.awt.Color;
-import java.util.Random;
 
+import Run.Main;
 import Run.World;
 import Things.Helpers.Position;
 
@@ -11,13 +11,12 @@ import Things.Helpers.Position;
  */
 public class Nothing extends Thing {
         
-    private static final Random random = new Random();
     private static float foodGrowRate;
     private static float newFoodEnergy;
     private boolean willGrow;
 
     public Nothing(World world, Position pos) {
-        super(Color.WHITE, world, pos);
+        super(world, pos);
     }
 
     public static void setWorldAttributes(float foodGrowRate, float newFoodEnergy) {
@@ -27,7 +26,7 @@ public class Nothing extends Thing {
 
     @Override
     public void run() {
-        if (random.nextFloat() <= foodGrowRate) {
+        if (Main.random.nextFloat() <= foodGrowRate) {
             willGrow = true;
         } else {
             willGrow = false;
@@ -50,7 +49,11 @@ public class Nothing extends Thing {
         return "Nothing";
     }
 
-    
+    @Override
+    public Color getColor() {
+        return Color.WHITE;
+    }
+
     @Override
     /**
      * this is only called if the Nothing is set to grow.

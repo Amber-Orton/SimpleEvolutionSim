@@ -13,7 +13,7 @@ public class Egg extends Edible{
     private Animal child;
 
     public Egg(World world, Position pos, AnimalAttributes attributes, Animal parent) {
-        super(Color.PINK, world, pos);
+        super(world, pos);
         this.attributes = attributes;
         this.parent = parent;
         this.cyclesToHatch = attributes.getHatchCycles();
@@ -88,6 +88,11 @@ public class Egg extends Edible{
     @Override
     public String getName() {
         return "Egg";
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.PINK;
     }
 
     @Override

@@ -8,7 +8,7 @@ import Things.Helpers.Position;
 public class Food extends Edible{
 
     public Food(World world, Position pos, float energy) {
-        super(Color.RED, world, pos);
+        super(world, pos);
         if (energy <= 0){
             throw new IllegalArgumentException("cannot make food with no energy" + energy);
         }
@@ -28,6 +28,11 @@ public class Food extends Edible{
     @Override
     public String getName() {
         return "Food";
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.RED;
     }
 
     @Override

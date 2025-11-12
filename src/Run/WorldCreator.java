@@ -1,12 +1,12 @@
 package Run;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 import NeuralNet.NeuralNet;
 import Things.Animal;
 import Things.Nothing;
 import Things.Helpers.AnimalAttributes;
+import Things.Helpers.Appearance;
 import Things.Helpers.Position;
 
 public class WorldCreator {
@@ -33,13 +33,12 @@ public class WorldCreator {
         }
 
         // Randomly place animals by density
-        Random rnd = new Random();
         int placed = 0;
         for (int row = 0; row < world.getHeight(); row++) {
             for (int col = 0; col < world.getWidth(); col++) {
-                if (rnd.nextFloat() < initialAnimalDensity) {
-                    NeuralNet net = buildRandomNeuralNet(rnd, maxLayers, INPUT_SIZE, OUTPUT_SIZE, initialNeuralNetRandomness);
-                    AnimalAttributes attrs = buildRandomAnimalAttributes(rnd, statTotal, net);
+                if (Main.random.nextFloat() < initialAnimalDensity) {
+                    NeuralNet net = buildRandomNeuralNet(maxLayers, INPUT_SIZE, OUTPUT_SIZE, initialNeuralNetRandomness);
+                    AnimalAttributes attrs = buildRandomAnimalAttributes(statTotal, net);
                     Position pos = new Position(row, col);
                     world.putThingAt(pos, new Animal(world, pos, attrs, null));
                     placed++;
@@ -49,10 +48,10 @@ public class WorldCreator {
 
         // Ensure at least one animal exists
         if (placed == 0) {
-            int row = rnd.nextInt(world.getHeight());
-            int col = rnd.nextInt(world.getWidth());
-            NeuralNet net = buildRandomNeuralNet(rnd, maxLayers, INPUT_SIZE, OUTPUT_SIZE, initialNeuralNetRandomness);
-            AnimalAttributes attrs = buildRandomAnimalAttributes(rnd, statTotal, net);
+            int row = Main.random.nextInt(world.getHeight());
+            int col = Main.random.nextInt(world.getWidth());
+            NeuralNet net = buildRandomNeuralNet(maxLayers, INPUT_SIZE, OUTPUT_SIZE, initialNeuralNetRandomness);
+            AnimalAttributes attrs = buildRandomAnimalAttributes(statTotal, net);
             Position pos = new Position(row, col);
             world.putThingAt(pos, new Animal(world, pos, attrs, null));
         }
@@ -65,10 +64,10 @@ public class WorldCreator {
      * - 1..(maxLayers-1) hidden layers (since the list includes hidden + output)
      * - Each hidden layer node has 'prevLayerSize' weights, first hidden layer uses 'inputSize'
      */
-    private static NeuralNet buildRandomNeuralNet(Random rnd, int maxLayers, int inputSize, int outputSize, float initialNeuralNetRandomness) {
+    private static NeuralNet buildRandomNeuralNet(int maxLayers, int inputSize, int outputSize, float initialNeuralNetRandomness) {
         // Ensure at least one hidden layer; 'maxLayers' counts hidden+output in the list
         int maxHiddenLayers = Math.max(1, maxLayers - 1);
-        int hiddenLayers = 1 + rnd.nextInt(maxHiddenLayers); // [1, maxHiddenLayers]
+        int hiddenLayers = 1 + Main.random.nextInt(maxHiddenLayers); // [1, maxHiddenLayers]
 
         // Hidden layer node count bounds
         int minHiddenNodes = 4;
@@ -79,7 +78,7 @@ public class WorldCreator {
 
         // Hidden layers
         for (int h = 0; h < hiddenLayers; h++) {
-            int nodes = minHiddenNodes + rnd.nextInt(maxHiddenNodes - minHiddenNodes + 1);
+            int nodes = minHiddenNodes + Main.random.nextInt(maxHiddenNodes - minHiddenNodes + 1);
             ArrayList<float[][]> layer = new ArrayList<>();
 
             for (int n = 0; n < nodes; n++) {
@@ -89,9 +88,9 @@ public class WorldCreator {
 
                 // Small random weights/bias around 0
                 for (int i = 0; i < prevSize; i++) {
-                    node[0][i] = (rnd.nextFloat() - 0.5f) * initialNeuralNetRandomness *2; // +-initialNeuralNetRandomness
+                    node[0][i] = (Main.random.nextFloat() - 0.5f) * initialNeuralNetRandomness *2; // +-initialNeuralNetRandomness
                 }
-                node[1][0] = (rnd.nextFloat() - 0.5f) * initialNeuralNetRandomness *2;
+                node[1][0] = (Main.random.nextFloat() - 0.5f) * initialNeuralNetRandomness *2;
 
                 layer.add(node);
             }
@@ -108,9 +107,9 @@ public class WorldCreator {
             node[1] = new float[1];        // bias
 
             for (int i = 0; i < prevSize; i++) {
-                node[0][i] = (rnd.nextFloat() - 0.5f) * initialNeuralNetRandomness *2;
+                node[0][i] = (Main.random.nextFloat() - 0.5f) * initialNeuralNetRandomness *2;
             }
-            node[1][0] = (rnd.nextFloat() - 0.5f) * initialNeuralNetRandomness *2;
+            node[1][0] = (Main.random.nextFloat() - 0.5f) * initialNeuralNetRandomness *2;
 
             outputLayer.add(node);
         }
@@ -124,13 +123,13 @@ public class WorldCreator {
      * Reproduction cost is randomized separately (not part of the 100) and must be < maxEnergy (stat3).
      * Constructor: new AnimalAttributes(stat1, stat2, stat3, reproductionCost, net)
      */
-    private static AnimalAttributes buildRandomAnimalAttributes(Random rnd, int statTotal, NeuralNet net) {
+    private static AnimalAttributes buildRandomAnimalAttributes(int statTotal, NeuralNet net) {
         // Minimums to avoid useless animals; ensure stat3 (max energy) is not tiny.
         int min1 = 10;
         int min2 = 10;
         int min3 = Math.max(20, statTotal / 5); // at least 20% of total or 20
 
-        int[] parts = randomTripleSum(rnd, statTotal, min1, min2, min3);
+        int[] parts = randomTripleSum(statTotal, min1, min2, min3);
         int s1 = parts[0];
         int s2 = parts[1];
         int s3 = parts[2]; // treated as max energy
@@ -139,16 +138,16 @@ public class WorldCreator {
         // Keep it reasonable: between 2 and min(6, s3-1) as lower bound, up to s3-1 as upper.
         int maxRepCost = Math.max(2, s3 - 10);
         int minRepCost = Math.min(6, maxRepCost); // prefer small-ish base cost
-        int reproductionCost = minRepCost + (maxRepCost > minRepCost ? rnd.nextInt(maxRepCost - minRepCost + 1) : 0);
+        int reproductionCost = minRepCost + (maxRepCost > minRepCost ? Main.random.nextInt(maxRepCost - minRepCost + 1) : 0);
 
-        return new AnimalAttributes(s1, s2, s3, reproductionCost, net);
+        return new AnimalAttributes(s1, s2, s3, reproductionCost, net, new Appearance());
     }
 
     /**
      * Split 'total' into three non-negative integers with given minimums.
      * The result sums to 'total'.
      */
-    private static int[] randomTripleSum(Random rnd, int total, int minA, int minB, int minC) {
+    private static int[] randomTripleSum(int total, int minA, int minB, int minC) {
         int base = minA + minB + minC;
         if (base > total) {
             // Fallback: clamp mins proportionally if someone changes totals
@@ -160,8 +159,8 @@ public class WorldCreator {
         }
         int remaining = total - base;
 
-        int extraA = remaining == 0 ? 0 : rnd.nextInt(remaining + 1);
-        int extraB = remaining - extraA == 0 ? 0 : rnd.nextInt(remaining - extraA + 1);
+        int extraA = remaining == 0 ? 0 : Main.random.nextInt(remaining + 1);
+        int extraB = remaining - extraA == 0 ? 0 : Main.random.nextInt(remaining - extraA + 1);
         int extraC = remaining - extraA - extraB;
 
         return new int[] { minA + extraA, minB + extraB, minC + extraC };

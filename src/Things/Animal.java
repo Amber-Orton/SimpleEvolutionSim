@@ -1,16 +1,20 @@
 package Things;
 import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 
 import Run.Main;
 import Run.World;
 import Things.Helpers.ACTION;
 import Things.Helpers.AnimalAttributes;
+import Things.Helpers.Appearance;
 import Things.Helpers.DIRECTION;
+import Things.Helpers.HasAppearance;
 import Things.Helpers.NameCreator;
 import Things.Helpers.Position;
 
 
-public class Animal extends Edible{
+public class Animal extends Edible implements HasAppearance {
 
     protected AnimalAttributes attributes;
     protected float health;
@@ -28,7 +32,7 @@ public class Animal extends Edible{
     * @param parent The parent animal, or null if this is a new animal without a parent.
     */
     public Animal(World world, Position pos, AnimalAttributes attributes, Animal parent) {
-        super(Color.BLACK, world, pos);
+        super(world, pos);
         this.attributes = attributes;
         this.health = attributes.getMaxHealth();
         if (parent == null) {
@@ -314,6 +318,16 @@ public class Animal extends Edible{
 
     protected void addHealth(float amount) {
         health = Math.min(attributes.getMaxHealth(), health + amount);
+    }
+
+    @Override
+    public BufferedImage getImage(int size) {
+        return attributes.getAppearance().getScaledAndRotatedImage(size, facing);
+    }
+
+    @Override
+    public Color getColor() {
+        return null;
     }
 
     public AnimalAttributes getAnimalAttributes() {

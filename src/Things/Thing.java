@@ -1,4 +1,5 @@
 package Things;
+
 import java.awt.Color;
 
 import Run.World;
@@ -11,13 +12,10 @@ public abstract class Thing implements Runnable {
     protected boolean isAlive;
 
 
-    protected Color color;
-
     protected Thing() {
     }
     
-    public Thing(Color color,World world, Position pos) {
-        this.color = color;
+    public Thing(World world, Position pos) {
         this.world = world;
         setPos(pos);
         this.isAlive = true;
@@ -40,9 +38,7 @@ public abstract class Thing implements Runnable {
         return "at: " + pos.toString() + " is: Thing";
     }
 
-    public Color getColor() {
-        return color;
-    }
+    public abstract Color getColor();
 
     public Position getPos() {
         return pos;

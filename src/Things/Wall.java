@@ -8,14 +8,13 @@ import Things.Helpers.Position;
 public class Wall extends Thing {
 
     public Wall(World world, Position pos) {
-        super(Color.DARK_GRAY, world, pos);
+        super(world, pos);
     }
 
     /**
      * Should only ever be used for the DEFAULTWALL instance in world.
      */
     public Wall() {
-        color = Color.DARK_GRAY;
         world = null;
         pos = new Position(-1, -1);
     }
@@ -33,6 +32,11 @@ public class Wall extends Thing {
     @Override
     public String getName() {
         return "Wall";
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.DARK_GRAY;
     }
 
     @Override

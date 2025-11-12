@@ -1,5 +1,6 @@
 package Run;
 import java.io.IOException;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -29,6 +30,12 @@ public class Main {
     protected static int WORLD_HEIGHT = 10;
     protected static float INITIAL_ANIMAL_DENSITY = 0.8f;
     protected static float INITIAL_NEURAL_NET_RANDOMNESS = 0.1f;
+    public static final int[] ANIMAL_COLOR_PALETTE = new int[]{
+        0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00,
+        0xFF00FF, 0x00FFFF, 0xFFFFFF, 0x000000,
+        0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00,
+        0xFF00FF, 0x00FFFF, 0xFFFFFF, 0x000000,
+    };
 
 
     /**
@@ -47,6 +54,7 @@ public class Main {
     protected static volatile int tickMillis = 0;
     protected static World world;
     protected static final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+    public static final Random random = new Random();
 
     //do not change unless you know what youre doing
     public static final int NEURAL_NET_INPUT_SIZE = 18;
