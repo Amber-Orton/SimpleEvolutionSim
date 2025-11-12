@@ -71,6 +71,7 @@ public class GUI {
                     System.out.println("Game stopped!");
                     NameCreator.close();
                     Main.executorService.shutdown();
+                    worldGridPanel.renderExecutor.shutdown();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
@@ -286,8 +287,9 @@ public class GUI {
         if (!updateWorldViewWorking) {
             updateWorldViewWorking = true;
             Main.lastUpdateWorldViewStartTime = System.nanoTime();
-            SwingUtilities.invokeLater(() -> updateWorldView(Main.lastUpdateWorldViewStartTime));
+            updateWorldView(Main.lastUpdateWorldViewStartTime);
         }
+
         if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
         updateSelectedThingInfo(selectedThing);
         if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
@@ -455,7 +457,7 @@ class WorldGridPanel extends JPanel {
     private int yOffset = 0;
 
     // Off-EDT buffered rendering
-    private final ExecutorService renderExecutor = Executors.newSingleThreadExecutor(r -> {
+    protected final ExecutorService renderExecutor = Executors.newSingleThreadExecutor(r -> {
         Thread t = new Thread(r, "WorldRenderer");
         t.setDaemon(true);
         return t;

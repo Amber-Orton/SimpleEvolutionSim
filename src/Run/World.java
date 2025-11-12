@@ -54,16 +54,9 @@ public class World implements Runnable {
      * The caller must first check and set readyToTick to false before calling
      */
     public synchronized void run() {
-        long startTime = System.nanoTime();
-        doTickAndUpdateGUI(startTime);  // Do the tick
-        Main.lastTickTime = System.nanoTime() - startTime;
-        System.out.println("Ticked! in: " + (Main.lastTickTime / 1_000_000_000.0) + " seconds");
-    }
 
-    private void doTickAndUpdateGUI(long startTime) {
         tick();
-        Main.lastTickTime = System.nanoTime() - startTime;
-        GUI.getInstance().updateAfterTick(startTime);
+
     }
 
     /**
@@ -78,7 +71,6 @@ public class World implements Runnable {
         tickCount++;
 
         // Remove dead things before ticking
-        //things.removeIf(thing -> !thing.isAlive());
         for (Thing thing : new HashSet<>(things)) {
             if (!thing.isAlive()) {
                 removeThing(thing);
@@ -102,6 +94,8 @@ public class World implements Runnable {
             try {
                 future.get();
             } catch (InterruptedException | ExecutionException e) {
+                Main.play = false;
+                System.err.println("Paused!: Error occurred while updating world: " + e.getMessage());
                 e.printStackTrace();
             }
         }
