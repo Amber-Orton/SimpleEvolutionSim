@@ -319,8 +319,8 @@ public class Animal extends Edible implements HasAppearance {
     }
 
     @Override
-    public BufferedImage getImage(int size) {
-        return attributes.getAppearance().getScaledAndRotatedImage(size, facing);
+    public BufferedImage getImage() {
+        return attributes.getAppearance().getRotatedImage(facing);
     }
 
     @Override

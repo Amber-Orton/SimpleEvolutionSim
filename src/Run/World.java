@@ -95,6 +95,7 @@ public class World implements Runnable {
                 future.get();
             } catch (InterruptedException | ExecutionException e) {
                 Main.play = false;
+                GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
                 System.err.println("Paused!: Error occurred while updating world: " + e.getMessage());
                 e.printStackTrace();
             }

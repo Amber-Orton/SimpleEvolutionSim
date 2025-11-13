@@ -36,6 +36,7 @@ public class GUI {
     private JTextArea selectedThingInfoTextRight;
     private JLabel reportedmspt;
     private Thing selectedThing;
+    protected JButton playPauseButton;
 
     private final WorldPlayer worldPlayer = new WorldPlayer();
     private static boolean optionsShown = false;
@@ -309,7 +310,7 @@ public class GUI {
 
         JPanel newWorldRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
         JButton newWorldButton = new JButton("New World...");
-        JButton playPauseButton = new JButton(Main.play ? "Pause" : "Play");
+        playPauseButton = new JButton(Main.play ? "Pause" : "Play");
         reportedmspt = new JLabel("Actual: MSPT: " + Main.lastTickTime / 1_000_000.0 + ", TPS: " + 1_000_000_000.0 / Main.lastTickTime);
         newWorldRow.add(newWorldButton);
         content.add(newWorldRow);
@@ -502,9 +503,6 @@ class WorldGridPanel extends JPanel {
         yOffset = (int) Math.round((h - gridH) / 2.0);
     }
 
-    // Map logical edge to pixel
-    private int toX(int col) { return xOffset + (int) Math.round(col * cellSize); }
-    private int toY(int row) { return yOffset + (int) Math.round(row * cellSize); }
 
     // Map pixel to logical index (clamped)
     private int colFromX(int x) {
@@ -528,68 +526,69 @@ class WorldGridPanel extends JPanel {
             return;
         }
 
-        final int panelW = size.width;
-        final int panelH = size.height;
         final int rows = world.getHeight();
         final int cols = world.getWidth();
+        final int panelH = rows*8;
+        final int panelW = cols*8;
+        double scale = Math.min(size.height / (double) panelH, size.width / (double) panelW);
+        final int finalPanelH = (int)Math.round(panelH * scale);
+        final int finalPanelW = (int)Math.round(panelW * scale);
+
+        
 
         renderExecutor.submit(() -> {
-            BufferedImage img = new BufferedImage(panelW, panelH, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage preScaleImg = new BufferedImage(panelW, panelH, BufferedImage.TYPE_INT_ARGB);
+            Graphics2D preScaleG2 = preScaleImg.createGraphics();
+            BufferedImage img = new BufferedImage(finalPanelW, finalPanelH, BufferedImage.TYPE_INT_ARGB);
             Graphics2D g2 = img.createGraphics();
             try {
                 // Background
-                g2.setColor(getBackground());
-                g2.fillRect(0, 0, panelW, panelH);
+                preScaleG2.setColor(getBackground());
+                preScaleG2.fillRect(0, 0, panelW, panelH);
 
-                // Compute metrics for this render
-                double cw = panelW / (double) cols;
-                double ch = panelH / (double) rows;
-                double localCell = Math.max(0.25, Math.min(cw, ch));
-                double gridW = localCell * cols;
-                double gridH = localCell * rows;
-                int localXOffset = (int) Math.round((panelW - gridW) / 2.0);
-                int localYOffset = (int) Math.round((panelH - gridH) / 2.0);
 
                 // Draw world
                 for (int r = 0; r < rows; r++) {
-                    int y1 = localYOffset + (int) Math.round(r * localCell);
-                    int y2 = localYOffset + (int) Math.round((r + 1) * localCell);
-                    int h = Math.max(1, y2 - y1);
+                    int y = r * 8;
 
                     for (int c = 0; c < cols; c++) {
-                        int x1 = localXOffset + (int) Math.round(c * localCell);
-                        int x2 = localXOffset + (int) Math.round((c + 1) * localCell);
-                        int w = Math.max(1, x2 - x1);
+                        int x = c * 8;
+
 
                         Color cellColor = world.colorGrid[r][c];
                         if (cellColor == null) {
                             Thing t = world.getThingAt(r, c);
                             if (t instanceof HasAppearance) {
-                                RenderedImage imgCell = ((HasAppearance) t).getImage(w);
+                                RenderedImage imgCell = ((HasAppearance) t).getImage();
                                 if (imgCell != null) {
-                                    g2.drawRenderedImage(imgCell, AffineTransform.getTranslateInstance(x1, y1));
+                                    preScaleG2.drawRenderedImage(imgCell, AffineTransform.getTranslateInstance(x, y));
                                 } else {
                                     // Fallback if no image available
-                                    g2.setColor(Color.GRAY);
-                                    g2.fillRect(x1, y1, w, h);
+                                    preScaleG2.setColor(Color.GRAY);
+                                    preScaleG2.fillRect(x, y, 8, 8);
                                 }
                             } else {
-                                g2.setColor(Color.GRAY);
-                                g2.fillRect(x1, y1, w, h);
+                                preScaleG2.setColor(Color.GRAY);
+                                preScaleG2.fillRect(x, y, 8, 8);
                             }
                         } else {
-                            g2.setColor(cellColor);
-                            g2.fillRect(x1, y1, w, h);
+                            preScaleG2.setColor(cellColor);
+                            preScaleG2.fillRect(x, y, 8, 8);
                         }
 
                         // Only draw borders when cells are large enough
-                        if (w >= 3 && h >= 3) {
-                            g2.setColor(Color.DARK_GRAY);
-                            g2.drawRect(x1, y1, w, h);
+                        
+                        if (finalPanelH/rows >= 3 && finalPanelW/cols >= 3) {
+                            preScaleG2.setColor(Color.DARK_GRAY);
+                            preScaleG2.drawRect(x, y, 8, 8);
                         }
                     }
                 }
+                //scale at end
+                g2.drawImage(preScaleImg, 0, 0, finalPanelW, finalPanelH, null);
+
             } finally {
+                preScaleG2.dispose();
                 g2.dispose();
             }
 
@@ -610,48 +609,81 @@ class WorldGridPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // If we have a buffered frame, draw it scaled to current size.
+        // If we have a buffered frame, draw it preserving aspect ratio and centered.
         BufferedImage buf = backBuffer;
         if (buf != null) {
-            g.drawImage(buf, 0, 0, getWidth(), getHeight(), null);
+            int panelW = getWidth();
+            int panelH = getHeight();
+            int bw = buf.getWidth();
+            int bh = buf.getHeight();
+            double s = Math.min(panelW / (double) bw, panelH / (double) bh);
+            int drawW = Math.max(1, (int) Math.round(bw * s));
+            int drawH = Math.max(1, (int) Math.round(bh * s));
+            int x = (panelW - drawW) / 2;
+            int y = (panelH - drawH) / 2;
+            g.drawImage(buf, x, y, drawW, drawH, null);
             return;
         }
 
         // Fallback: immediate painting path (used for first paint)
-        computeMetrics();
+        final int rows = world.getHeight();
+        final int cols = world.getWidth();
+        final int panelH = rows*8;
+        final int panelW = cols*8;
+        double scale = Math.min(getHeight() / (double) panelH, getWidth() / (double) panelW);
+        final int finalPanelH = (int)Math.round(panelH * scale);
+        final int finalPanelW = (int)Math.round(panelW * scale);
 
-        Graphics2D g2 = (Graphics2D) g;
-        Rectangle clip = g2.getClipBounds();
+        BufferedImage preScaleImg = new BufferedImage(panelW, panelH, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D preScaleG2 = preScaleImg.createGraphics();
 
-        // Convert clip to row/col range so don’t loop the whole grid
-        int cStart = colFromX(clip.x);
-        int cEnd = colFromX(clip.x + clip.width);
-        int rStart = rowFromY(clip.y);
-        int rEnd = rowFromY(clip.y + clip.height);
+        try {
+            // Background
+            preScaleG2.setColor(getBackground());
+            preScaleG2.fillRect(0, 0, panelW, panelH);
 
-        for (int r = rStart; r <= rEnd; r++) {
-            int y1 = toY(r);
-            int y2 = toY(r + 1);
-            int h = Math.max(1, y2 - y1);
+            // Draw world at 8x8 scale
+            for (int r = 0; r < rows; r++) {
+                int y = r * 8;
 
-            for (int c = cStart; c <= cEnd; c++) {
-                int x1 = toX(c);
-                int x2 = toX(c + 1);
-                int w = Math.max(1, x2 - x1);
+                for (int c = 0; c < cols; c++) {
+                    int x = c * 8;
 
-                if (world.colorGrid[r][c] == null) {
-                    g2.drawRenderedImage(((HasAppearance)world.getThingAt(r, c)).getImage(w), AffineTransform.getTranslateInstance(x1, y1));
-                } else {
-                    g2.setColor(world.colorGrid[r][c]);
-                    g2.fillRect(x1, y1, w, h);
-                }
+                    Color cellColor = world.colorGrid[r][c];
+                    if (cellColor == null) {
+                        Thing t = world.getThingAt(r, c);
+                        if (t instanceof HasAppearance) {
+                            RenderedImage imgCell = ((HasAppearance) t).getImage();
+                            if (imgCell != null) {
+                                preScaleG2.drawRenderedImage(imgCell, AffineTransform.getTranslateInstance(x, y));
+                            } else {
+                                preScaleG2.setColor(Color.GRAY);
+                                preScaleG2.fillRect(x, y, 8, 8);
+                            }
+                        } else {
+                            preScaleG2.setColor(Color.GRAY);
+                            preScaleG2.fillRect(x, y, 8, 8);
+                        }
+                    } else {
+                        preScaleG2.setColor(cellColor);
+                        preScaleG2.fillRect(x, y, 8, 8);
+                    }
 
-                if (w >= 3 && h >= 3) {
-                    g2.setColor(Color.DARK_GRAY);
-                    g2.drawRect(x1, y1, w, h);
+                    // Only draw borders when cells are large enough
+                    if (finalPanelH / rows >= 3 && finalPanelW / cols >= 3) {
+                        preScaleG2.setColor(Color.DARK_GRAY);
+                        preScaleG2.drawRect(x, y, 8, 8);
+                    }
                 }
             }
+        } finally {
+            preScaleG2.dispose();
         }
+
+        // Scale to final panel size (center it like the buffered path)
+        int x = (getWidth() - finalPanelW) / 2;
+        int y = (getHeight() - finalPanelH) / 2;
+        g.drawImage(preScaleImg, x, y, finalPanelW, finalPanelH, null);
     }
 
     private void handleClick(int mx, int my) {

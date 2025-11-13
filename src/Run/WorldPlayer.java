@@ -21,22 +21,25 @@ public class WorldPlayer implements Runnable {
                 } catch (Exception e) {
                     e.printStackTrace();
                     Main.play = false;
+                    GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
                     executor.shutdown();
                     return;
                 }
                 System.out.println("Ticked! in: " + (Main.lastTickTime / 1_000_000_000.0) + " seconds");
 
-                long elapsedTime = System.nanoTime() - startTime / 1_000_000;
-                int sleepMs = Main.tickMillis - (int) elapsedTime;
-                if (sleepMs > 0) {
+                // Fix elapsed/sleep calculation to avoid overflow and unit mismatch
+                long elapsedMs = (System.nanoTime() - startTime) / 1_000_000L;
+                long sleepMs = (long) Main.tickMillis - elapsedMs;
+                if (sleepMs > 0L) {
                     try {
                         Thread.sleep(sleepMs);
                     } catch (InterruptedException e) {
                         Main.play = false;
+                        GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
                         executor.shutdown();
                         return;
                     }
-                    }
+                }
             }
         } finally {
             executor.shutdown();

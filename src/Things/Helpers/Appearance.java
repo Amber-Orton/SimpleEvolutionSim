@@ -10,7 +10,7 @@ public class Appearance {
     
     private NibbleGrid8x8 data = new NibbleGrid8x8();
     private volatile BufferedImage image;
-    private final Map<Integer, Map<DIRECTION, BufferedImage>> cache = new ConcurrentHashMap<>();
+    private final Map<DIRECTION, BufferedImage> cache = new ConcurrentHashMap<>();
 
 
 
@@ -50,36 +50,14 @@ public class Appearance {
         return image;
     }
 
-    public BufferedImage getScaledAndRotatedImage(int size, DIRECTION direction) {
-        if (size <= 0) size = 1;
-        if (direction == null) throw new IllegalArgumentException("Direction cannot be null");
-        if (cache.containsKey(size) && cache.get(size).containsKey(direction)) {
-            return cache.get(size).get(direction);
-        }
-        if (!cache.containsKey(size)) {
-            cache.put(size, new ConcurrentHashMap<DIRECTION, BufferedImage>());
-        }
-        BufferedImage base = getRotatedImage(direction);
-        BufferedImage out = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
-        var g = out.createGraphics();
-        g.setRenderingHint(java.awt.RenderingHints.KEY_INTERPOLATION,
-                           java.awt.RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR);
-        g.drawImage(base, 0, 0, size, size, null);
-        g.dispose();
-        cache.get(size).put(direction, out);
-        return out;
-    }
 
-    private BufferedImage getRotatedImage(DIRECTION direction) {
-        if (cache.containsKey(8) && cache.get(8).containsKey(direction)) {
-            return cache.get(8).get(direction);
-        }
-        if (!cache.containsKey(8)) {
-            cache.put(8, new ConcurrentHashMap<DIRECTION, BufferedImage>());
+    public BufferedImage getRotatedImage(DIRECTION direction) {
+        if (cache.containsKey(direction)) {
+            return cache.get(direction);
         }
         BufferedImage original = getImage();
         if (direction == DIRECTION.NORTH) {
-            cache.get(8).put(direction, original);
+            cache.put(direction, original);
             return original;
         }
         BufferedImage rotated = new BufferedImage(8, 8, BufferedImage.TYPE_INT_ARGB);
@@ -100,7 +78,7 @@ public class Appearance {
                 }
             }
         }
-        cache.get(8).put(direction, rotated);
+        cache.put(direction, rotated);
         return rotated;
     }
 
