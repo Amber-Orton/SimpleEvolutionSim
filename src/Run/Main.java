@@ -54,6 +54,7 @@ public class Main {
     protected static long lastUpdateWorldViewStartTime;
     protected static volatile boolean play = false;
     protected static volatile int tickMillis = 0;
+    protected static volatile int ticksToRun = -1;
     protected static World world;
     protected static final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     public static final Random random = new Random();

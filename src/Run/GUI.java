@@ -35,6 +35,7 @@ public class GUI {
     private JTextArea selectedThingInfoTextLeft;
     private JTextArea selectedThingInfoTextRight;
     private JLabel reportedmspt;
+    private JTextField ticksToRun;
     private Thing selectedThing;
     protected JButton playPauseButton;
 
@@ -280,6 +281,8 @@ public class GUI {
     }
 
     protected void updateAfterTick(long startTime) {
+        ticksToRun.setText(Integer.toString(Main.ticksToRun));
+
         if (Main.IN_DEPTH_DEBUG_MODE) {
             updateAfterTickDebugTimes.clear();
             updateAfterTickDebugTimes.add(System.nanoTime());
@@ -314,12 +317,13 @@ public class GUI {
         reportedmspt = new JLabel("Actual: MSPT: " + Main.lastTickTime / 1_000_000.0 + ", TPS: " + 1_000_000_000.0 / Main.lastTickTime);
         newWorldRow.add(newWorldButton);
         content.add(newWorldRow);
-
+        
+        
         newWorldButton.addActionListener(e -> {Main.play = false;
             playPauseButton.setText(Main.play ? "Pause" : "Play");
             showNewWorldDialog(rootPanel);
         });
-
+        
         JPanel msptPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
         msptPanel.setBorder(BorderFactory.createTitledBorder("MSPT"));
         
@@ -346,6 +350,30 @@ public class GUI {
 
         msptPanel.add(new JLabel("Target: "));
         msptPanel.add(msptField);
+                
+        ticksToRun = new JTextField("-1",8);
+        ticksToRun.setMaximumSize(new Dimension(100, 28));
+        
+        Runnable applyTicksToRun = () -> {
+            try {
+                int val = Integer.parseInt(ticksToRun.getText().trim());
+                if (val < 0) val = 0;
+                Main.ticksToRun = val;
+            } catch (NumberFormatException ex) {
+                ticksToRun.setText(Integer.toString(Main.ticksToRun));
+            }
+        };
+        
+        ticksToRun.addActionListener(e -> applyTicksToRun.run());
+        ticksToRun.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusLost(FocusEvent e) {
+                applyTicksToRun.run();
+            }
+        });
+
+        msptPanel.add(new JLabel("Ticks to Run (-1 for infinite): "));
+        msptPanel.add(ticksToRun);
         
          playPauseButton.addActionListener(e -> {
              Main.play = !Main.play;
@@ -578,7 +606,7 @@ class WorldGridPanel extends JPanel {
 
                         // Only draw borders when cells are large enough
                         
-                        if (finalPanelH/rows >= 3 && finalPanelW/cols >= 3) {
+                        if (finalPanelH/rows >= 8 && finalPanelW/cols >= 8) {
                             preScaleG2.setColor(Color.DARK_GRAY);
                             preScaleG2.drawRect(x, y, 8, 8);
                         }
@@ -670,7 +698,7 @@ class WorldGridPanel extends JPanel {
                     }
 
                     // Only draw borders when cells are large enough
-                    if (finalPanelH / rows >= 3 && finalPanelW / cols >= 3) {
+                    if (finalPanelH / rows >= 8 && finalPanelW / cols >= 8) {
                         preScaleG2.setColor(Color.DARK_GRAY);
                         preScaleG2.drawRect(x, y, 8, 8);
                     }

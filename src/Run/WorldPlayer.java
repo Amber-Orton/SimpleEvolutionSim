@@ -11,9 +11,16 @@ public class WorldPlayer implements Runnable {
     public void run() {
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         try {
-            while (Main.play) {
+            while (Main.play && (Main.ticksToRun == -1 || Main.ticksToRun > 0)) {
                 long startTime = System.nanoTime();
 
+                if (Main.ticksToRun > 0) {
+                    Main.ticksToRun--;
+                    if (Main.ticksToRun == 0) {
+                        Main.play = false;
+                        GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                    }
+                }
                 Main.world.run();
                 Main.lastTickTime = System.nanoTime() - startTime;
                 try {
@@ -47,6 +54,10 @@ public class WorldPlayer implements Runnable {
     }
 
     public void once() {
+        if (Main.ticksToRun > 0) {
+            Main.ticksToRun--;
+        }
+        if (Main.play) return;
         Thread thread = new Thread(() -> Main.world.run());
         thread.start();
     }
