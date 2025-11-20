@@ -119,7 +119,7 @@ public class GUI {
                 updateWorldViewWorking = false;
             });
         } else {
-            Main.lastUpdateWorldViewTime = System.nanoTime() - startTime;
+            Main.lastUpdateWorldViewTotalTime = System.nanoTime() - startTime;
             updateWorldViewWorking = false;
         }
     }
@@ -237,7 +237,7 @@ public class GUI {
             System.out.println("------------- UPDATE AFTER TICK DEBUG INFO -------------");
             System.out.println();
             System.out.println("updateAfterTick() debug times: ");
-            System.out.println("debug times are: update start : update world view : update selected thing info : update tick count in GUI");
+            System.out.println("debug times are: update start : start update world view : update selected thing info : update tick count in GUI");
             System.out.println("updateAfterTick debug Times ns (absolute): " + updateAfterTickDebugTimes);
             System.out.print("updateAfterTick Times ns (differences): [");
             for (int i = 0; i < updateAfterTickDebugTimes.size(); i++) {
@@ -249,6 +249,11 @@ public class GUI {
                 System.out.print((i > 0 ? (updateAfterTickDebugTimes.get(i) -  updateAfterTickDebugTimes.get(i-1)) / 1000000 : 0) + ", ");
             }
             System.out.println("]");
+            System.out.println();
+            System.out.println("------------- UPDATE WORLD VIEW DEBUG INFO -------------");
+            System.out.println();
+            System.out.println("time to complete last completed update world view from initialisation: " + Main.lastUpdateWorldViewTotalTime + " ns (" + (Main.lastUpdateWorldViewTotalTime / 1_000_000.0) + " ms)");
+            System.out.println("actual time spent updating world view (excluding waiting): " + Main.lastUpdateWorldViewActualTime + " ns (" + (Main.lastUpdateWorldViewActualTime / 1_000_000.0) + " ms)");
         } else {
             System.out.println("for more indepth debugging information, enable in-depth debug mode.");
         }
@@ -272,11 +277,7 @@ public class GUI {
     private void tick() {
         synchronized (world) {
             long startTime = System.nanoTime();
-            worldPlayer.once();
-            Main.lastTickTime = System.nanoTime() - startTime;
-            updateAfterTick(startTime);
-            Main.lastTickTime = System.nanoTime() - startTime;
-            System.out.println("Ticked! in: " + (Main.lastTickTime / 1_000_000_000.0) + " seconds");
+            worldPlayer.queueOneTick(startTime);
         }
     }
 
@@ -299,7 +300,7 @@ public class GUI {
         if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
         tickCountDisplay.setText("Tick Count: " + world.getTickCount());
         Main.lastTickTime = System.nanoTime() - startTime;
-        reportedmspt.setText("Actual: MSPT: " + Main.lastTickTime / 1_000_000.0 + ", TPS: " + 1_000_000_000.0 / Main.lastTickTime + ", Last render time(ms): " + Main.lastUpdateWorldViewTime / 1_000_000.0 + ", Current render time(ms): " + (System.nanoTime() - Main.lastUpdateWorldViewStartTime) / 1_000_000.0);
+        reportedmspt.setText("Actual: MSPT: " + Main.lastTickTime / 1_000_000.0 + ", TPS: " + 1_000_000_000.0 / Main.lastTickTime + ", Last render time(ms): " + Main.lastUpdateWorldViewTotalTime / 1_000_000.0 + ", Current render time(ms): " + (System.nanoTime() - Main.lastUpdateWorldViewStartTime) / 1_000_000.0);
         if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
         if (Main.autoDebug) {
             printDebugInfo();
@@ -545,6 +546,7 @@ class WorldGridPanel extends JPanel {
 
     // Off-EDT full-frame render into a BufferedImage, then swap on EDT and repaint.
     public void renderWorldAsync(long startTime, Runnable onDone) {
+        long startRenderTime = System.nanoTime();
         final Dimension size = getSize();
         if (size.width <= 0 || size.height <= 0) {
             SwingUtilities.invokeLater(() -> {
@@ -620,13 +622,14 @@ class WorldGridPanel extends JPanel {
                 g2.dispose();
             }
 
+            Main.lastUpdateWorldViewActualTime = System.nanoTime() - startRenderTime;
             // Swap buffer and update UI on EDT
             SwingUtilities.invokeLater(() -> {
                 backBuffer = img;
                 // Reset changed grid now that we committed a new frame
                 world.updateChangedGrid();
                 // Track total render time based on the passed-in startTime
-                Main.lastUpdateWorldViewTime = System.nanoTime() - startTime;
+                Main.lastUpdateWorldViewTotalTime = System.nanoTime() - startTime;
                 repaint();
                 if (onDone != null) onDone.run();
             });
@@ -677,30 +680,32 @@ class WorldGridPanel extends JPanel {
                 for (int c = 0; c < cols; c++) {
                     int x = c * 8;
 
-                    Color cellColor = world.colorGrid[r][c];
-                    if (cellColor == null) {
-                        Thing t = world.getThingAt(r, c);
-                        if (t instanceof HasAppearance) {
-                            RenderedImage imgCell = ((HasAppearance) t).getImage();
-                            if (imgCell != null) {
-                                preScaleG2.drawRenderedImage(imgCell, AffineTransform.getTranslateInstance(x, y));
+                    if (world.changedGrid[r][c]){
+                        Color cellColor = world.colorGrid[r][c];
+                        if (cellColor == null) {
+                            Thing t = world.getThingAt(r, c);
+                            if (t instanceof HasAppearance) {
+                                RenderedImage imgCell = ((HasAppearance) t).getImage();
+                                if (imgCell != null) {
+                                    preScaleG2.drawRenderedImage(imgCell, AffineTransform.getTranslateInstance(x, y));
+                                } else {
+                                    preScaleG2.setColor(Color.GRAY);
+                                    preScaleG2.fillRect(x, y, 8, 8);
+                                }
                             } else {
                                 preScaleG2.setColor(Color.GRAY);
                                 preScaleG2.fillRect(x, y, 8, 8);
                             }
                         } else {
-                            preScaleG2.setColor(Color.GRAY);
+                            preScaleG2.setColor(cellColor);
                             preScaleG2.fillRect(x, y, 8, 8);
                         }
-                    } else {
-                        preScaleG2.setColor(cellColor);
-                        preScaleG2.fillRect(x, y, 8, 8);
-                    }
-
-                    // Only draw borders when cells are large enough
-                    if (finalPanelH / rows >= 8 && finalPanelW / cols >= 8) {
-                        preScaleG2.setColor(Color.DARK_GRAY);
-                        preScaleG2.drawRect(x, y, 8, 8);
+    
+                        // Only draw borders when cells are large enough
+                        if (finalPanelH / rows >= 8 && finalPanelW / cols >= 8) {
+                            preScaleG2.setColor(Color.DARK_GRAY);
+                            preScaleG2.drawRect(x, y, 8, 8);
+                        }
                     }
                 }
             }

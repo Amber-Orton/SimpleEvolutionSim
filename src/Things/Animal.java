@@ -62,10 +62,12 @@ public class Animal extends Edible implements HasAppearance {
         switch (action) {
             case TURN_LEFT:
                 facing = facing.turnLeft();
+                world.posHasChanged(pos);
                 break;
             
             case TURN_RIGHT:
                 facing = facing.turnRight();
+                world.posHasChanged(pos);
                 break;
 
             case MOVE:

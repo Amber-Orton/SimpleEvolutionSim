@@ -41,16 +41,17 @@ public class Main {
     /**
      * other options
      */
-    protected static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = true;
+    protected static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false;
     public static boolean IN_DEPTH_DEBUG_MODE = false;
     public static boolean autoDebug = false;
 
 
     /**
-     * Critical information for running the simulation
+     * Critical information for running the simulation and GUI
      */
     protected static long lastTickTime;
-    protected static long lastUpdateWorldViewTime;
+    protected static long lastUpdateWorldViewTotalTime;
+    protected static long lastUpdateWorldViewActualTime;
     protected static long lastUpdateWorldViewStartTime;
     protected static volatile boolean play = false;
     protected static volatile int tickMillis = 0;

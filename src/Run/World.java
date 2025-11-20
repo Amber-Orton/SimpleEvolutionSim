@@ -250,6 +250,12 @@ public class World implements Runnable {
         }
     }
 
+    public void posHasChanged(Position pos) {
+        if (posIsInBounds(pos)) {
+            changedGrid[pos.getRow()][pos.getCol()] = true;
+        }
+    }
+
     public boolean posIsInBounds(Position pos) {
         return pos.getRow() >= 0 && pos.getRow() < height && pos.getCol() >= 0 && pos.getCol() < width;
     }
