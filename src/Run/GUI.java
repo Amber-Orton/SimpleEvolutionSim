@@ -622,32 +622,32 @@ class WorldGridPanel extends JPanel {
                         int x = c * 8;
 
 
-                        Color cellColor = world.colorGrid[r][c];
-                        if (cellColor == null) {
-                            Thing t = world.getThingAt(r, c);
-                            if (t instanceof HasAppearance) {
-                                RenderedImage imgCell = ((HasAppearance) t).getImage();
-                                if (imgCell != null) {
-                                    preScaleG2.drawRenderedImage(imgCell, AffineTransform.getTranslateInstance(x, y));
+                        if (world.changedGrid[r][c]){
+                            Color cellColor = world.colorGrid[r][c];
+                            if (cellColor == null) {
+                                Thing t = world.getThingAt(r, c);
+                                if (t instanceof HasAppearance) {
+                                    RenderedImage imgCell = ((HasAppearance) t).getImage();
+                                    if (imgCell != null) {
+                                        preScaleG2.drawRenderedImage(imgCell, AffineTransform.getTranslateInstance(x, y));
+                                    } else {
+                                        preScaleG2.setColor(Color.GRAY);
+                                        preScaleG2.fillRect(x, y, 8, 8);
+                                    }
                                 } else {
-                                    // Fallback if no image available
                                     preScaleG2.setColor(Color.GRAY);
                                     preScaleG2.fillRect(x, y, 8, 8);
                                 }
                             } else {
-                                preScaleG2.setColor(Color.GRAY);
+                                preScaleG2.setColor(cellColor);
                                 preScaleG2.fillRect(x, y, 8, 8);
                             }
-                        } else {
-                            preScaleG2.setColor(cellColor);
-                            preScaleG2.fillRect(x, y, 8, 8);
-                        }
-
-                        // Only draw borders when cells are large enough
-                        
-                        if (finalPanelH/rows >= 8 && finalPanelW/cols >= 8) {
-                            preScaleG2.setColor(Color.DARK_GRAY);
-                            preScaleG2.drawRect(x, y, 8, 8);
+        
+                            // Only draw borders when cells are large enough
+                            if (finalPanelH / rows >= 8 && finalPanelW / cols >= 8) {
+                                preScaleG2.setColor(Color.DARK_GRAY);
+                                preScaleG2.drawRect(x, y, 8, 8);
+                            }
                         }
                     }
                 }
