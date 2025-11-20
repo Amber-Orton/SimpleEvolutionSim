@@ -53,6 +53,8 @@ public class Main {
     protected static long lastUpdateWorldViewTotalTime;
     protected static long lastUpdateWorldViewActualTime;
     protected static long lastUpdateWorldViewStartTime;
+    protected static boolean waitForLongUpdateAfterTick = true;
+    protected static boolean doUpdateWorldView = true;
     protected static volatile boolean play = false;
     protected static volatile int tickMillis = 0;
     protected static volatile int ticksToRun = -1;

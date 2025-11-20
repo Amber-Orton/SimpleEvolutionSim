@@ -204,6 +204,25 @@ public class GUI {
         });
         tickPanel.add(toggleAutoDebugButton);
 
+        JButton toggleUpdateWorldViewButton = new JButton(Main.doUpdateWorldView ? "Disable World View" : "Enable World View");
+        toggleUpdateWorldViewButton.addActionListener(e -> {
+            Main.doUpdateWorldView = !Main.doUpdateWorldView;
+            toggleUpdateWorldViewButton.setText(Main.doUpdateWorldView ? "Disable World View" : "Enable World View");
+            if (Main.doUpdateWorldView && !updateWorldViewWorking) {
+                updateWorldViewWorking = true;
+                Main.lastUpdateWorldViewStartTime = System.nanoTime();
+                updateWorldView(Main.lastUpdateWorldViewStartTime);
+            }
+        });
+        tickPanel.add(toggleUpdateWorldViewButton);
+
+        JButton toggleWaitForLongUpdateButton = new JButton(Main.waitForLongUpdateAfterTick ? "Disable Wait for Render" : "Enable Wait for Render");
+        toggleWaitForLongUpdateButton.addActionListener(e -> {
+            Main.waitForLongUpdateAfterTick = !Main.waitForLongUpdateAfterTick;
+            toggleWaitForLongUpdateButton.setText(Main.waitForLongUpdateAfterTick ? "Disable Wait for Render" : "Enable Wait for Render");
+        });
+        tickPanel.add(toggleWaitForLongUpdateButton);
+
         return tickPanel;
     }
 
@@ -282,28 +301,46 @@ public class GUI {
     }
 
     protected void updateAfterTick(long startTime) {
-        ticksToRun.setText(Integer.toString(Main.ticksToRun));
-
+        
         if (Main.IN_DEPTH_DEBUG_MODE) {
             updateAfterTickDebugTimes.clear();
             updateAfterTickDebugTimes.add(System.nanoTime());
         }
-
-        if (!updateWorldViewWorking) {
-            updateWorldViewWorking = true;
-            Main.lastUpdateWorldViewStartTime = System.nanoTime();
-            updateWorldView(Main.lastUpdateWorldViewStartTime);
-        }
-
-        if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
-        updateSelectedThingInfo(selectedThing);
-        if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+        
+        ticksToRun.setText(Integer.toString(Main.ticksToRun));
         tickCountDisplay.setText("Tick Count: " + world.getTickCount());
-        Main.lastTickTime = System.nanoTime() - startTime;
         reportedmspt.setText("Actual: MSPT: " + Main.lastTickTime / 1_000_000.0 + ", TPS: " + 1_000_000_000.0 / Main.lastTickTime + ", Last render time(ms): " + Main.lastUpdateWorldViewTotalTime / 1_000_000.0 + ", Current render time(ms): " + (System.nanoTime() - Main.lastUpdateWorldViewStartTime) / 1_000_000.0);
-        if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
-        if (Main.autoDebug) {
-            printDebugInfo();
+        
+        if (Main.waitForLongUpdateAfterTick) {
+            if (!updateWorldViewWorking && Main.doUpdateWorldView) {
+                updateWorldViewWorking = true;
+                Main.lastUpdateWorldViewStartTime = System.nanoTime();
+                updateWorldView(Main.lastUpdateWorldViewStartTime);
+            }
+            
+            if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+            updateSelectedThingInfo(selectedThing);
+            Main.lastTickTime = System.nanoTime() - startTime;
+            if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+            if (Main.autoDebug) {
+                printDebugInfo();
+            }
+        } else {
+            SwingUtilities.invokeLater(() -> {
+                if (!updateWorldViewWorking && Main.doUpdateWorldView) {
+                    updateWorldViewWorking = true;
+                    Main.lastUpdateWorldViewStartTime = System.nanoTime();
+                    updateWorldView(Main.lastUpdateWorldViewStartTime);
+                }
+                
+                if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+                updateSelectedThingInfo(selectedThing);
+                Main.lastTickTime = System.nanoTime() - startTime;
+                if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+                if (Main.autoDebug) {
+                    printDebugInfo();
+                }
+            });
         }
     }
 
