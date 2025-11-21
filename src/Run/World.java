@@ -8,7 +8,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-
+import Logger.Logger;
 import Things.Egg;
 import Things.Nothing;
 import Things.Thing;
@@ -31,7 +31,6 @@ public class World implements Runnable {
 
 
 
-    protected ArrayList<Long> tickDebugTimes = new ArrayList<>();
 
 
 
@@ -65,8 +64,7 @@ public class World implements Runnable {
      */
     private synchronized void tick() {
         if (Main.IN_DEPTH_DEBUG_MODE) {
-            tickDebugTimes.clear();
-            tickDebugTimes.add(System.nanoTime());
+            Logger.logEvent("Tick: " + tickCount, "Tick started");
         }
         tickCount++;
 
@@ -77,7 +75,7 @@ public class World implements Runnable {
             }
         }
 
-        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
+        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Removed dead things");}
 
         List<Future<?>> futures = new ArrayList<>(things.size());
 
@@ -101,7 +99,7 @@ public class World implements Runnable {
             }
         }
 
-        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
+        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Threads run");}
 
         thingsToUpdate = new HashSet<>();
         eggsToUpdate = new HashSet<>();
@@ -117,14 +115,14 @@ public class World implements Runnable {
             }
         }
 
-        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
+        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Created update sets");}
 
         thingsDoAction(thingsToUpdate);
-        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
+        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Things did action");}
         thingsDoAction(eggsToUpdate);
-        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
+        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Eggs did action");}
         thingsDoAction(nothingToUpdate);
-        if (Main.IN_DEPTH_DEBUG_MODE) {tickDebugTimes.add(System.nanoTime());}
+        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Nothing did action");}
     }
 
     private void thingsDoAction(Set<Thing> things) {

@@ -2,6 +2,7 @@ package Run;
 
 import javax.swing.*;
 
+import Logger.Logger;
 import Things.Animal;
 import Things.Egg;
 import Things.Food;
@@ -42,7 +43,6 @@ public class GUI {
     private final WorldPlayer worldPlayer = new WorldPlayer();
     private static boolean optionsShown = false;
 
-    private ArrayList<Long> updateAfterTickDebugTimes = new ArrayList<>();
     private boolean updateWorldViewWorking = false;
 
     public static GUI getInstance() {
@@ -239,35 +239,12 @@ public class GUI {
             System.out.println();
             System.out.println("------------- WORLD DEBUG INFO -------------");
             System.out.println();
-            System.out.println("tick() debug times: ");
-            System.out.println("debug times are: tick start : remove dead things : wait for threads to think : create doAction sets : update things : update eggs : update nothing");
-            System.out.println("world debug Times ns (absolute): " + world.tickDebugTimes);
-            System.out.print("world debug Times ns (differences): [");
-            for (int i = 0; i < world.tickDebugTimes.size(); i++) {
-                System.out.print((i > 0 ? world.tickDebugTimes.get(i) -  world.tickDebugTimes.get(i-1) : 0) + ", ");
-            }
-            System.out.println("]");
-            System.out.print("world debug Times ms (differences): [");
-            for (int i = 0; i < world.tickDebugTimes.size(); i++) {
-                System.out.print((i > 0 ? (world.tickDebugTimes.get(i) -  world.tickDebugTimes.get(i-1)) / 1000000 : 0) + ", ");
-            }
-            System.out.println("]");
+            System.out.println(Logger.getLogEvent("Tick: " + world.getTickCount()));
+            System.out.println(Logger.getLogEvent("WorldPlayer Tick: " + world.getTickCount()));
             System.out.println();
             System.out.println("------------- UPDATE AFTER TICK DEBUG INFO -------------");
             System.out.println();
-            System.out.println("updateAfterTick() debug times: ");
-            System.out.println("debug times are: update start : start update world view : update selected thing info : update tick count in GUI");
-            System.out.println("updateAfterTick debug Times ns (absolute): " + updateAfterTickDebugTimes);
-            System.out.print("updateAfterTick Times ns (differences): [");
-            for (int i = 0; i < updateAfterTickDebugTimes.size(); i++) {
-                System.out.print((i > 0 ? updateAfterTickDebugTimes.get(i) -  updateAfterTickDebugTimes.get(i-1) : 0) + ", ");
-            }
-            System.out.println("]");
-            System.out.print("updateAfterTick Times ms (differences): [");
-            for (int i = 0; i < updateAfterTickDebugTimes.size(); i++) {
-                System.out.print((i > 0 ? (updateAfterTickDebugTimes.get(i) -  updateAfterTickDebugTimes.get(i-1)) / 1000000 : 0) + ", ");
-            }
-            System.out.println("]");
+            System.out.println(Logger.getLogEvent("updateAfterTick Tick: " + world.getTickCount()));
             System.out.println();
             System.out.println("------------- UPDATE WORLD VIEW DEBUG INFO -------------");
             System.out.println();
@@ -301,10 +278,10 @@ public class GUI {
     }
 
     protected void updateAfterTick(long startTime) {
+        int tick = world.getTickCount();
         
         if (Main.IN_DEPTH_DEBUG_MODE) {
-            updateAfterTickDebugTimes.clear();
-            updateAfterTickDebugTimes.add(System.nanoTime());
+            Logger.logEvent("updateAfterTick Tick: " + tick, "Start");
         }
         
         ticksToRun.setText(Integer.toString(Main.ticksToRun));
@@ -318,12 +295,13 @@ public class GUI {
                 updateWorldView(Main.lastUpdateWorldViewStartTime);
             }
             
-            if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+            if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Updated World View");}
             updateSelectedThingInfo(selectedThing);
             Main.lastTickTime = System.nanoTime() - startTime;
-            if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+            if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Updated Selected Thing Info");}
             if (Main.autoDebug) {
                 printDebugInfo();
+                if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Printed Debug Info");}
             }
         } else {
             SwingUtilities.invokeLater(() -> {
@@ -333,12 +311,13 @@ public class GUI {
                     updateWorldView(Main.lastUpdateWorldViewStartTime);
                 }
                 
-                if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+                if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Updated World View");}
                 updateSelectedThingInfo(selectedThing);
                 Main.lastTickTime = System.nanoTime() - startTime;
-                if (Main.IN_DEPTH_DEBUG_MODE) {updateAfterTickDebugTimes.add(System.nanoTime());}
+                if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Updated Selected Thing Info");}
                 if (Main.autoDebug) {
                     printDebugInfo();
+                    if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Printed Debug Info");}
                 }
             });
         }
@@ -593,71 +572,12 @@ class WorldGridPanel extends JPanel {
             return;
         }
 
-        final int rows = world.getHeight();
-        final int cols = world.getWidth();
-        final int panelH = rows*8;
-        final int panelW = cols*8;
-        double scale = Math.min(size.height / (double) panelH, size.width / (double) panelW);
-        final int finalPanelH = (int)Math.round(panelH * scale);
-        final int finalPanelW = (int)Math.round(panelW * scale);
+
 
         
 
         renderExecutor.submit(() -> {
-            BufferedImage preScaleImg = new BufferedImage(panelW, panelH, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D preScaleG2 = preScaleImg.createGraphics();
-            BufferedImage img = new BufferedImage(finalPanelW, finalPanelH, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2 = img.createGraphics();
-            try {
-                // Background
-                preScaleG2.setColor(getBackground());
-                preScaleG2.fillRect(0, 0, panelW, panelH);
-
-
-                // Draw world
-                for (int r = 0; r < rows; r++) {
-                    int y = r * 8;
-
-                    for (int c = 0; c < cols; c++) {
-                        int x = c * 8;
-
-
-                        if (world.changedGrid[r][c]){
-                            Color cellColor = world.colorGrid[r][c];
-                            if (cellColor == null) {
-                                Thing t = world.getThingAt(r, c);
-                                if (t instanceof HasAppearance) {
-                                    RenderedImage imgCell = ((HasAppearance) t).getImage();
-                                    if (imgCell != null) {
-                                        preScaleG2.drawRenderedImage(imgCell, AffineTransform.getTranslateInstance(x, y));
-                                    } else {
-                                        preScaleG2.setColor(Color.GRAY);
-                                        preScaleG2.fillRect(x, y, 8, 8);
-                                    }
-                                } else {
-                                    preScaleG2.setColor(Color.GRAY);
-                                    preScaleG2.fillRect(x, y, 8, 8);
-                                }
-                            } else {
-                                preScaleG2.setColor(cellColor);
-                                preScaleG2.fillRect(x, y, 8, 8);
-                            }
-        
-                            // Only draw borders when cells are large enough
-                            if (finalPanelH / rows >= 8 && finalPanelW / cols >= 8) {
-                                preScaleG2.setColor(Color.DARK_GRAY);
-                                preScaleG2.drawRect(x, y, 8, 8);
-                            }
-                        }
-                    }
-                }
-                //scale at end
-                g2.drawImage(preScaleImg, 0, 0, finalPanelW, finalPanelH, null);
-
-            } finally {
-                preScaleG2.dispose();
-                g2.dispose();
-            }
+            BufferedImage img = createBufferedImage();
 
             Main.lastUpdateWorldViewActualTime = System.nanoTime() - startRenderTime;
             // Swap buffer and update UI on EDT
@@ -677,40 +597,47 @@ class WorldGridPanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // If we have a buffered frame, draw it preserving aspect ratio and centered.
         BufferedImage buf = backBuffer;
         if (buf != null) {
-            int panelW = getWidth();
-            int panelH = getHeight();
-            int bw = buf.getWidth();
-            int bh = buf.getHeight();
-            double s = Math.min(panelW / (double) bw, panelH / (double) bh);
-            int drawW = Math.max(1, (int) Math.round(bw * s));
-            int drawH = Math.max(1, (int) Math.round(bh * s));
-            int x = (panelW - drawW) / 2;
-            int y = (panelH - drawH) / 2;
-            g.drawImage(buf, x, y, drawW, drawH, null);
+            drawScaledAndCentered(g, buf);
             return;
         }
 
         // Fallback: immediate painting path (used for first paint)
+        BufferedImage img = createBufferedImage();
+        drawScaledAndCentered(g, img);
+    }
+
+    private void drawScaledAndCentered(Graphics g, BufferedImage img) {
+        int panelW = getWidth();
+        int panelH = getHeight();
+        int imgW = img.getWidth();
+        int imgH = img.getHeight();
+        
+        double scale = Math.min(panelW / (double) imgW, panelH / (double) imgH);
+        int drawW = Math.max(1, (int) Math.round(imgW * scale));
+        int drawH = Math.max(1, (int) Math.round(imgH * scale));
+        int x = (panelW - drawW) / 2;
+        int y = (panelH - drawH) / 2;
+        
+        g.drawImage(img, x, y, drawW, drawH, null);
+    }
+
+    private BufferedImage createBufferedImage(){
         final int rows = world.getHeight();
         final int cols = world.getWidth();
-        final int panelH = rows*8;
-        final int panelW = cols*8;
-        double scale = Math.min(getHeight() / (double) panelH, getWidth() / (double) panelW);
-        final int finalPanelH = (int)Math.round(panelH * scale);
-        final int finalPanelW = (int)Math.round(panelW * scale);
+        final int imgW = cols * 8;
+        final int imgH = rows * 8;
 
-        BufferedImage preScaleImg = new BufferedImage(panelW, panelH, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D preScaleG2 = preScaleImg.createGraphics();
-
+        BufferedImage img;
+        if (backBuffer != null) {
+            img = backBuffer;
+        } else {
+            img = new BufferedImage(imgW, imgH, BufferedImage.TYPE_INT_ARGB);
+        }
+        Graphics2D g2 = img.createGraphics();
         try {
-            // Background
-            preScaleG2.setColor(getBackground());
-            preScaleG2.fillRect(0, 0, panelW, panelH);
-
-            // Draw world at 8x8 scale
+            // Draw world cells
             for (int r = 0; r < rows; r++) {
                 int y = r * 8;
 
@@ -724,36 +651,34 @@ class WorldGridPanel extends JPanel {
                             if (t instanceof HasAppearance) {
                                 RenderedImage imgCell = ((HasAppearance) t).getImage();
                                 if (imgCell != null) {
-                                    preScaleG2.drawRenderedImage(imgCell, AffineTransform.getTranslateInstance(x, y));
+                                    g2.drawRenderedImage(imgCell, AffineTransform.getTranslateInstance(x, y));
                                 } else {
-                                    preScaleG2.setColor(Color.GRAY);
-                                    preScaleG2.fillRect(x, y, 8, 8);
+                                    g2.setColor(Color.GRAY);
+                                    g2.fillRect(x, y, 8, 8);
                                 }
                             } else {
-                                preScaleG2.setColor(Color.GRAY);
-                                preScaleG2.fillRect(x, y, 8, 8);
+                                g2.setColor(Color.GRAY);
+                                g2.fillRect(x, y, 8, 8);
                             }
                         } else {
-                            preScaleG2.setColor(cellColor);
-                            preScaleG2.fillRect(x, y, 8, 8);
+                            g2.setColor(cellColor);
+                            g2.fillRect(x, y, 8, 8);
                         }
     
-                        // Only draw borders when cells are large enough
-                        if (finalPanelH / rows >= 8 && finalPanelW / cols >= 8) {
-                            preScaleG2.setColor(Color.DARK_GRAY);
-                            preScaleG2.drawRect(x, y, 8, 8);
+                        // Only draw borders when scaled cells will be large enough
+                        double scale = Math.min(getHeight() / (double) imgH, getWidth() / (double) imgW);
+                        if (scale * 8 >= 8) {
+                            g2.setColor(Color.DARK_GRAY);
+                            g2.drawRect(x, y, 8, 8);
                         }
                     }
                 }
             }
-        } finally {
-            preScaleG2.dispose();
-        }
 
-        // Scale to final panel size (center it like the buffered path)
-        int x = (getWidth() - finalPanelW) / 2;
-        int y = (getHeight() - finalPanelH) / 2;
-        g.drawImage(preScaleImg, x, y, finalPanelW, finalPanelH, null);
+        } finally {
+            g2.dispose();
+        }
+        return img;
     }
 
     private void handleClick(int mx, int my) {

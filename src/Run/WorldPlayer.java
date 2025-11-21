@@ -5,6 +5,8 @@ import java.util.concurrent.Executors;
 
 import javax.swing.SwingUtilities;
 
+import Logger.Logger;
+
 public class WorldPlayer implements Runnable {
 
    private final ExecutorService onceExecutor = Executors.newSingleThreadExecutor();
@@ -18,6 +20,8 @@ public class WorldPlayer implements Runnable {
                 GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
             }
             while (Main.play && (Main.ticksToRun == -1 || Main.ticksToRun > 0)) {
+                int currentTick = Main.world.getTickCount();
+                Logger.logEvent("WorldPlayer Tick: " + currentTick, "Starting tick");
                 long startTime = System.nanoTime();
 
                 if (Main.ticksToRun > 0) {
@@ -27,7 +31,9 @@ public class WorldPlayer implements Runnable {
                         GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
                     }
                 }
+                Logger.logEvent("WorldPlayer Tick: " + currentTick, "Checked ticksToRun");
                 Main.world.run();
+                Logger.logEvent("WorldPlayer Tick: " + currentTick, "Ran world");
                 Main.lastTickTime = System.nanoTime() - startTime;
                 try {
                     SwingUtilities.invokeAndWait(() -> GUI.getInstance().updateAfterTick(startTime));
