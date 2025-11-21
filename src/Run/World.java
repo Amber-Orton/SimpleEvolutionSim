@@ -22,17 +22,18 @@ public class World implements Runnable {
     private Set<Thing> thingsToUpdate = new HashSet<>();
     private Set<Thing> eggsToUpdate = new HashSet<>();
     private Set<Thing> nothingToUpdate = new HashSet<>();
-    protected Thing[][] grid;
-    protected Color[][] colorGrid;
-    protected boolean[][] changedGrid;
+    private Thing[][] grid;
+    private Color[][] colorGrid;
+    private boolean[][] changedGrid;
     protected Nothing[][] nothingGrid;
+    
     private final Wall DEFAULTWALL = new Wall();
     private int tickCount = 0;
+    
+    
 
-
-
-
-
+    
+    
 
 
     protected World(int width, int height) {
@@ -46,18 +47,18 @@ public class World implements Runnable {
             Arrays.fill(row, true);//initialise to true since the world has changed from completly empty to populated on boot
         }
     }
-
+    
 
     /**
      * Used to tick automatically on time
      * The caller must first check and set readyToTick to false before calling
      */
     public synchronized void run() {
-
+        
         tick();
-
+        
     }
-
+    
     /**
      * Advance the world by one tick, running each Thing in its own thread to think 
      * then one thread for updating the world with the actions of the Things.
@@ -76,7 +77,7 @@ public class World implements Runnable {
         }
 
         if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Removed dead things");}
-
+        
         List<Future<?>> futures = new ArrayList<>(things.size());
 
         //dispatch the Things
@@ -85,7 +86,7 @@ public class World implements Runnable {
                 futures.add(Main.executorService.submit(thing));
             }
         }
-
+        
 
         // Wait for all threads to finish
         for (Future<?> future : futures) {
@@ -98,9 +99,9 @@ public class World implements Runnable {
                 e.printStackTrace();
             }
         }
-
+        
         if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Threads run");}
-
+        
         thingsToUpdate = new HashSet<>();
         eggsToUpdate = new HashSet<>();
         for (Thing thing : things) {
@@ -114,7 +115,7 @@ public class World implements Runnable {
                 }
             }
         }
-
+        
         if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Created update sets");}
 
         thingsDoAction(thingsToUpdate);
@@ -134,9 +135,9 @@ public class World implements Runnable {
             things.remove(thing);
         }
     }
-
-
-
+    
+    
+    
     /** 
      * Set a Thing at a specific location in the grid.
      * Useful for testing and initializing.
@@ -292,5 +293,18 @@ public class World implements Runnable {
 
     public int getTickCount() {
         return tickCount;
+    }
+
+    public Thing[][] getThingGrid() {
+        return grid;
+    }
+
+    public Color[][] getColorGrid() {
+        return colorGrid;
+    }
+
+
+    public boolean[][] getChangedGrid() {
+        return changedGrid;
     }
 }

@@ -638,16 +638,22 @@ class WorldGridPanel extends JPanel {
         Graphics2D g2 = img.createGraphics();
         try {
             // Draw world cells
+
+            //TODO: still not totally thread safe
+            boolean[][] changedGrid = world.getChangedGrid();
+            Thing[][] thingGrid = world.getThingGrid();
+            Color[][] colorGrid = world.getColorGrid();
+
             for (int r = 0; r < rows; r++) {
                 int y = r * 8;
 
                 for (int c = 0; c < cols; c++) {
                     int x = c * 8;
 
-                    if (world.changedGrid[r][c]){
-                        Color cellColor = world.colorGrid[r][c];
+                    if (changedGrid[r][c]){
+                        Color cellColor = colorGrid[r][c];
                         if (cellColor == null) {
-                            Thing t = world.getThingAt(r, c);
+                            Thing t = thingGrid[r][c];
                             if (t instanceof HasAppearance) {
                                 RenderedImage imgCell = ((HasAppearance) t).getImage();
                                 if (imgCell != null) {
