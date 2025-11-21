@@ -55,6 +55,8 @@ public class WorldCreator {
             Position pos = new Position(row, col);
             world.putThingAt(pos, new Animal(world, pos, attrs, null));
         }
+
+        world.updateSnapshot();
     }
 
     /**
