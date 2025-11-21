@@ -16,7 +16,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.lang.reflect.InvocationTargetException;
 import java.util.function.Consumer;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -577,14 +577,11 @@ class WorldGridPanel extends JPanel {
         
 
         renderExecutor.submit(() -> {
-            BufferedImage img = createBufferedImage();
+            createBufferedImage();
 
             Main.lastUpdateWorldViewActualTime = System.nanoTime() - startRenderTime;
             // Swap buffer and update UI on EDT
             SwingUtilities.invokeLater(() -> {
-                backBuffer = img;
-                // Reset changed grid now that we committed a new frame
-                world.updateChangedGrid();
                 // Track total render time based on the passed-in startTime
                 Main.lastUpdateWorldViewTotalTime = System.nanoTime() - startTime;
                 repaint();
@@ -604,8 +601,8 @@ class WorldGridPanel extends JPanel {
         }
 
         // Fallback: immediate painting path (used for first paint)
-        BufferedImage img = createBufferedImage();
-        drawScaledAndCentered(g, img);
+        createBufferedImage();
+        drawScaledAndCentered(g, backBuffer);
     }
 
     private void drawScaledAndCentered(Graphics g, BufferedImage img) {
@@ -623,7 +620,7 @@ class WorldGridPanel extends JPanel {
         g.drawImage(img, x, y, drawW, drawH, null);
     }
 
-    private BufferedImage createBufferedImage(){
+    private void createBufferedImage(){
         final int rows = world.getHeight();
         final int cols = world.getWidth();
         final int imgW = cols * 8;
@@ -643,6 +640,10 @@ class WorldGridPanel extends JPanel {
             boolean[][] changedGrid = world.getChangedGrid();
             Thing[][] thingGrid = world.getThingGrid();
             Color[][] colorGrid = world.getColorGrid();
+
+
+            double scale = Math.min(getHeight() / (double) imgH, getWidth() / (double) imgW);
+            boolean drawBorders = (scale * 8 >= 8);
 
             for (int r = 0; r < rows; r++) {
                 int y = r * 8;
@@ -672,8 +673,7 @@ class WorldGridPanel extends JPanel {
                         }
     
                         // Only draw borders when scaled cells will be large enough
-                        double scale = Math.min(getHeight() / (double) imgH, getWidth() / (double) imgW);
-                        if (scale * 8 >= 8) {
+                        if (drawBorders) {
                             g2.setColor(Color.DARK_GRAY);
                             g2.drawRect(x, y, 8, 8);
                         }
@@ -684,7 +684,8 @@ class WorldGridPanel extends JPanel {
         } finally {
             g2.dispose();
         }
-        return img;
+        backBuffer = img;
+        world.updateChangedGrid();
     }
 
     private void handleClick(int mx, int my) {
