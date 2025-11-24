@@ -74,6 +74,9 @@ public class GUI {
                     NameCreator.close();
                     Main.executorService.shutdown();
                     worldGridPanel.renderExecutor.shutdown();
+                    if (Main.LOGGING_ENABLED) {
+                        Logger.write();
+                    }
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }

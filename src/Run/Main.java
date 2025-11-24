@@ -44,6 +44,7 @@ public class Main {
     protected static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false;
     public static boolean IN_DEPTH_DEBUG_MODE = false;
     public static boolean autoDebug = false;
+    public static boolean LOGGING_ENABLED = true;
 
 
     /**
