@@ -685,7 +685,6 @@ class WorldGridPanel extends JPanel {
             g2.dispose();
         }
         backBuffer = img;
-        world.updateChangedGrid();
     }
 
     private void handleClick(int mx, int my) {

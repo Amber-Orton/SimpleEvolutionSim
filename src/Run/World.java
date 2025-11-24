@@ -24,7 +24,7 @@ public class World implements Runnable {
     private Set<Thing> nothingToUpdate = new HashSet<>();
     private Thing[][] grid;
     private Color[][] colorGrid;
-    private boolean[][] changedGrid;
+    private volatile boolean[][] changedGrid;
     private volatile Snapshot latestSnapshot;
     protected Nothing[][] nothingGrid;
     
@@ -123,6 +123,7 @@ public class World implements Runnable {
         Logger.logEvent("Tick: " + tickCount, "Eggs did action");
         thingsDoAction(nothingToUpdate);
         Logger.logEvent("Tick: " + tickCount, "Nothing did action");
+
         updateSnapshot();
         Logger.logEvent("Tick: " + tickCount, "Updated cached grids");
     }
@@ -175,11 +176,6 @@ public class World implements Runnable {
         things.add(thing);
     }
 
-    public void updateChangedGrid() {
-        for (boolean[] row : changedGrid) {
-            Arrays.fill(row, false);
-        }
-    }
 
     public Thing getThingAt(Position pos) {
         if (posIsInBounds(pos)) {
@@ -252,18 +248,21 @@ public class World implements Runnable {
 
     /**
      * Creates a snapshot of the current world state for GUI rendering.
-     * This must be called when it is known the state of the world is stable.
+     * This must be called when it is known the state of the world is stable for the whole execution time.
      */
     public void updateSnapshot() {
         Thing[][] gridCopy = new Thing[height][width];
         Color[][] colorCopy = new Color[height][width];
-        boolean[][] changedCopy = new boolean[height][width];
+        boolean[][] changedCopy = latestSnapshot == null ? new boolean[height][width] : latestSnapshot.changedGrid;
 
         for (int r = 0; r < height; r++) {
             for (int c = 0; c < width; c++) {
                 gridCopy[r][c] = grid[r][c];
                 colorCopy[r][c] = colorGrid[r][c];
-                changedCopy[r][c] = changedGrid[r][c];
+                if (!changedCopy[r][c] && changedGrid[r][c]) {
+                    changedCopy[r][c] = true;
+                    changedGrid[r][c] = false;
+                }
             }
         }
 
