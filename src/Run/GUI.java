@@ -283,9 +283,7 @@ public class GUI {
     protected void updateAfterTick(long startTime) {
         int tick = world.getTickCount();
         
-        if (Main.IN_DEPTH_DEBUG_MODE) {
-            Logger.logEvent("updateAfterTick Tick: " + tick, "Start");
-        }
+        Logger.logEvent("updateAfterTick Tick: " + tick, "Start");
         
         ticksToRun.setText(Integer.toString(Main.ticksToRun));
         tickCountDisplay.setText("Tick Count: " + world.getTickCount());
@@ -298,13 +296,13 @@ public class GUI {
                 updateWorldView(Main.lastUpdateWorldViewStartTime);
             }
             
-            if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Updated World View");}
+            Logger.logEvent("updateAfterTick Tick: " + tick, "Updated World View");
             updateSelectedThingInfo(selectedThing);
             Main.lastTickTime = System.nanoTime() - startTime;
-            if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Updated Selected Thing Info");}
+            Logger.logEvent("updateAfterTick Tick: " + tick, "Updated Selected Thing Info");
             if (Main.autoDebug) {
                 printDebugInfo();
-                if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Printed Debug Info");}
+                Logger.logEvent("updateAfterTick Tick: " + tick, "Printed Debug Info");
             }
         } else {
             SwingUtilities.invokeLater(() -> {
@@ -314,13 +312,13 @@ public class GUI {
                     updateWorldView(Main.lastUpdateWorldViewStartTime);
                 }
                 
-                if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Updated World View");}
+                Logger.logEvent("updateAfterTick Tick: " + tick, "Updated World View");
                 updateSelectedThingInfo(selectedThing);
                 Main.lastTickTime = System.nanoTime() - startTime;
-                if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Updated Selected Thing Info");}
+                Logger.logEvent("updateAfterTick Tick: " + tick, "Updated Selected Thing Info");
                 if (Main.autoDebug) {
                     printDebugInfo();
-                    if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("updateAfterTick Tick: " + tick, "Printed Debug Info");}
+                    Logger.logEvent("updateAfterTick Tick: " + tick, "Printed Debug Info");
                 }
             });
         }

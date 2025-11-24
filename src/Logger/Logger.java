@@ -12,11 +12,14 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+import Run.Main;
+
 public class Logger {
     private static Map<String, LogEvent> logs = new HashMap<>();
     private static final String LOG_DIR = "log";
 
     public static void logEvent(String task, String message) {
+        if (!Main.IN_DEPTH_DEBUG_MODE) return;
         if (!logs.containsKey(task)) {
             logs.put(task, new LogEvent(task));
         }

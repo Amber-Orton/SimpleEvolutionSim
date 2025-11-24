@@ -1,0 +1,4451 @@
+=== Evolution Simulator Log ===
+Generated: 2025-11-24 21:38:58
+
+Task: WorldPlayer Tick: 402
+LogEvent for task: WorldPlayer Tick: 402
+Timestamp: 2458071737915ns, Message: Starting tick
+Timestamp: 2458071742353ns, Message: Checked ticksToRun
+Timestamp: 2458072223439ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 523
+LogEvent for task: WorldPlayer Tick: 523
+Timestamp: 2458624930539ns, Message: Starting tick
+Timestamp: 2458624941951ns, Message: Checked ticksToRun
+Timestamp: 2458625134309ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 403
+LogEvent for task: WorldPlayer Tick: 403
+Timestamp: 2458074983522ns, Message: Starting tick
+Timestamp: 2458074986888ns, Message: Checked ticksToRun
+Timestamp: 2458078386192ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 524
+LogEvent for task: WorldPlayer Tick: 524
+Timestamp: 2458625749075ns, Message: Starting tick
+Timestamp: 2458625753222ns, Message: Checked ticksToRun
+Timestamp: 2458625927998ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 400
+LogEvent for task: WorldPlayer Tick: 400
+Timestamp: 2458063734813ns, Message: Starting tick
+Timestamp: 2458063748949ns, Message: Checked ticksToRun
+Timestamp: 2458065448316ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 521
+LogEvent for task: WorldPlayer Tick: 521
+Timestamp: 2458618416743ns, Message: Starting tick
+Timestamp: 2458618421101ns, Message: Checked ticksToRun
+Timestamp: 2458618618890ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 401
+LogEvent for task: WorldPlayer Tick: 401
+Timestamp: 2458069601795ns, Message: Starting tick
+Timestamp: 2458069605271ns, Message: Checked ticksToRun
+Timestamp: 2458070944296ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 522
+LogEvent for task: WorldPlayer Tick: 522
+Timestamp: 2458620858152ns, Message: Starting tick
+Timestamp: 2458620863181ns, Message: Checked ticksToRun
+Timestamp: 2458621104441ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 520
+LogEvent for task: WorldPlayer Tick: 520
+Timestamp: 2458609183349ns, Message: Starting tick
+Timestamp: 2458609187146ns, Message: Checked ticksToRun
+Timestamp: 2458609400133ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 408
+LogEvent for task: WorldPlayer Tick: 408
+Timestamp: 2458095222742ns, Message: Starting tick
+Timestamp: 2458095226419ns, Message: Checked ticksToRun
+Timestamp: 2458097141727ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 529
+LogEvent for task: WorldPlayer Tick: 529
+Timestamp: 2458642642380ns, Message: Starting tick
+Timestamp: 2458642647550ns, Message: Checked ticksToRun
+Timestamp: 2458642854796ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 409
+LogEvent for task: WorldPlayer Tick: 409
+Timestamp: 2458100453638ns, Message: Starting tick
+Timestamp: 2458100459359ns, Message: Checked ticksToRun
+Timestamp: 2458101808973ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 406
+LogEvent for task: WorldPlayer Tick: 406
+Timestamp: 2458088430657ns, Message: Starting tick
+Timestamp: 2458088434274ns, Message: Checked ticksToRun
+Timestamp: 2458089099934ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 527
+LogEvent for task: WorldPlayer Tick: 527
+Timestamp: 2458635921468ns, Message: Starting tick
+Timestamp: 2458635924353ns, Message: Checked ticksToRun
+Timestamp: 2458636116481ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 407
+LogEvent for task: WorldPlayer Tick: 407
+Timestamp: 2458090096380ns, Message: Starting tick
+Timestamp: 2458090100488ns, Message: Checked ticksToRun
+Timestamp: 2458090577757ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 528
+LogEvent for task: WorldPlayer Tick: 528
+Timestamp: 2458639390882ns, Message: Starting tick
+Timestamp: 2458639399769ns, Message: Checked ticksToRun
+Timestamp: 2458640134989ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 404
+LogEvent for task: WorldPlayer Tick: 404
+Timestamp: 2458081618494ns, Message: Starting tick
+Timestamp: 2458081636808ns, Message: Checked ticksToRun
+Timestamp: 2458081947728ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 525
+LogEvent for task: WorldPlayer Tick: 525
+Timestamp: 2458628626075ns, Message: Starting tick
+Timestamp: 2458628630824ns, Message: Checked ticksToRun
+Timestamp: 2458630153471ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 405
+LogEvent for task: WorldPlayer Tick: 405
+Timestamp: 2458086222603ns, Message: Starting tick
+Timestamp: 2458086227071ns, Message: Checked ticksToRun
+Timestamp: 2458087058751ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 526
+LogEvent for task: WorldPlayer Tick: 526
+Timestamp: 2458633189838ns, Message: Starting tick
+Timestamp: 2458633193736ns, Message: Checked ticksToRun
+Timestamp: 2458633402465ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 413
+LogEvent for task: WorldPlayer Tick: 413
+Timestamp: 2458118168565ns, Message: Starting tick
+Timestamp: 2458118172402ns, Message: Checked ticksToRun
+Timestamp: 2458118498379ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 534
+LogEvent for task: WorldPlayer Tick: 534
+Timestamp: 2458661170152ns, Message: Starting tick
+Timestamp: 2458661173187ns, Message: Checked ticksToRun
+Timestamp: 2458662050762ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 414
+LogEvent for task: WorldPlayer Tick: 414
+Timestamp: 2458122152438ns, Message: Starting tick
+Timestamp: 2458122155383ns, Message: Checked ticksToRun
+Timestamp: 2458122470430ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 535
+LogEvent for task: WorldPlayer Tick: 535
+Timestamp: 2458665218615ns, Message: Starting tick
+Timestamp: 2458665222532ns, Message: Checked ticksToRun
+Timestamp: 2458665473159ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 411
+LogEvent for task: WorldPlayer Tick: 411
+Timestamp: 2458109276727ns, Message: Starting tick
+Timestamp: 2458109280064ns, Message: Checked ticksToRun
+Timestamp: 2458109782810ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 532
+LogEvent for task: WorldPlayer Tick: 532
+Timestamp: 2458656415513ns, Message: Starting tick
+Timestamp: 2458656418669ns, Message: Checked ticksToRun
+Timestamp: 2458656557137ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 412
+LogEvent for task: WorldPlayer Tick: 412
+Timestamp: 2458115360132ns, Message: Starting tick
+Timestamp: 2458115364039ns, Message: Checked ticksToRun
+Timestamp: 2458117219877ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 533
+LogEvent for task: WorldPlayer Tick: 533
+Timestamp: 2458658076317ns, Message: Starting tick
+Timestamp: 2458658079924ns, Message: Checked ticksToRun
+Timestamp: 2458658226457ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 530
+LogEvent for task: WorldPlayer Tick: 530
+Timestamp: 2458646444454ns, Message: Starting tick
+Timestamp: 2458646448432ns, Message: Checked ticksToRun
+Timestamp: 2458646644968ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 410
+LogEvent for task: WorldPlayer Tick: 410
+Timestamp: 2458104139406ns, Message: Starting tick
+Timestamp: 2458104143543ns, Message: Checked ticksToRun
+Timestamp: 2458104781322ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 531
+LogEvent for task: WorldPlayer Tick: 531
+Timestamp: 2458652198225ns, Message: Starting tick
+Timestamp: 2458652203755ns, Message: Checked ticksToRun
+Timestamp: 2458653406737ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 9
+LogEvent for task: WorldPlayer Tick: 9
+Timestamp: 2455449873997ns, Message: Starting tick
+Timestamp: 2455449880439ns, Message: Checked ticksToRun
+Timestamp: 2455455722314ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 8
+LogEvent for task: WorldPlayer Tick: 8
+Timestamp: 2455431885020ns, Message: Starting tick
+Timestamp: 2455431891813ns, Message: Checked ticksToRun
+Timestamp: 2455446452502ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 7
+LogEvent for task: WorldPlayer Tick: 7
+Timestamp: 2455408491754ns, Message: Starting tick
+Timestamp: 2455408496853ns, Message: Checked ticksToRun
+Timestamp: 2455417798404ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 6
+LogEvent for task: WorldPlayer Tick: 6
+Timestamp: 2455396791864ns, Message: Starting tick
+Timestamp: 2455396800390ns, Message: Checked ticksToRun
+Timestamp: 2455402691216ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 5
+LogEvent for task: WorldPlayer Tick: 5
+Timestamp: 2455379454180ns, Message: Starting tick
+Timestamp: 2455379462286ns, Message: Checked ticksToRun
+Timestamp: 2455387044483ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 419
+LogEvent for task: WorldPlayer Tick: 419
+Timestamp: 2458143176069ns, Message: Starting tick
+Timestamp: 2458143179395ns, Message: Checked ticksToRun
+Timestamp: 2458144365585ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 4
+LogEvent for task: WorldPlayer Tick: 4
+Timestamp: 2455358529363ns, Message: Starting tick
+Timestamp: 2455358537999ns, Message: Checked ticksToRun
+Timestamp: 2455370078792ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 3
+LogEvent for task: WorldPlayer Tick: 3
+Timestamp: 2455348272592ns, Message: Starting tick
+Timestamp: 2455348280147ns, Message: Checked ticksToRun
+Timestamp: 2455356883256ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 417
+LogEvent for task: WorldPlayer Tick: 417
+Timestamp: 2458131971062ns, Message: Starting tick
+Timestamp: 2458131973837ns, Message: Checked ticksToRun
+Timestamp: 2458132203445ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 538
+LogEvent for task: WorldPlayer Tick: 538
+Timestamp: 2458674166266ns, Message: Starting tick
+Timestamp: 2458674169813ns, Message: Checked ticksToRun
+Timestamp: 2458674374985ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 2
+LogEvent for task: WorldPlayer Tick: 2
+Timestamp: 2455329266620ns, Message: Starting tick
+Timestamp: 2455329272181ns, Message: Checked ticksToRun
+Timestamp: 2455345317156ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 418
+LogEvent for task: WorldPlayer Tick: 418
+Timestamp: 2458137313456ns, Message: Starting tick
+Timestamp: 2458137318014ns, Message: Checked ticksToRun
+Timestamp: 2458138289144ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 539
+LogEvent for task: WorldPlayer Tick: 539
+Timestamp: 2458676419955ns, Message: Starting tick
+Timestamp: 2458676422720ns, Message: Checked ticksToRun
+Timestamp: 2458676575134ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 1
+LogEvent for task: WorldPlayer Tick: 1
+Timestamp: 2455316654111ns, Message: Starting tick
+Timestamp: 2455316659210ns, Message: Checked ticksToRun
+Timestamp: 2455326782842ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 415
+LogEvent for task: WorldPlayer Tick: 415
+Timestamp: 2458126948033ns, Message: Starting tick
+Timestamp: 2458126950988ns, Message: Checked ticksToRun
+Timestamp: 2458128279894ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 536
+LogEvent for task: WorldPlayer Tick: 536
+Timestamp: 2458667983256ns, Message: Starting tick
+Timestamp: 2458667986221ns, Message: Checked ticksToRun
+Timestamp: 2458668192536ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 0
+LogEvent for task: WorldPlayer Tick: 0
+Timestamp: 2455282779495ns, Message: Starting tick
+Timestamp: 2455283031254ns, Message: Checked ticksToRun
+Timestamp: 2455293183289ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 416
+LogEvent for task: WorldPlayer Tick: 416
+Timestamp: 2458130577215ns, Message: Starting tick
+Timestamp: 2458130580591ns, Message: Checked ticksToRun
+Timestamp: 2458130866704ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 537
+LogEvent for task: WorldPlayer Tick: 537
+Timestamp: 2458669230690ns, Message: Starting tick
+Timestamp: 2458669233425ns, Message: Checked ticksToRun
+Timestamp: 2458669473623ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 501
+LogEvent for task: WorldPlayer Tick: 501
+Timestamp: 2458504193361ns, Message: Starting tick
+Timestamp: 2458504197488ns, Message: Checked ticksToRun
+Timestamp: 2458504357797ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 502
+LogEvent for task: WorldPlayer Tick: 502
+Timestamp: 2458506164163ns, Message: Starting tick
+Timestamp: 2458506168250ns, Message: Checked ticksToRun
+Timestamp: 2458506324101ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 500
+LogEvent for task: WorldPlayer Tick: 500
+Timestamp: 2458493794806ns, Message: Starting tick
+Timestamp: 2458493798152ns, Message: Checked ticksToRun
+Timestamp: 2458493989418ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 509
+LogEvent for task: WorldPlayer Tick: 509
+Timestamp: 2458556751708ns, Message: Starting tick
+Timestamp: 2458556756136ns, Message: Checked ticksToRun
+Timestamp: 2458558941288ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 507
+LogEvent for task: WorldPlayer Tick: 507
+Timestamp: 2458541852608ns, Message: Starting tick
+Timestamp: 2458541856946ns, Message: Checked ticksToRun
+Timestamp: 2458541998299ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 508
+LogEvent for task: WorldPlayer Tick: 508
+Timestamp: 2458547617589ns, Message: Starting tick
+Timestamp: 2458547620915ns, Message: Checked ticksToRun
+Timestamp: 2458555262373ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 505
+LogEvent for task: WorldPlayer Tick: 505
+Timestamp: 2458531166798ns, Message: Starting tick
+Timestamp: 2458531170615ns, Message: Checked ticksToRun
+Timestamp: 2458534944166ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 506
+LogEvent for task: WorldPlayer Tick: 506
+Timestamp: 2458538498939ns, Message: Starting tick
+Timestamp: 2458538503147ns, Message: Checked ticksToRun
+Timestamp: 2458538807264ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 503
+LogEvent for task: WorldPlayer Tick: 503
+Timestamp: 2458508134504ns, Message: Starting tick
+Timestamp: 2458508137279ns, Message: Checked ticksToRun
+Timestamp: 2458519180214ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 504
+LogEvent for task: WorldPlayer Tick: 504
+Timestamp: 2458527346991ns, Message: Starting tick
+Timestamp: 2458527350708ns, Message: Checked ticksToRun
+Timestamp: 2458527546182ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 99
+LogEvent for task: WorldPlayer Tick: 99
+Timestamp: 2456225857299ns, Message: Starting tick
+Timestamp: 2456225862739ns, Message: Checked ticksToRun
+Timestamp: 2456229835020ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 512
+LogEvent for task: WorldPlayer Tick: 512
+Timestamp: 2458569184693ns, Message: Starting tick
+Timestamp: 2458569188721ns, Message: Checked ticksToRun
+Timestamp: 2458571125429ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 90
+LogEvent for task: WorldPlayer Tick: 90
+Timestamp: 2456153606470ns, Message: Starting tick
+Timestamp: 2456153613503ns, Message: Checked ticksToRun
+Timestamp: 2456154953550ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 513
+LogEvent for task: WorldPlayer Tick: 513
+Timestamp: 2458571583272ns, Message: Starting tick
+Timestamp: 2458571585306ns, Message: Checked ticksToRun
+Timestamp: 2458572199400ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 510
+LogEvent for task: WorldPlayer Tick: 510
+Timestamp: 2458559943495ns, Message: Starting tick
+Timestamp: 2458559946400ns, Message: Checked ticksToRun
+Timestamp: 2458560122088ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 511
+LogEvent for task: WorldPlayer Tick: 511
+Timestamp: 2458562733503ns, Message: Starting tick
+Timestamp: 2458562737290ns, Message: Checked ticksToRun
+Timestamp: 2458564119526ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 97
+LogEvent for task: WorldPlayer Tick: 97
+Timestamp: 2456212957664ns, Message: Starting tick
+Timestamp: 2456212964927ns, Message: Checked ticksToRun
+Timestamp: 2456217242107ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 98
+LogEvent for task: WorldPlayer Tick: 98
+Timestamp: 2456221487216ns, Message: Starting tick
+Timestamp: 2456221495632ns, Message: Checked ticksToRun
+Timestamp: 2456222337941ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 95
+LogEvent for task: WorldPlayer Tick: 95
+Timestamp: 2456192170994ns, Message: Starting tick
+Timestamp: 2456192177025ns, Message: Checked ticksToRun
+Timestamp: 2456193534574ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 518
+LogEvent for task: WorldPlayer Tick: 518
+Timestamp: 2458596958171ns, Message: Starting tick
+Timestamp: 2458596960726ns, Message: Checked ticksToRun
+Timestamp: 2458597116115ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 96
+LogEvent for task: WorldPlayer Tick: 96
+Timestamp: 2456201078310ns, Message: Starting tick
+Timestamp: 2456201085964ns, Message: Checked ticksToRun
+Timestamp: 2456202470123ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 519
+LogEvent for task: WorldPlayer Tick: 519
+Timestamp: 2458605576619ns, Message: Starting tick
+Timestamp: 2458605601746ns, Message: Checked ticksToRun
+Timestamp: 2458606925653ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 93
+LogEvent for task: WorldPlayer Tick: 93
+Timestamp: 2456176308939ns, Message: Starting tick
+Timestamp: 2456176325180ns, Message: Checked ticksToRun
+Timestamp: 2456177391396ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 516
+LogEvent for task: WorldPlayer Tick: 516
+Timestamp: 2458590907367ns, Message: Starting tick
+Timestamp: 2458590913659ns, Message: Checked ticksToRun
+Timestamp: 2458594362465ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 94
+LogEvent for task: WorldPlayer Tick: 94
+Timestamp: 2456186837386ns, Message: Starting tick
+Timestamp: 2456186843197ns, Message: Checked ticksToRun
+Timestamp: 2456187351364ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 517
+LogEvent for task: WorldPlayer Tick: 517
+Timestamp: 2458594907641ns, Message: Starting tick
+Timestamp: 2458594910295ns, Message: Checked ticksToRun
+Timestamp: 2458595094879ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 91
+LogEvent for task: WorldPlayer Tick: 91
+Timestamp: 2456159165808ns, Message: Starting tick
+Timestamp: 2456159172471ns, Message: Checked ticksToRun
+Timestamp: 2456159578337ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 514
+LogEvent for task: WorldPlayer Tick: 514
+Timestamp: 2458577248428ns, Message: Starting tick
+Timestamp: 2458577252716ns, Message: Checked ticksToRun
+Timestamp: 2458586519361ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 92
+LogEvent for task: WorldPlayer Tick: 92
+Timestamp: 2456173565738ns, Message: Starting tick
+Timestamp: 2456173570227ns, Message: Checked ticksToRun
+Timestamp: 2456174918148ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 515
+LogEvent for task: WorldPlayer Tick: 515
+Timestamp: 2458587391677ns, Message: Starting tick
+Timestamp: 2458587395925ns, Message: Checked ticksToRun
+Timestamp: 2458588208769ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 88
+LogEvent for task: WorldPlayer Tick: 88
+Timestamp: 2456139056580ns, Message: Starting tick
+Timestamp: 2456139062031ns, Message: Checked ticksToRun
+Timestamp: 2456141329766ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 89
+LogEvent for task: WorldPlayer Tick: 89
+Timestamp: 2456142807189ns, Message: Starting tick
+Timestamp: 2456142812368ns, Message: Checked ticksToRun
+Timestamp: 2456143638788ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 86
+LogEvent for task: WorldPlayer Tick: 86
+Timestamp: 2456127835122ns, Message: Starting tick
+Timestamp: 2456127842035ns, Message: Checked ticksToRun
+Timestamp: 2456129449160ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 87
+LogEvent for task: WorldPlayer Tick: 87
+Timestamp: 2456133158641ns, Message: Starting tick
+Timestamp: 2456133164993ns, Message: Checked ticksToRun
+Timestamp: 2456134811541ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 84
+LogEvent for task: WorldPlayer Tick: 84
+Timestamp: 2456116214501ns, Message: Starting tick
+Timestamp: 2456116222666ns, Message: Checked ticksToRun
+Timestamp: 2456117539890ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 85
+LogEvent for task: WorldPlayer Tick: 85
+Timestamp: 2456121695182ns, Message: Starting tick
+Timestamp: 2456121703879ns, Message: Checked ticksToRun
+Timestamp: 2456123073911ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 82
+LogEvent for task: WorldPlayer Tick: 82
+Timestamp: 2456097672633ns, Message: Starting tick
+Timestamp: 2456097678354ns, Message: Checked ticksToRun
+Timestamp: 2456098626951ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 83
+LogEvent for task: WorldPlayer Tick: 83
+Timestamp: 2456106046896ns, Message: Starting tick
+Timestamp: 2456106055142ns, Message: Checked ticksToRun
+Timestamp: 2456107636238ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 80
+LogEvent for task: WorldPlayer Tick: 80
+Timestamp: 2456084169294ns, Message: Starting tick
+Timestamp: 2456084175425ns, Message: Checked ticksToRun
+Timestamp: 2456085670811ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 81
+LogEvent for task: WorldPlayer Tick: 81
+Timestamp: 2456090118178ns, Message: Starting tick
+Timestamp: 2456090124550ns, Message: Checked ticksToRun
+Timestamp: 2456091371593ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 79
+LogEvent for task: WorldPlayer Tick: 79
+Timestamp: 2456079277549ns, Message: Starting tick
+Timestamp: 2456079282909ns, Message: Checked ticksToRun
+Timestamp: 2456079726706ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 77
+LogEvent for task: WorldPlayer Tick: 77
+Timestamp: 2456065919631ns, Message: Starting tick
+Timestamp: 2456065925602ns, Message: Checked ticksToRun
+Timestamp: 2456066495624ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 78
+LogEvent for task: WorldPlayer Tick: 78
+Timestamp: 2456069980377ns, Message: Starting tick
+Timestamp: 2456069985376ns, Message: Checked ticksToRun
+Timestamp: 2456070717049ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 75
+LogEvent for task: WorldPlayer Tick: 75
+Timestamp: 2456055831154ns, Message: Starting tick
+Timestamp: 2456055838738ns, Message: Checked ticksToRun
+Timestamp: 2456056421303ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 76
+LogEvent for task: WorldPlayer Tick: 76
+Timestamp: 2456062832659ns, Message: Starting tick
+Timestamp: 2456062838330ns, Message: Checked ticksToRun
+Timestamp: 2456063556979ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 73
+LogEvent for task: WorldPlayer Tick: 73
+Timestamp: 2456043204598ns, Message: Starting tick
+Timestamp: 2456043210359ns, Message: Checked ticksToRun
+Timestamp: 2456048864704ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 74
+LogEvent for task: WorldPlayer Tick: 74
+Timestamp: 2456051923463ns, Message: Starting tick
+Timestamp: 2456051928793ns, Message: Checked ticksToRun
+Timestamp: 2456052436539ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 71
+LogEvent for task: WorldPlayer Tick: 71
+Timestamp: 2456032677714ns, Message: Starting tick
+Timestamp: 2456032684326ns, Message: Checked ticksToRun
+Timestamp: 2456036183035ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 72
+LogEvent for task: WorldPlayer Tick: 72
+Timestamp: 2456039086295ns, Message: Starting tick
+Timestamp: 2456039091815ns, Message: Checked ticksToRun
+Timestamp: 2456040175795ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 70
+LogEvent for task: WorldPlayer Tick: 70
+Timestamp: 2456024324089ns, Message: Starting tick
+Timestamp: 2456024328448ns, Message: Checked ticksToRun
+Timestamp: 2456026636268ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 68
+LogEvent for task: WorldPlayer Tick: 68
+Timestamp: 2456008459390ns, Message: Starting tick
+Timestamp: 2456008464660ns, Message: Checked ticksToRun
+Timestamp: 2456009753231ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 69
+LogEvent for task: WorldPlayer Tick: 69
+Timestamp: 2456019346926ns, Message: Starting tick
+Timestamp: 2456019352566ns, Message: Checked ticksToRun
+Timestamp: 2456022599667ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 66
+LogEvent for task: WorldPlayer Tick: 66
+Timestamp: 2455998369811ns, Message: Starting tick
+Timestamp: 2455998374901ns, Message: Checked ticksToRun
+Timestamp: 2455999215757ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 67
+LogEvent for task: WorldPlayer Tick: 67
+Timestamp: 2456005632844ns, Message: Starting tick
+Timestamp: 2456005638975ns, Message: Checked ticksToRun
+Timestamp: 2456007152485ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 64
+LogEvent for task: WorldPlayer Tick: 64
+Timestamp: 2455984375276ns, Message: Starting tick
+Timestamp: 2455984381358ns, Message: Checked ticksToRun
+Timestamp: 2455985894427ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 65
+LogEvent for task: WorldPlayer Tick: 65
+Timestamp: 2455990256404ns, Message: Starting tick
+Timestamp: 2455990261403ns, Message: Checked ticksToRun
+Timestamp: 2455991373445ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 62
+LogEvent for task: WorldPlayer Tick: 62
+Timestamp: 2455974895023ns, Message: Starting tick
+Timestamp: 2455974899621ns, Message: Checked ticksToRun
+Timestamp: 2455975801872ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 63
+LogEvent for task: WorldPlayer Tick: 63
+Timestamp: 2455978017120ns, Message: Starting tick
+Timestamp: 2455978022951ns, Message: Checked ticksToRun
+Timestamp: 2455980977425ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 60
+LogEvent for task: WorldPlayer Tick: 60
+Timestamp: 2455960376882ns, Message: Starting tick
+Timestamp: 2455960381902ns, Message: Checked ticksToRun
+Timestamp: 2455962324341ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 61
+LogEvent for task: WorldPlayer Tick: 61
+Timestamp: 2455970206226ns, Message: Starting tick
+Timestamp: 2455970238496ns, Message: Checked ticksToRun
+Timestamp: 2455971846042ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 59
+LogEvent for task: WorldPlayer Tick: 59
+Timestamp: 2455955363171ns, Message: Starting tick
+Timestamp: 2455955370274ns, Message: Checked ticksToRun
+Timestamp: 2455956466456ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 57
+LogEvent for task: WorldPlayer Tick: 57
+Timestamp: 2455944644560ns, Message: Starting tick
+Timestamp: 2455944650090ns, Message: Checked ticksToRun
+Timestamp: 2455946419897ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 58
+LogEvent for task: WorldPlayer Tick: 58
+Timestamp: 2455948246561ns, Message: Starting tick
+Timestamp: 2455948254265ns, Message: Checked ticksToRun
+Timestamp: 2455950258750ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 55
+LogEvent for task: WorldPlayer Tick: 55
+Timestamp: 2455930199946ns, Message: Starting tick
+Timestamp: 2455930205817ns, Message: Checked ticksToRun
+Timestamp: 2455931860811ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 56
+LogEvent for task: WorldPlayer Tick: 56
+Timestamp: 2455940074625ns, Message: Starting tick
+Timestamp: 2455940081187ns, Message: Checked ticksToRun
+Timestamp: 2455942611542ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 53
+LogEvent for task: WorldPlayer Tick: 53
+Timestamp: 2455916454075ns, Message: Starting tick
+Timestamp: 2455916461148ns, Message: Checked ticksToRun
+Timestamp: 2455917442276ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 54
+LogEvent for task: WorldPlayer Tick: 54
+Timestamp: 2455923795043ns, Message: Starting tick
+Timestamp: 2455923802517ns, Message: Checked ticksToRun
+Timestamp: 2455925384284ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 51
+LogEvent for task: WorldPlayer Tick: 51
+Timestamp: 2455904373987ns, Message: Starting tick
+Timestamp: 2455904380148ns, Message: Checked ticksToRun
+Timestamp: 2455905221516ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 52
+LogEvent for task: WorldPlayer Tick: 52
+Timestamp: 2455908251061ns, Message: Starting tick
+Timestamp: 2455908254597ns, Message: Checked ticksToRun
+Timestamp: 2455909705641ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 50
+LogEvent for task: WorldPlayer Tick: 50
+Timestamp: 2455892961784ns, Message: Starting tick
+Timestamp: 2455892969137ns, Message: Checked ticksToRun
+Timestamp: 2455895874841ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 48
+LogEvent for task: WorldPlayer Tick: 48
+Timestamp: 2455869249513ns, Message: Starting tick
+Timestamp: 2455869257768ns, Message: Checked ticksToRun
+Timestamp: 2455872818843ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 49
+LogEvent for task: WorldPlayer Tick: 49
+Timestamp: 2455885774041ns, Message: Starting tick
+Timestamp: 2455885777648ns, Message: Checked ticksToRun
+Timestamp: 2455887157509ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 46
+LogEvent for task: WorldPlayer Tick: 46
+Timestamp: 2455854660059ns, Message: Starting tick
+Timestamp: 2455854666091ns, Message: Checked ticksToRun
+Timestamp: 2455856960386ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 47
+LogEvent for task: WorldPlayer Tick: 47
+Timestamp: 2455859923005ns, Message: Starting tick
+Timestamp: 2455859928806ns, Message: Checked ticksToRun
+Timestamp: 2455861580514ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 44
+LogEvent for task: WorldPlayer Tick: 44
+Timestamp: 2455838194531ns, Message: Starting tick
+Timestamp: 2455838199440ns, Message: Checked ticksToRun
+Timestamp: 2455841251667ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 45
+LogEvent for task: WorldPlayer Tick: 45
+Timestamp: 2455845505322ns, Message: Starting tick
+Timestamp: 2455845511414ns, Message: Checked ticksToRun
+Timestamp: 2455847102338ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 130
+LogEvent for task: WorldPlayer Tick: 130
+Timestamp: 2456439562567ns, Message: Starting tick
+Timestamp: 2456439567987ns, Message: Checked ticksToRun
+Timestamp: 2456443156533ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 251
+LogEvent for task: WorldPlayer Tick: 251
+Timestamp: 2457220521569ns, Message: Starting tick
+Timestamp: 2457220524815ns, Message: Checked ticksToRun
+Timestamp: 2457224094455ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 372
+LogEvent for task: WorldPlayer Tick: 372
+Timestamp: 2457933099372ns, Message: Starting tick
+Timestamp: 2457933101846ns, Message: Checked ticksToRun
+Timestamp: 2457933330943ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 493
+LogEvent for task: WorldPlayer Tick: 493
+Timestamp: 2458460558620ns, Message: Starting tick
+Timestamp: 2458460577505ns, Message: Checked ticksToRun
+Timestamp: 2458460777898ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 131
+LogEvent for task: WorldPlayer Tick: 131
+Timestamp: 2456449139921ns, Message: Starting tick
+Timestamp: 2456449145762ns, Message: Checked ticksToRun
+Timestamp: 2456450404217ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 252
+LogEvent for task: WorldPlayer Tick: 252
+Timestamp: 2457231455290ns, Message: Starting tick
+Timestamp: 2457231460961ns, Message: Checked ticksToRun
+Timestamp: 2457232871910ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 373
+LogEvent for task: WorldPlayer Tick: 373
+Timestamp: 2457936807471ns, Message: Starting tick
+Timestamp: 2457936810055ns, Message: Checked ticksToRun
+Timestamp: 2457941827454ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 494
+LogEvent for task: WorldPlayer Tick: 494
+Timestamp: 2458463764002ns, Message: Starting tick
+Timestamp: 2458463768450ns, Message: Checked ticksToRun
+Timestamp: 2458468183917ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 370
+LogEvent for task: WorldPlayer Tick: 370
+Timestamp: 2457923200638ns, Message: Starting tick
+Timestamp: 2457923204455ns, Message: Checked ticksToRun
+Timestamp: 2457923697634ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 491
+LogEvent for task: WorldPlayer Tick: 491
+Timestamp: 2458445872607ns, Message: Starting tick
+Timestamp: 2458445877265ns, Message: Checked ticksToRun
+Timestamp: 2458450200681ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 250
+LogEvent for task: WorldPlayer Tick: 250
+Timestamp: 2457217866762ns, Message: Starting tick
+Timestamp: 2457217870679ns, Message: Checked ticksToRun
+Timestamp: 2457218934852ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 371
+LogEvent for task: WorldPlayer Tick: 371
+Timestamp: 2457929234521ns, Message: Starting tick
+Timestamp: 2457929238338ns, Message: Checked ticksToRun
+Timestamp: 2457929854105ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 492
+LogEvent for task: WorldPlayer Tick: 492
+Timestamp: 2458456201943ns, Message: Starting tick
+Timestamp: 2458456206521ns, Message: Checked ticksToRun
+Timestamp: 2458456623758ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 490
+LogEvent for task: WorldPlayer Tick: 490
+Timestamp: 2458441752149ns, Message: Starting tick
+Timestamp: 2458441760625ns, Message: Checked ticksToRun
+Timestamp: 2458443668300ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 127
+LogEvent for task: WorldPlayer Tick: 127
+Timestamp: 2456414306609ns, Message: Starting tick
+Timestamp: 2456414311609ns, Message: Checked ticksToRun
+Timestamp: 2456415182271ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 248
+LogEvent for task: WorldPlayer Tick: 248
+Timestamp: 2457201255973ns, Message: Starting tick
+Timestamp: 2457201260421ns, Message: Checked ticksToRun
+Timestamp: 2457203792058ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 369
+LogEvent for task: WorldPlayer Tick: 369
+Timestamp: 2457921130892ns, Message: Starting tick
+Timestamp: 2457921134729ns, Message: Checked ticksToRun
+Timestamp: 2457921415773ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 128
+LogEvent for task: WorldPlayer Tick: 128
+Timestamp: 2456424047659ns, Message: Starting tick
+Timestamp: 2456424110186ns, Message: Checked ticksToRun
+Timestamp: 2456425108345ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 249
+LogEvent for task: WorldPlayer Tick: 249
+Timestamp: 2457208477368ns, Message: Starting tick
+Timestamp: 2457208481345ns, Message: Checked ticksToRun
+Timestamp: 2457214208776ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 125
+LogEvent for task: WorldPlayer Tick: 125
+Timestamp: 2456398943986ns, Message: Starting tick
+Timestamp: 2456398952161ns, Message: Checked ticksToRun
+Timestamp: 2456406219091ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 246
+LogEvent for task: WorldPlayer Tick: 246
+Timestamp: 2457179348424ns, Message: Starting tick
+Timestamp: 2457179353674ns, Message: Checked ticksToRun
+Timestamp: 2457179770240ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 367
+LogEvent for task: WorldPlayer Tick: 367
+Timestamp: 2457906458504ns, Message: Starting tick
+Timestamp: 2457906462522ns, Message: Checked ticksToRun
+Timestamp: 2457908336243ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 488
+LogEvent for task: WorldPlayer Tick: 488
+Timestamp: 2458432703800ns, Message: Starting tick
+Timestamp: 2458432707988ns, Message: Checked ticksToRun
+Timestamp: 2458432993320ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 126
+LogEvent for task: WorldPlayer Tick: 126
+Timestamp: 2456408650811ns, Message: Starting tick
+Timestamp: 2456408657043ns, Message: Checked ticksToRun
+Timestamp: 2456410793594ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 247
+LogEvent for task: WorldPlayer Tick: 247
+Timestamp: 2457193422838ns, Message: Starting tick
+Timestamp: 2457193429851ns, Message: Checked ticksToRun
+Timestamp: 2457197761662ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 368
+LogEvent for task: WorldPlayer Tick: 368
+Timestamp: 2457912290260ns, Message: Starting tick
+Timestamp: 2457912295760ns, Message: Checked ticksToRun
+Timestamp: 2457915575812ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 489
+LogEvent for task: WorldPlayer Tick: 489
+Timestamp: 2458438178220ns, Message: Starting tick
+Timestamp: 2458438182098ns, Message: Checked ticksToRun
+Timestamp: 2458438400975ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 123
+LogEvent for task: WorldPlayer Tick: 123
+Timestamp: 2456388872821ns, Message: Starting tick
+Timestamp: 2456388878291ns, Message: Checked ticksToRun
+Timestamp: 2456389313412ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 244
+LogEvent for task: WorldPlayer Tick: 244
+Timestamp: 2457168656904ns, Message: Starting tick
+Timestamp: 2457168660280ns, Message: Checked ticksToRun
+Timestamp: 2457169057149ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 365
+LogEvent for task: WorldPlayer Tick: 365
+Timestamp: 2457894265736ns, Message: Starting tick
+Timestamp: 2457894279562ns, Message: Checked ticksToRun
+Timestamp: 2457894937117ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 486
+LogEvent for task: WorldPlayer Tick: 486
+Timestamp: 2458424959080ns, Message: Starting tick
+Timestamp: 2458424962697ns, Message: Checked ticksToRun
+Timestamp: 2458426242462ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 124
+LogEvent for task: WorldPlayer Tick: 124
+Timestamp: 2456394511327ns, Message: Starting tick
+Timestamp: 2456394516486ns, Message: Checked ticksToRun
+Timestamp: 2456395493727ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 245
+LogEvent for task: WorldPlayer Tick: 245
+Timestamp: 2457174177139ns, Message: Starting tick
+Timestamp: 2457174184192ns, Message: Checked ticksToRun
+Timestamp: 2457175876706ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 366
+LogEvent for task: WorldPlayer Tick: 366
+Timestamp: 2457902172869ns, Message: Starting tick
+Timestamp: 2457902176255ns, Message: Checked ticksToRun
+Timestamp: 2457903378796ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 487
+LogEvent for task: WorldPlayer Tick: 487
+Timestamp: 2458428028479ns, Message: Starting tick
+Timestamp: 2458428033729ns, Message: Checked ticksToRun
+Timestamp: 2458428203776ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 121
+LogEvent for task: WorldPlayer Tick: 121
+Timestamp: 2456376742520ns, Message: Starting tick
+Timestamp: 2456376745986ns, Message: Checked ticksToRun
+Timestamp: 2456377459105ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 242
+LogEvent for task: WorldPlayer Tick: 242
+Timestamp: 2457147293389ns, Message: Starting tick
+Timestamp: 2457147300332ns, Message: Checked ticksToRun
+Timestamp: 2457148090083ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 363
+LogEvent for task: WorldPlayer Tick: 363
+Timestamp: 2457882276077ns, Message: Starting tick
+Timestamp: 2457882280335ns, Message: Checked ticksToRun
+Timestamp: 2457883662160ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 484
+LogEvent for task: WorldPlayer Tick: 484
+Timestamp: 2458413550053ns, Message: Starting tick
+Timestamp: 2458413553650ns, Message: Checked ticksToRun
+Timestamp: 2458413751258ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 122
+LogEvent for task: WorldPlayer Tick: 122
+Timestamp: 2456384165570ns, Message: Starting tick
+Timestamp: 2456384171552ns, Message: Checked ticksToRun
+Timestamp: 2456384577438ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 243
+LogEvent for task: WorldPlayer Tick: 243
+Timestamp: 2457155314374ns, Message: Starting tick
+Timestamp: 2457155318541ns, Message: Checked ticksToRun
+Timestamp: 2457158575640ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 364
+LogEvent for task: WorldPlayer Tick: 364
+Timestamp: 2457886337675ns, Message: Starting tick
+Timestamp: 2457886341672ns, Message: Checked ticksToRun
+Timestamp: 2457886722622ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 485
+LogEvent for task: WorldPlayer Tick: 485
+Timestamp: 2458419238582ns, Message: Starting tick
+Timestamp: 2458419241688ns, Message: Checked ticksToRun
+Timestamp: 2458419533972ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 42
+LogEvent for task: WorldPlayer Tick: 42
+Timestamp: 2455819268257ns, Message: Starting tick
+Timestamp: 2455819288906ns, Message: Checked ticksToRun
+Timestamp: 2455820843993ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 43
+LogEvent for task: WorldPlayer Tick: 43
+Timestamp: 2455824628935ns, Message: Starting tick
+Timestamp: 2455824633233ns, Message: Checked ticksToRun
+Timestamp: 2455829050313ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 40
+LogEvent for task: WorldPlayer Tick: 40
+Timestamp: 2455805196879ns, Message: Starting tick
+Timestamp: 2455805205485ns, Message: Checked ticksToRun
+Timestamp: 2455806501780ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 41
+LogEvent for task: WorldPlayer Tick: 41
+Timestamp: 2455808952396ns, Message: Starting tick
+Timestamp: 2455808956765ns, Message: Checked ticksToRun
+Timestamp: 2455810705322ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 129
+LogEvent for task: WorldPlayer Tick: 129
+Timestamp: 2456428976693ns, Message: Starting tick
+Timestamp: 2456428981131ns, Message: Checked ticksToRun
+Timestamp: 2456430784261ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 39
+LogEvent for task: WorldPlayer Tick: 39
+Timestamp: 2455801484472ns, Message: Starting tick
+Timestamp: 2455801492367ns, Message: Checked ticksToRun
+Timestamp: 2455803891276ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 37
+LogEvent for task: WorldPlayer Tick: 37
+Timestamp: 2455787807058ns, Message: Starting tick
+Timestamp: 2455787813140ns, Message: Checked ticksToRun
+Timestamp: 2455789742224ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 38
+LogEvent for task: WorldPlayer Tick: 38
+Timestamp: 2455793735684ns, Message: Starting tick
+Timestamp: 2455793765841ns, Message: Checked ticksToRun
+Timestamp: 2455795970509ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 35
+LogEvent for task: WorldPlayer Tick: 35
+Timestamp: 2455768186491ns, Message: Starting tick
+Timestamp: 2455768194967ns, Message: Checked ticksToRun
+Timestamp: 2455770250837ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 36
+LogEvent for task: WorldPlayer Tick: 36
+Timestamp: 2455778745274ns, Message: Starting tick
+Timestamp: 2455778752147ns, Message: Checked ticksToRun
+Timestamp: 2455781652210ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 33
+LogEvent for task: WorldPlayer Tick: 33
+Timestamp: 2455751534545ns, Message: Starting tick
+Timestamp: 2455751538723ns, Message: Checked ticksToRun
+Timestamp: 2455753408026ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 34
+LogEvent for task: WorldPlayer Tick: 34
+Timestamp: 2455758294630ns, Message: Starting tick
+Timestamp: 2455758300131ns, Message: Checked ticksToRun
+Timestamp: 2455761335997ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 141
+LogEvent for task: WorldPlayer Tick: 141
+Timestamp: 2456515684829ns, Message: Starting tick
+Timestamp: 2456515690449ns, Message: Checked ticksToRun
+Timestamp: 2456516131581ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 262
+LogEvent for task: WorldPlayer Tick: 262
+Timestamp: 2457318120847ns, Message: Starting tick
+Timestamp: 2457318158637ns, Message: Checked ticksToRun
+Timestamp: 2457327208098ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 383
+LogEvent for task: WorldPlayer Tick: 383
+Timestamp: 2457977582904ns, Message: Starting tick
+Timestamp: 2457977587933ns, Message: Checked ticksToRun
+Timestamp: 2457979256292ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 142
+LogEvent for task: WorldPlayer Tick: 142
+Timestamp: 2456521983394ns, Message: Starting tick
+Timestamp: 2456521989315ns, Message: Checked ticksToRun
+Timestamp: 2456523613692ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 263
+LogEvent for task: WorldPlayer Tick: 263
+Timestamp: 2457328821454ns, Message: Starting tick
+Timestamp: 2457328826674ns, Message: Checked ticksToRun
+Timestamp: 2457333867867ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 384
+LogEvent for task: WorldPlayer Tick: 384
+Timestamp: 2457983265602ns, Message: Starting tick
+Timestamp: 2457983270691ns, Message: Checked ticksToRun
+Timestamp: 2457983771374ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 260
+LogEvent for task: WorldPlayer Tick: 260
+Timestamp: 2457299727756ns, Message: Starting tick
+Timestamp: 2457299733106ns, Message: Checked ticksToRun
+Timestamp: 2457303021363ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 381
+LogEvent for task: WorldPlayer Tick: 381
+Timestamp: 2457967981985ns, Message: Starting tick
+Timestamp: 2457967985903ns, Message: Checked ticksToRun
+Timestamp: 2457969564424ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 140
+LogEvent for task: WorldPlayer Tick: 140
+Timestamp: 2456509474888ns, Message: Starting tick
+Timestamp: 2456509479577ns, Message: Checked ticksToRun
+Timestamp: 2456510112586ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 261
+LogEvent for task: WorldPlayer Tick: 261
+Timestamp: 2457310155255ns, Message: Starting tick
+Timestamp: 2457310160324ns, Message: Checked ticksToRun
+Timestamp: 2457315476399ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 382
+LogEvent for task: WorldPlayer Tick: 382
+Timestamp: 2457972155461ns, Message: Starting tick
+Timestamp: 2457972161312ns, Message: Checked ticksToRun
+Timestamp: 2457973046642ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 380
+LogEvent for task: WorldPlayer Tick: 380
+Timestamp: 2457962956983ns, Message: Starting tick
+Timestamp: 2457962960630ns, Message: Checked ticksToRun
+Timestamp: 2457963649663ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 138
+LogEvent for task: WorldPlayer Tick: 138
+Timestamp: 2456494436679ns, Message: Starting tick
+Timestamp: 2456494442099ns, Message: Checked ticksToRun
+Timestamp: 2456495381429ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 259
+LogEvent for task: WorldPlayer Tick: 259
+Timestamp: 2457292203217ns, Message: Starting tick
+Timestamp: 2457292206523ns, Message: Checked ticksToRun
+Timestamp: 2457292669676ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 139
+LogEvent for task: WorldPlayer Tick: 139
+Timestamp: 2456500616483ns, Message: Starting tick
+Timestamp: 2456500620911ns, Message: Checked ticksToRun
+Timestamp: 2456504387088ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 136
+LogEvent for task: WorldPlayer Tick: 136
+Timestamp: 2456484601013ns, Message: Starting tick
+Timestamp: 2456484605351ns, Message: Checked ticksToRun
+Timestamp: 2456485396254ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 257
+LogEvent for task: WorldPlayer Tick: 257
+Timestamp: 2457274851286ns, Message: Starting tick
+Timestamp: 2457274854252ns, Message: Checked ticksToRun
+Timestamp: 2457275909939ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 378
+LogEvent for task: WorldPlayer Tick: 378
+Timestamp: 2457957954252ns, Message: Starting tick
+Timestamp: 2457957957287ns, Message: Checked ticksToRun
+Timestamp: 2457958262366ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 499
+LogEvent for task: WorldPlayer Tick: 499
+Timestamp: 2458492610219ns, Message: Starting tick
+Timestamp: 2458492616781ns, Message: Checked ticksToRun
+Timestamp: 2458492965400ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 137
+LogEvent for task: WorldPlayer Tick: 137
+Timestamp: 2456490333413ns, Message: Starting tick
+Timestamp: 2456490337411ns, Message: Checked ticksToRun
+Timestamp: 2456492449867ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 258
+LogEvent for task: WorldPlayer Tick: 258
+Timestamp: 2457284580875ns, Message: Starting tick
+Timestamp: 2457284585052ns, Message: Checked ticksToRun
+Timestamp: 2457286620525ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 379
+LogEvent for task: WorldPlayer Tick: 379
+Timestamp: 2457958943775ns, Message: Starting tick
+Timestamp: 2457958946480ns, Message: Checked ticksToRun
+Timestamp: 2457959280443ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 134
+LogEvent for task: WorldPlayer Tick: 134
+Timestamp: 2456467984713ns, Message: Starting tick
+Timestamp: 2456467989211ns, Message: Checked ticksToRun
+Timestamp: 2456468469276ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 255
+LogEvent for task: WorldPlayer Tick: 255
+Timestamp: 2457255027360ns, Message: Starting tick
+Timestamp: 2457255033501ns, Message: Checked ticksToRun
+Timestamp: 2457262657907ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 376
+LogEvent for task: WorldPlayer Tick: 376
+Timestamp: 2457949558218ns, Message: Starting tick
+Timestamp: 2457949563017ns, Message: Checked ticksToRun
+Timestamp: 2457951433101ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 497
+LogEvent for task: WorldPlayer Tick: 497
+Timestamp: 2458478349218ns, Message: Starting tick
+Timestamp: 2458478352253ns, Message: Checked ticksToRun
+Timestamp: 2458479142215ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 135
+LogEvent for task: WorldPlayer Tick: 135
+Timestamp: 2456476176526ns, Message: Starting tick
+Timestamp: 2456476181746ns, Message: Checked ticksToRun
+Timestamp: 2456476572774ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 256
+LogEvent for task: WorldPlayer Tick: 256
+Timestamp: 2457268492799ns, Message: Starting tick
+Timestamp: 2457268496766ns, Message: Checked ticksToRun
+Timestamp: 2457269363872ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 377
+LogEvent for task: WorldPlayer Tick: 377
+Timestamp: 2457955674955ns, Message: Starting tick
+Timestamp: 2457955677369ns, Message: Checked ticksToRun
+Timestamp: 2457956403552ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 498
+LogEvent for task: WorldPlayer Tick: 498
+Timestamp: 2458481389813ns, Message: Starting tick
+Timestamp: 2458481392408ns, Message: Checked ticksToRun
+Timestamp: 2458482510310ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 132
+LogEvent for task: WorldPlayer Tick: 132
+Timestamp: 2456454971046ns, Message: Starting tick
+Timestamp: 2456454975564ns, Message: Checked ticksToRun
+Timestamp: 2456455380659ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 253
+LogEvent for task: WorldPlayer Tick: 253
+Timestamp: 2457236054109ns, Message: Starting tick
+Timestamp: 2457236071000ns, Message: Checked ticksToRun
+Timestamp: 2457238151276ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 374
+LogEvent for task: WorldPlayer Tick: 374
+Timestamp: 2457942846463ns, Message: Starting tick
+Timestamp: 2457942862733ns, Message: Checked ticksToRun
+Timestamp: 2457943479101ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 495
+LogEvent for task: WorldPlayer Tick: 495
+Timestamp: 2458469471386ns, Message: Starting tick
+Timestamp: 2458469474963ns, Message: Checked ticksToRun
+Timestamp: 2458473356094ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 133
+LogEvent for task: WorldPlayer Tick: 133
+Timestamp: 2456457534131ns, Message: Starting tick
+Timestamp: 2456457538239ns, Message: Checked ticksToRun
+Timestamp: 2456457865569ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 254
+LogEvent for task: WorldPlayer Tick: 254
+Timestamp: 2457248730969ns, Message: Starting tick
+Timestamp: 2457248739134ns, Message: Checked ticksToRun
+Timestamp: 2457250223369ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 375
+LogEvent for task: WorldPlayer Tick: 375
+Timestamp: 2457946354439ns, Message: Starting tick
+Timestamp: 2457946356663ns, Message: Checked ticksToRun
+Timestamp: 2457946771426ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 496
+LogEvent for task: WorldPlayer Tick: 496
+Timestamp: 2458473905468ns, Message: Starting tick
+Timestamp: 2458473907892ns, Message: Checked ticksToRun
+Timestamp: 2458474211508ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 31
+LogEvent for task: WorldPlayer Tick: 31
+Timestamp: 2455725911644ns, Message: Starting tick
+Timestamp: 2455725917425ns, Message: Checked ticksToRun
+Timestamp: 2455730178694ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 32
+LogEvent for task: WorldPlayer Tick: 32
+Timestamp: 2455739865172ns, Message: Starting tick
+Timestamp: 2455739872536ns, Message: Checked ticksToRun
+Timestamp: 2455743887146ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 30
+LogEvent for task: WorldPlayer Tick: 30
+Timestamp: 2455717229497ns, Message: Starting tick
+Timestamp: 2455717241259ns, Message: Checked ticksToRun
+Timestamp: 2455720114252ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 28
+LogEvent for task: WorldPlayer Tick: 28
+Timestamp: 2455689483731ns, Message: Starting tick
+Timestamp: 2455689492858ns, Message: Checked ticksToRun
+Timestamp: 2455692831058ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 29
+LogEvent for task: WorldPlayer Tick: 29
+Timestamp: 2455704078745ns, Message: Starting tick
+Timestamp: 2455704095506ns, Message: Checked ticksToRun
+Timestamp: 2455705775065ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 26
+LogEvent for task: WorldPlayer Tick: 26
+Timestamp: 2455668835689ns, Message: Starting tick
+Timestamp: 2455668841290ns, Message: Checked ticksToRun
+Timestamp: 2455672274076ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 27
+LogEvent for task: WorldPlayer Tick: 27
+Timestamp: 2455677306883ns, Message: Starting tick
+Timestamp: 2455677316050ns, Message: Checked ticksToRun
+Timestamp: 2455682399582ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 24
+LogEvent for task: WorldPlayer Tick: 24
+Timestamp: 2455645344270ns, Message: Starting tick
+Timestamp: 2455645352134ns, Message: Checked ticksToRun
+Timestamp: 2455647599993ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 25
+LogEvent for task: WorldPlayer Tick: 25
+Timestamp: 2455658137386ns, Message: Starting tick
+Timestamp: 2455658144700ns, Message: Checked ticksToRun
+Timestamp: 2455661396649ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 22
+LogEvent for task: WorldPlayer Tick: 22
+Timestamp: 2455619881447ns, Message: Starting tick
+Timestamp: 2455619889001ns, Message: Checked ticksToRun
+Timestamp: 2455622458319ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 23
+LogEvent for task: WorldPlayer Tick: 23
+Timestamp: 2455633993551ns, Message: Starting tick
+Timestamp: 2455633999422ns, Message: Checked ticksToRun
+Timestamp: 2455636790252ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 350
+LogEvent for task: WorldPlayer Tick: 350
+Timestamp: 2457824430799ns, Message: Starting tick
+Timestamp: 2457824441980ns, Message: Checked ticksToRun
+Timestamp: 2457825352276ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 471
+LogEvent for task: WorldPlayer Tick: 471
+Timestamp: 2458371350326ns, Message: Starting tick
+Timestamp: 2458371353802ns, Message: Checked ticksToRun
+Timestamp: 2458371590694ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 230
+LogEvent for task: WorldPlayer Tick: 230
+Timestamp: 2457060703975ns, Message: Starting tick
+Timestamp: 2457060709194ns, Message: Checked ticksToRun
+Timestamp: 2457061520005ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 351
+LogEvent for task: WorldPlayer Tick: 351
+Timestamp: 2457827540253ns, Message: Starting tick
+Timestamp: 2457827544430ns, Message: Checked ticksToRun
+Timestamp: 2457827828900ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 472
+LogEvent for task: WorldPlayer Tick: 472
+Timestamp: 2458375844880ns, Message: Starting tick
+Timestamp: 2458375849349ns, Message: Checked ticksToRun
+Timestamp: 2458376149117ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 470
+LogEvent for task: WorldPlayer Tick: 470
+Timestamp: 2458366892740ns, Message: Starting tick
+Timestamp: 2458366896267ns, Message: Checked ticksToRun
+Timestamp: 2458367077855ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 105
+LogEvent for task: WorldPlayer Tick: 105
+Timestamp: 2456270216329ns, Message: Starting tick
+Timestamp: 2456270224033ns, Message: Checked ticksToRun
+Timestamp: 2456271544734ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 226
+LogEvent for task: WorldPlayer Tick: 226
+Timestamp: 2457038025279ns, Message: Starting tick
+Timestamp: 2457038029607ns, Message: Checked ticksToRun
+Timestamp: 2457038364211ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 347
+LogEvent for task: WorldPlayer Tick: 347
+Timestamp: 2457811992564ns, Message: Starting tick
+Timestamp: 2457811995309ns, Message: Checked ticksToRun
+Timestamp: 2457812828552ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 468
+LogEvent for task: WorldPlayer Tick: 468
+Timestamp: 2458347355328ns, Message: Starting tick
+Timestamp: 2458347361420ns, Message: Checked ticksToRun
+Timestamp: 2458353980663ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 106
+LogEvent for task: WorldPlayer Tick: 106
+Timestamp: 2456277771476ns, Message: Starting tick
+Timestamp: 2456277777507ns, Message: Checked ticksToRun
+Timestamp: 2456279219193ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 227
+LogEvent for task: WorldPlayer Tick: 227
+Timestamp: 2457047279822ns, Message: Starting tick
+Timestamp: 2457047284902ns, Message: Checked ticksToRun
+Timestamp: 2457047813467ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 348
+LogEvent for task: WorldPlayer Tick: 348
+Timestamp: 2457818902940ns, Message: Starting tick
+Timestamp: 2457818906416ns, Message: Checked ticksToRun
+Timestamp: 2457820210466ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 469
+LogEvent for task: WorldPlayer Tick: 469
+Timestamp: 2458365938913ns, Message: Starting tick
+Timestamp: 2458365943131ns, Message: Checked ticksToRun
+Timestamp: 2458366159665ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 103
+LogEvent for task: WorldPlayer Tick: 103
+Timestamp: 2456260906402ns, Message: Starting tick
+Timestamp: 2456260912534ns, Message: Checked ticksToRun
+Timestamp: 2456261801630ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 224
+LogEvent for task: WorldPlayer Tick: 224
+Timestamp: 2457018768620ns, Message: Starting tick
+Timestamp: 2457018772497ns, Message: Checked ticksToRun
+Timestamp: 2457019188212ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 345
+LogEvent for task: WorldPlayer Tick: 345
+Timestamp: 2457799667810ns, Message: Starting tick
+Timestamp: 2457799671026ns, Message: Checked ticksToRun
+Timestamp: 2457801435043ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 466
+LogEvent for task: WorldPlayer Tick: 466
+Timestamp: 2458339558321ns, Message: Starting tick
+Timestamp: 2458339563260ns, Message: Checked ticksToRun
+Timestamp: 2458340122502ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 104
+LogEvent for task: WorldPlayer Tick: 104
+Timestamp: 2456267146900ns, Message: Starting tick
+Timestamp: 2456267152059ns, Message: Checked ticksToRun
+Timestamp: 2456268429079ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 225
+LogEvent for task: WorldPlayer Tick: 225
+Timestamp: 2457034296171ns, Message: Starting tick
+Timestamp: 2457034301691ns, Message: Checked ticksToRun
+Timestamp: 2457034565453ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 346
+LogEvent for task: WorldPlayer Tick: 346
+Timestamp: 2457807022514ns, Message: Starting tick
+Timestamp: 2457807026712ns, Message: Checked ticksToRun
+Timestamp: 2457807643922ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 467
+LogEvent for task: WorldPlayer Tick: 467
+Timestamp: 2458345195594ns, Message: Starting tick
+Timestamp: 2458345199602ns, Message: Checked ticksToRun
+Timestamp: 2458345390217ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 101
+LogEvent for task: WorldPlayer Tick: 101
+Timestamp: 2456236801921ns, Message: Starting tick
+Timestamp: 2456236809645ns, Message: Checked ticksToRun
+Timestamp: 2456237804529ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 222
+LogEvent for task: WorldPlayer Tick: 222
+Timestamp: 2456999532509ns, Message: Starting tick
+Timestamp: 2456999536246ns, Message: Checked ticksToRun
+Timestamp: 2457000818034ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 343
+LogEvent for task: WorldPlayer Tick: 343
+Timestamp: 2457794201536ns, Message: Starting tick
+Timestamp: 2457794205463ns, Message: Checked ticksToRun
+Timestamp: 2457794575021ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 464
+LogEvent for task: WorldPlayer Tick: 464
+Timestamp: 2458330477050ns, Message: Starting tick
+Timestamp: 2458330480317ns, Message: Checked ticksToRun
+Timestamp: 2458330649101ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 102
+LogEvent for task: WorldPlayer Tick: 102
+Timestamp: 2456250664970ns, Message: Starting tick
+Timestamp: 2456250672304ns, Message: Checked ticksToRun
+Timestamp: 2456252712746ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 223
+LogEvent for task: WorldPlayer Tick: 223
+Timestamp: 2457005194108ns, Message: Starting tick
+Timestamp: 2457005198877ns, Message: Checked ticksToRun
+Timestamp: 2457005479870ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 344
+LogEvent for task: WorldPlayer Tick: 344
+Timestamp: 2457796391957ns, Message: Starting tick
+Timestamp: 2457796396595ns, Message: Checked ticksToRun
+Timestamp: 2457797601571ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 465
+LogEvent for task: WorldPlayer Tick: 465
+Timestamp: 2458333292015ns, Message: Starting tick
+Timestamp: 2458333296153ns, Message: Checked ticksToRun
+Timestamp: 2458333552160ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 220
+LogEvent for task: WorldPlayer Tick: 220
+Timestamp: 2456984142785ns, Message: Starting tick
+Timestamp: 2456984148485ns, Message: Checked ticksToRun
+Timestamp: 2456984487587ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 341
+LogEvent for task: WorldPlayer Tick: 341
+Timestamp: 2457785384698ns, Message: Starting tick
+Timestamp: 2457785387724ns, Message: Checked ticksToRun
+Timestamp: 2457786442970ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 462
+LogEvent for task: WorldPlayer Tick: 462
+Timestamp: 2458321377506ns, Message: Starting tick
+Timestamp: 2458321383367ns, Message: Checked ticksToRun
+Timestamp: 2458322308350ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 100
+LogEvent for task: WorldPlayer Tick: 100
+Timestamp: 2456233222241ns, Message: Starting tick
+Timestamp: 2456233229575ns, Message: Checked ticksToRun
+Timestamp: 2456234782528ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 221
+LogEvent for task: WorldPlayer Tick: 221
+Timestamp: 2456994298858ns, Message: Starting tick
+Timestamp: 2456994305160ns, Message: Checked ticksToRun
+Timestamp: 2456997778822ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 342
+LogEvent for task: WorldPlayer Tick: 342
+Timestamp: 2457790030133ns, Message: Starting tick
+Timestamp: 2457790034331ns, Message: Checked ticksToRun
+Timestamp: 2457790344700ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 463
+LogEvent for task: WorldPlayer Tick: 463
+Timestamp: 2458325990541ns, Message: Starting tick
+Timestamp: 2458325994318ns, Message: Checked ticksToRun
+Timestamp: 2458327234318ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 20
+LogEvent for task: WorldPlayer Tick: 20
+Timestamp: 2455604753320ns, Message: Starting tick
+Timestamp: 2455604759732ns, Message: Checked ticksToRun
+Timestamp: 2455606312445ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 21
+LogEvent for task: WorldPlayer Tick: 21
+Timestamp: 2455613944215ns, Message: Starting tick
+Timestamp: 2455613948984ns, Message: Checked ticksToRun
+Timestamp: 2455616219665ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 109
+LogEvent for task: WorldPlayer Tick: 109
+Timestamp: 2456300296264ns, Message: Starting tick
+Timestamp: 2456300302235ns, Message: Checked ticksToRun
+Timestamp: 2456302871592ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 107
+LogEvent for task: WorldPlayer Tick: 107
+Timestamp: 2456286922426ns, Message: Starting tick
+Timestamp: 2456286928587ns, Message: Checked ticksToRun
+Timestamp: 2456288042192ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 228
+LogEvent for task: WorldPlayer Tick: 228
+Timestamp: 2457051655886ns, Message: Starting tick
+Timestamp: 2457051658972ns, Message: Checked ticksToRun
+Timestamp: 2457051876507ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 349
+LogEvent for task: WorldPlayer Tick: 349
+Timestamp: 2457820909438ns, Message: Starting tick
+Timestamp: 2457820913816ns, Message: Checked ticksToRun
+Timestamp: 2457821145738ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 108
+LogEvent for task: WorldPlayer Tick: 108
+Timestamp: 2456294647199ns, Message: Starting tick
+Timestamp: 2456294652919ns, Message: Checked ticksToRun
+Timestamp: 2456295232479ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 229
+LogEvent for task: WorldPlayer Tick: 229
+Timestamp: 2457058572052ns, Message: Starting tick
+Timestamp: 2457058575188ns, Message: Checked ticksToRun
+Timestamp: 2457059283408ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 17
+LogEvent for task: WorldPlayer Tick: 17
+Timestamp: 2455558898714ns, Message: Starting tick
+Timestamp: 2455558907149ns, Message: Checked ticksToRun
+Timestamp: 2455561235538ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 18
+LogEvent for task: WorldPlayer Tick: 18
+Timestamp: 2455572186592ns, Message: Starting tick
+Timestamp: 2455572193094ns, Message: Checked ticksToRun
+Timestamp: 2455585357742ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 15
+LogEvent for task: WorldPlayer Tick: 15
+Timestamp: 2455536332458ns, Message: Starting tick
+Timestamp: 2455536345242ns, Message: Checked ticksToRun
+Timestamp: 2455540036169ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 16
+LogEvent for task: WorldPlayer Tick: 16
+Timestamp: 2455549889628ns, Message: Starting tick
+Timestamp: 2455549897853ns, Message: Checked ticksToRun
+Timestamp: 2455553389068ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 13
+LogEvent for task: WorldPlayer Tick: 13
+Timestamp: 2455506722999ns, Message: Starting tick
+Timestamp: 2455506729581ns, Message: Checked ticksToRun
+Timestamp: 2455517937905ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 14
+LogEvent for task: WorldPlayer Tick: 14
+Timestamp: 2455526236818ns, Message: Starting tick
+Timestamp: 2455526241997ns, Message: Checked ticksToRun
+Timestamp: 2455530486526ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 11
+LogEvent for task: WorldPlayer Tick: 11
+Timestamp: 2455478733399ns, Message: Starting tick
+Timestamp: 2455478741003ns, Message: Checked ticksToRun
+Timestamp: 2455484299950ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 12
+LogEvent for task: WorldPlayer Tick: 12
+Timestamp: 2455496394425ns, Message: Starting tick
+Timestamp: 2455496402881ns, Message: Checked ticksToRun
+Timestamp: 2455501387478ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 240
+LogEvent for task: WorldPlayer Tick: 240
+Timestamp: 2457129789345ns, Message: Starting tick
+Timestamp: 2457129793373ns, Message: Checked ticksToRun
+Timestamp: 2457130165887ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 361
+LogEvent for task: WorldPlayer Tick: 361
+Timestamp: 2457871184371ns, Message: Starting tick
+Timestamp: 2457871188639ns, Message: Checked ticksToRun
+Timestamp: 2457871652072ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 482
+LogEvent for task: WorldPlayer Tick: 482
+Timestamp: 2458405834136ns, Message: Starting tick
+Timestamp: 2458405837393ns, Message: Checked ticksToRun
+Timestamp: 2458406018300ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 120
+LogEvent for task: WorldPlayer Tick: 120
+Timestamp: 2456375780968ns, Message: Starting tick
+Timestamp: 2456375786218ns, Message: Checked ticksToRun
+Timestamp: 2456376190681ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 241
+LogEvent for task: WorldPlayer Tick: 241
+Timestamp: 2457143333020ns, Message: Starting tick
+Timestamp: 2457143338871ns, Message: Checked ticksToRun
+Timestamp: 2457143724379ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 362
+LogEvent for task: WorldPlayer Tick: 362
+Timestamp: 2457874534232ns, Message: Starting tick
+Timestamp: 2457874537158ns, Message: Checked ticksToRun
+Timestamp: 2457874989541ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 483
+LogEvent for task: WorldPlayer Tick: 483
+Timestamp: 2458409644887ns, Message: Starting tick
+Timestamp: 2458409647652ns, Message: Checked ticksToRun
+Timestamp: 2458412812308ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 480
+LogEvent for task: WorldPlayer Tick: 480
+Timestamp: 2458400184390ns, Message: Starting tick
+Timestamp: 2458400189149ns, Message: Checked ticksToRun
+Timestamp: 2458400375476ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 360
+LogEvent for task: WorldPlayer Tick: 360
+Timestamp: 2457868177118ns, Message: Starting tick
+Timestamp: 2457868180975ns, Message: Checked ticksToRun
+Timestamp: 2457868526469ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 481
+LogEvent for task: WorldPlayer Tick: 481
+Timestamp: 2458402899348ns, Message: Starting tick
+Timestamp: 2458402903286ns, Message: Checked ticksToRun
+Timestamp: 2458403274257ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 19
+LogEvent for task: WorldPlayer Tick: 19
+Timestamp: 2455591180231ns, Message: Starting tick
+Timestamp: 2455591185751ns, Message: Checked ticksToRun
+Timestamp: 2455594410249ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 116
+LogEvent for task: WorldPlayer Tick: 116
+Timestamp: 2456346194883ns, Message: Starting tick
+Timestamp: 2456346202056ns, Message: Checked ticksToRun
+Timestamp: 2456348430298ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 237
+LogEvent for task: WorldPlayer Tick: 237
+Timestamp: 2457096758502ns, Message: Starting tick
+Timestamp: 2457096763020ns, Message: Checked ticksToRun
+Timestamp: 2457097489644ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 358
+LogEvent for task: WorldPlayer Tick: 358
+Timestamp: 2457861338025ns, Message: Starting tick
+Timestamp: 2457861343285ns, Message: Checked ticksToRun
+Timestamp: 2457862865531ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 479
+LogEvent for task: WorldPlayer Tick: 479
+Timestamp: 2458398289409ns, Message: Starting tick
+Timestamp: 2458398293056ns, Message: Checked ticksToRun
+Timestamp: 2458398485675ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 117
+LogEvent for task: WorldPlayer Tick: 117
+Timestamp: 2456354338797ns, Message: Starting tick
+Timestamp: 2456354343295ns, Message: Checked ticksToRun
+Timestamp: 2456354902567ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 238
+LogEvent for task: WorldPlayer Tick: 238
+Timestamp: 2457118362755ns, Message: Starting tick
+Timestamp: 2457118372493ns, Message: Checked ticksToRun
+Timestamp: 2457119584031ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 359
+LogEvent for task: WorldPlayer Tick: 359
+Timestamp: 2457864752407ns, Message: Starting tick
+Timestamp: 2457864756565ns, Message: Checked ticksToRun
+Timestamp: 2457865085287ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 114
+LogEvent for task: WorldPlayer Tick: 114
+Timestamp: 2456330290009ns, Message: Starting tick
+Timestamp: 2456330296892ns, Message: Checked ticksToRun
+Timestamp: 2456331593357ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 235
+LogEvent for task: WorldPlayer Tick: 235
+Timestamp: 2457085961214ns, Message: Starting tick
+Timestamp: 2457085964841ns, Message: Checked ticksToRun
+Timestamp: 2457086337565ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 356
+LogEvent for task: WorldPlayer Tick: 356
+Timestamp: 2457856505080ns, Message: Starting tick
+Timestamp: 2457856510370ns, Message: Checked ticksToRun
+Timestamp: 2457856956622ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 477
+LogEvent for task: WorldPlayer Tick: 477
+Timestamp: 2458392218929ns, Message: Starting tick
+Timestamp: 2458392222806ns, Message: Checked ticksToRun
+Timestamp: 2458392447995ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 115
+LogEvent for task: WorldPlayer Tick: 115
+Timestamp: 2456340192219ns, Message: Starting tick
+Timestamp: 2456340200334ns, Message: Checked ticksToRun
+Timestamp: 2456341139975ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 236
+LogEvent for task: WorldPlayer Tick: 236
+Timestamp: 2457093316378ns, Message: Starting tick
+Timestamp: 2457093320005ns, Message: Checked ticksToRun
+Timestamp: 2457095374042ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 357
+LogEvent for task: WorldPlayer Tick: 357
+Timestamp: 2457858307499ns, Message: Starting tick
+Timestamp: 2457858310424ns, Message: Checked ticksToRun
+Timestamp: 2457859165016ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 478
+LogEvent for task: WorldPlayer Tick: 478
+Timestamp: 2458395226653ns, Message: Starting tick
+Timestamp: 2458395230600ns, Message: Checked ticksToRun
+Timestamp: 2458395424972ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 112
+LogEvent for task: WorldPlayer Tick: 112
+Timestamp: 2456318104545ns, Message: Starting tick
+Timestamp: 2456318110516ns, Message: Checked ticksToRun
+Timestamp: 2456320670816ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 233
+LogEvent for task: WorldPlayer Tick: 233
+Timestamp: 2457077606187ns, Message: Starting tick
+Timestamp: 2457077609713ns, Message: Checked ticksToRun
+Timestamp: 2457078401940ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 354
+LogEvent for task: WorldPlayer Tick: 354
+Timestamp: 2457845109778ns, Message: Starting tick
+Timestamp: 2457845113425ns, Message: Checked ticksToRun
+Timestamp: 2457845808320ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 475
+LogEvent for task: WorldPlayer Tick: 475
+Timestamp: 2458385454305ns, Message: Starting tick
+Timestamp: 2458385458883ns, Message: Checked ticksToRun
+Timestamp: 2458385682390ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 113
+LogEvent for task: WorldPlayer Tick: 113
+Timestamp: 2456327174183ns, Message: Starting tick
+Timestamp: 2456327178772ns, Message: Checked ticksToRun
+Timestamp: 2456327611608ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 234
+LogEvent for task: WorldPlayer Tick: 234
+Timestamp: 2457081791104ns, Message: Starting tick
+Timestamp: 2457081794821ns, Message: Checked ticksToRun
+Timestamp: 2457082415468ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 355
+LogEvent for task: WorldPlayer Tick: 355
+Timestamp: 2457852148423ns, Message: Starting tick
+Timestamp: 2457852151829ns, Message: Checked ticksToRun
+Timestamp: 2457852468179ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 476
+LogEvent for task: WorldPlayer Tick: 476
+Timestamp: 2458387130087ns, Message: Starting tick
+Timestamp: 2458387134004ns, Message: Checked ticksToRun
+Timestamp: 2458388191094ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 110
+LogEvent for task: WorldPlayer Tick: 110
+Timestamp: 2456308909222ns, Message: Starting tick
+Timestamp: 2456308915363ns, Message: Checked ticksToRun
+Timestamp: 2456313080023ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 231
+LogEvent for task: WorldPlayer Tick: 231
+Timestamp: 2457065636986ns, Message: Starting tick
+Timestamp: 2457065643869ns, Message: Checked ticksToRun
+Timestamp: 2457066305501ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 352
+LogEvent for task: WorldPlayer Tick: 352
+Timestamp: 2457834017902ns, Message: Starting tick
+Timestamp: 2457834021499ns, Message: Checked ticksToRun
+Timestamp: 2457834481315ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 473
+LogEvent for task: WorldPlayer Tick: 473
+Timestamp: 2458377899999ns, Message: Starting tick
+Timestamp: 2458377904798ns, Message: Checked ticksToRun
+Timestamp: 2458378217862ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 111
+LogEvent for task: WorldPlayer Tick: 111
+Timestamp: 2456315659479ns, Message: Starting tick
+Timestamp: 2456315666041ns, Message: Checked ticksToRun
+Timestamp: 2456316025922ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 232
+LogEvent for task: WorldPlayer Tick: 232
+Timestamp: 2457072184655ns, Message: Starting tick
+Timestamp: 2457072189575ns, Message: Checked ticksToRun
+Timestamp: 2457072460680ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 353
+LogEvent for task: WorldPlayer Tick: 353
+Timestamp: 2457837366421ns, Message: Starting tick
+Timestamp: 2457837369577ns, Message: Checked ticksToRun
+Timestamp: 2457844236010ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 474
+LogEvent for task: WorldPlayer Tick: 474
+Timestamp: 2458380263493ns, Message: Starting tick
+Timestamp: 2458380267390ns, Message: Checked ticksToRun
+Timestamp: 2458381036073ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 10
+LogEvent for task: WorldPlayer Tick: 10
+Timestamp: 2455465697760ns, Message: Starting tick
+Timestamp: 2455465724160ns, Message: Checked ticksToRun
+Timestamp: 2455470042596ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 118
+LogEvent for task: WorldPlayer Tick: 118
+Timestamp: 2456357123575ns, Message: Starting tick
+Timestamp: 2456357127763ns, Message: Checked ticksToRun
+Timestamp: 2456357532607ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 239
+LogEvent for task: WorldPlayer Tick: 239
+Timestamp: 2457125795233ns, Message: Starting tick
+Timestamp: 2457125799852ns, Message: Checked ticksToRun
+Timestamp: 2457126208263ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 119
+LogEvent for task: WorldPlayer Tick: 119
+Timestamp: 2456361237170ns, Message: Starting tick
+Timestamp: 2456361244163ns, Message: Checked ticksToRun
+Timestamp: 2456363326082ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 450
+LogEvent for task: WorldPlayer Tick: 450
+Timestamp: 2458268545399ns, Message: Starting tick
+Timestamp: 2458268548845ns, Message: Checked ticksToRun
+Timestamp: 2458268756652ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 204
+LogEvent for task: WorldPlayer Tick: 204
+Timestamp: 2456894409793ns, Message: Starting tick
+Timestamp: 2456894413380ns, Message: Checked ticksToRun
+Timestamp: 2456895457816ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 325
+LogEvent for task: WorldPlayer Tick: 325
+Timestamp: 2457679494582ns, Message: Starting tick
+Timestamp: 2457679499672ns, Message: Checked ticksToRun
+Timestamp: 2457680708023ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 446
+LogEvent for task: WorldPlayer Tick: 446
+Timestamp: 2458252330266ns, Message: Starting tick
+Timestamp: 2458252334624ns, Message: Checked ticksToRun
+Timestamp: 2458255143829ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 205
+LogEvent for task: WorldPlayer Tick: 205
+Timestamp: 2456904092414ns, Message: Starting tick
+Timestamp: 2456904096492ns, Message: Checked ticksToRun
+Timestamp: 2456904588428ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 326
+LogEvent for task: WorldPlayer Tick: 326
+Timestamp: 2457689964169ns, Message: Starting tick
+Timestamp: 2457689968016ns, Message: Checked ticksToRun
+Timestamp: 2457691420112ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 447
+LogEvent for task: WorldPlayer Tick: 447
+Timestamp: 2458256191741ns, Message: Starting tick
+Timestamp: 2458256196390ns, Message: Checked ticksToRun
+Timestamp: 2458256465872ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 202
+LogEvent for task: WorldPlayer Tick: 202
+Timestamp: 2456884453643ns, Message: Starting tick
+Timestamp: 2456884460205ns, Message: Checked ticksToRun
+Timestamp: 2456885432366ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 323
+LogEvent for task: WorldPlayer Tick: 323
+Timestamp: 2457668522439ns, Message: Starting tick
+Timestamp: 2457668526937ns, Message: Checked ticksToRun
+Timestamp: 2457668801859ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 444
+LogEvent for task: WorldPlayer Tick: 444
+Timestamp: 2458245998699ns, Message: Starting tick
+Timestamp: 2458246031951ns, Message: Checked ticksToRun
+Timestamp: 2458246245820ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 203
+LogEvent for task: WorldPlayer Tick: 203
+Timestamp: 2456889372738ns, Message: Starting tick
+Timestamp: 2456889377257ns, Message: Checked ticksToRun
+Timestamp: 2456890472387ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 324
+LogEvent for task: WorldPlayer Tick: 324
+Timestamp: 2457672088593ns, Message: Starting tick
+Timestamp: 2457672092761ns, Message: Checked ticksToRun
+Timestamp: 2457672450097ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 445
+LogEvent for task: WorldPlayer Tick: 445
+Timestamp: 2458248829604ns, Message: Starting tick
+Timestamp: 2458248835345ns, Message: Checked ticksToRun
+Timestamp: 2458249494593ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 200
+LogEvent for task: WorldPlayer Tick: 200
+Timestamp: 2456874303411ns, Message: Starting tick
+Timestamp: 2456874307839ns, Message: Checked ticksToRun
+Timestamp: 2456875777467ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 321
+LogEvent for task: WorldPlayer Tick: 321
+Timestamp: 2457652181723ns, Message: Starting tick
+Timestamp: 2457652186221ns, Message: Checked ticksToRun
+Timestamp: 2457653446419ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 442
+LogEvent for task: WorldPlayer Tick: 442
+Timestamp: 2458235561943ns, Message: Starting tick
+Timestamp: 2458235565570ns, Message: Checked ticksToRun
+Timestamp: 2458235750375ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 201
+LogEvent for task: WorldPlayer Tick: 201
+Timestamp: 2456880381826ns, Message: Starting tick
+Timestamp: 2456880386134ns, Message: Checked ticksToRun
+Timestamp: 2456880892167ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 322
+LogEvent for task: WorldPlayer Tick: 322
+Timestamp: 2457661339816ns, Message: Starting tick
+Timestamp: 2457661345687ns, Message: Checked ticksToRun
+Timestamp: 2457664154090ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 443
+LogEvent for task: WorldPlayer Tick: 443
+Timestamp: 2458241039690ns, Message: Starting tick
+Timestamp: 2458241044489ns, Message: Checked ticksToRun
+Timestamp: 2458241276501ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 440
+LogEvent for task: WorldPlayer Tick: 440
+Timestamp: 2458229266173ns, Message: Starting tick
+Timestamp: 2458229270100ns, Message: Checked ticksToRun
+Timestamp: 2458229491513ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 320
+LogEvent for task: WorldPlayer Tick: 320
+Timestamp: 2457645200675ns, Message: Starting tick
+Timestamp: 2457645205174ns, Message: Checked ticksToRun
+Timestamp: 2457646215787ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 441
+LogEvent for task: WorldPlayer Tick: 441
+Timestamp: 2458232105784ns, Message: Starting tick
+Timestamp: 2458232108890ns, Message: Checked ticksToRun
+Timestamp: 2458232302150ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 208
+LogEvent for task: WorldPlayer Tick: 208
+Timestamp: 2456916607452ns, Message: Starting tick
+Timestamp: 2456916611329ns, Message: Checked ticksToRun
+Timestamp: 2456916939401ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 329
+LogEvent for task: WorldPlayer Tick: 329
+Timestamp: 2457709872773ns, Message: Starting tick
+Timestamp: 2457709878775ns, Message: Checked ticksToRun
+Timestamp: 2457721294124ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 209
+LogEvent for task: WorldPlayer Tick: 209
+Timestamp: 2456919799660ns, Message: Starting tick
+Timestamp: 2456919804589ns, Message: Checked ticksToRun
+Timestamp: 2456920443369ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 206
+LogEvent for task: WorldPlayer Tick: 206
+Timestamp: 2456908201440ns, Message: Starting tick
+Timestamp: 2456908206249ns, Message: Checked ticksToRun
+Timestamp: 2456909980455ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 327
+LogEvent for task: WorldPlayer Tick: 327
+Timestamp: 2457698082766ns, Message: Starting tick
+Timestamp: 2457698087285ns, Message: Checked ticksToRun
+Timestamp: 2457700396016ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 448
+LogEvent for task: WorldPlayer Tick: 448
+Timestamp: 2458259289523ns, Message: Starting tick
+Timestamp: 2458259294242ns, Message: Checked ticksToRun
+Timestamp: 2458259545630ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 207
+LogEvent for task: WorldPlayer Tick: 207
+Timestamp: 2456914704537ns, Message: Starting tick
+Timestamp: 2456914708123ns, Message: Checked ticksToRun
+Timestamp: 2456915149175ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 328
+LogEvent for task: WorldPlayer Tick: 328
+Timestamp: 2457703707466ns, Message: Starting tick
+Timestamp: 2457703712015ns, Message: Checked ticksToRun
+Timestamp: 2457704081082ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 449
+LogEvent for task: WorldPlayer Tick: 449
+Timestamp: 2458265162476ns, Message: Starting tick
+Timestamp: 2458265166673ns, Message: Checked ticksToRun
+Timestamp: 2458267708639ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 460
+LogEvent for task: WorldPlayer Tick: 460
+Timestamp: 2458311711356ns, Message: Starting tick
+Timestamp: 2458311716345ns, Message: Checked ticksToRun
+Timestamp: 2458311953958ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 340
+LogEvent for task: WorldPlayer Tick: 340
+Timestamp: 2457777512961ns, Message: Starting tick
+Timestamp: 2457777518011ns, Message: Checked ticksToRun
+Timestamp: 2457777844018ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 461
+LogEvent for task: WorldPlayer Tick: 461
+Timestamp: 2458316962981ns, Message: Starting tick
+Timestamp: 2458316969593ns, Message: Checked ticksToRun
+Timestamp: 2458318304681ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 215
+LogEvent for task: WorldPlayer Tick: 215
+Timestamp: 2456962258991ns, Message: Starting tick
+Timestamp: 2456962263479ns, Message: Checked ticksToRun
+Timestamp: 2456962512743ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 336
+LogEvent for task: WorldPlayer Tick: 336
+Timestamp: 2457755533739ns, Message: Starting tick
+Timestamp: 2457755539801ns, Message: Checked ticksToRun
+Timestamp: 2457755905121ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 457
+LogEvent for task: WorldPlayer Tick: 457
+Timestamp: 2458296556579ns, Message: Starting tick
+Timestamp: 2458296561068ns, Message: Checked ticksToRun
+Timestamp: 2458296795755ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 216
+LogEvent for task: WorldPlayer Tick: 216
+Timestamp: 2456966212787ns, Message: Starting tick
+Timestamp: 2456966216925ns, Message: Checked ticksToRun
+Timestamp: 2456966559333ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 337
+LogEvent for task: WorldPlayer Tick: 337
+Timestamp: 2457762238772ns, Message: Starting tick
+Timestamp: 2457762243321ns, Message: Checked ticksToRun
+Timestamp: 2457762901577ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 458
+LogEvent for task: WorldPlayer Tick: 458
+Timestamp: 2458299784083ns, Message: Starting tick
+Timestamp: 2458299787189ns, Message: Checked ticksToRun
+Timestamp: 2458300101484ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 213
+LogEvent for task: WorldPlayer Tick: 213
+Timestamp: 2456944966191ns, Message: Starting tick
+Timestamp: 2456944971020ns, Message: Checked ticksToRun
+Timestamp: 2456945710327ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 334
+LogEvent for task: WorldPlayer Tick: 334
+Timestamp: 2457742185228ns, Message: Starting tick
+Timestamp: 2457742201128ns, Message: Checked ticksToRun
+Timestamp: 2457742882267ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 455
+LogEvent for task: WorldPlayer Tick: 455
+Timestamp: 2458288534012ns, Message: Starting tick
+Timestamp: 2458288537127ns, Message: Checked ticksToRun
+Timestamp: 2458290080222ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 214
+LogEvent for task: WorldPlayer Tick: 214
+Timestamp: 2456952385124ns, Message: Starting tick
+Timestamp: 2456952391626ns, Message: Checked ticksToRun
+Timestamp: 2456952738542ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 335
+LogEvent for task: WorldPlayer Tick: 335
+Timestamp: 2457745245099ns, Message: Starting tick
+Timestamp: 2457745251000ns, Message: Checked ticksToRun
+Timestamp: 2457745650374ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 456
+LogEvent for task: WorldPlayer Tick: 456
+Timestamp: 2458295567647ns, Message: Starting tick
+Timestamp: 2458295571574ns, Message: Checked ticksToRun
+Timestamp: 2458295767740ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 211
+LogEvent for task: WorldPlayer Tick: 211
+Timestamp: 2456929094338ns, Message: Starting tick
+Timestamp: 2456929099157ns, Message: Checked ticksToRun
+Timestamp: 2456929384959ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 332
+LogEvent for task: WorldPlayer Tick: 332
+Timestamp: 2457735183973ns, Message: Starting tick
+Timestamp: 2457735187099ns, Message: Checked ticksToRun
+Timestamp: 2457735439700ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 453
+LogEvent for task: WorldPlayer Tick: 453
+Timestamp: 2458280497047ns, Message: Starting tick
+Timestamp: 2458280502317ns, Message: Checked ticksToRun
+Timestamp: 2458280730151ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 212
+LogEvent for task: WorldPlayer Tick: 212
+Timestamp: 2456934721052ns, Message: Starting tick
+Timestamp: 2456934724107ns, Message: Checked ticksToRun
+Timestamp: 2456935070653ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 333
+LogEvent for task: WorldPlayer Tick: 333
+Timestamp: 2457737677159ns, Message: Starting tick
+Timestamp: 2457737680255ns, Message: Checked ticksToRun
+Timestamp: 2457738752182ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 454
+LogEvent for task: WorldPlayer Tick: 454
+Timestamp: 2458283873358ns, Message: Starting tick
+Timestamp: 2458283877035ns, Message: Checked ticksToRun
+Timestamp: 2458284098497ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 330
+LogEvent for task: WorldPlayer Tick: 330
+Timestamp: 2457723091893ns, Message: Starting tick
+Timestamp: 2457723098425ns, Message: Checked ticksToRun
+Timestamp: 2457723517957ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 451
+LogEvent for task: WorldPlayer Tick: 451
+Timestamp: 2458274487901ns, Message: Starting tick
+Timestamp: 2458274491828ns, Message: Checked ticksToRun
+Timestamp: 2458274712038ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 210
+LogEvent for task: WorldPlayer Tick: 210
+Timestamp: 2456925019205ns, Message: Starting tick
+Timestamp: 2456925024385ns, Message: Checked ticksToRun
+Timestamp: 2456925633189ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 331
+LogEvent for task: WorldPlayer Tick: 331
+Timestamp: 2457728123578ns, Message: Starting tick
+Timestamp: 2457728127626ns, Message: Checked ticksToRun
+Timestamp: 2457728455357ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 452
+LogEvent for task: WorldPlayer Tick: 452
+Timestamp: 2458277708421ns, Message: Starting tick
+Timestamp: 2458277711968ns, Message: Checked ticksToRun
+Timestamp: 2458279745747ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 219
+LogEvent for task: WorldPlayer Tick: 219
+Timestamp: 2456979946126ns, Message: Starting tick
+Timestamp: 2456979951916ns, Message: Checked ticksToRun
+Timestamp: 2456980304263ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 217
+LogEvent for task: WorldPlayer Tick: 217
+Timestamp: 2456971539322ns, Message: Starting tick
+Timestamp: 2456971542848ns, Message: Checked ticksToRun
+Timestamp: 2456971780391ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 338
+LogEvent for task: WorldPlayer Tick: 338
+Timestamp: 2457767179909ns, Message: Starting tick
+Timestamp: 2457767184537ns, Message: Checked ticksToRun
+Timestamp: 2457767512598ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 459
+LogEvent for task: WorldPlayer Tick: 459
+Timestamp: 2458304845714ns, Message: Starting tick
+Timestamp: 2458304849831ns, Message: Checked ticksToRun
+Timestamp: 2458305058731ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 218
+LogEvent for task: WorldPlayer Tick: 218
+Timestamp: 2456977714988ns, Message: Starting tick
+Timestamp: 2456977719417ns, Message: Checked ticksToRun
+Timestamp: 2456978342217ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 339
+LogEvent for task: WorldPlayer Tick: 339
+Timestamp: 2457770093658ns, Message: Starting tick
+Timestamp: 2457770132340ns, Message: Checked ticksToRun
+Timestamp: 2457770436096ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 303
+LogEvent for task: WorldPlayer Tick: 303
+Timestamp: 2457554457031ns, Message: Starting tick
+Timestamp: 2457554460658ns, Message: Checked ticksToRun
+Timestamp: 2457556349196ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 424
+LogEvent for task: WorldPlayer Tick: 424
+Timestamp: 2458167225007ns, Message: Starting tick
+Timestamp: 2458167229395ns, Message: Checked ticksToRun
+Timestamp: 2458167608091ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 545
+LogEvent for task: WorldPlayer Tick: 545
+Timestamp: 2458700051065ns, Message: Starting tick
+Timestamp: 2458700055824ns, Message: Checked ticksToRun
+Timestamp: 2458700357426ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 304
+LogEvent for task: WorldPlayer Tick: 304
+Timestamp: 2457557141543ns, Message: Starting tick
+Timestamp: 2457557145350ns, Message: Checked ticksToRun
+Timestamp: 2457558620198ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 425
+LogEvent for task: WorldPlayer Tick: 425
+Timestamp: 2458171165549ns, Message: Starting tick
+Timestamp: 2458171169336ns, Message: Checked ticksToRun
+Timestamp: 2458171477941ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 546
+LogEvent for task: WorldPlayer Tick: 546
+Timestamp: 2458702426300ns, Message: Starting tick
+Timestamp: 2458702431129ns, Message: Checked ticksToRun
+Timestamp: 2458702663593ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 301
+LogEvent for task: WorldPlayer Tick: 301
+Timestamp: 2457538632597ns, Message: Starting tick
+Timestamp: 2457538635873ns, Message: Checked ticksToRun
+Timestamp: 2457539048862ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 422
+LogEvent for task: WorldPlayer Tick: 422
+Timestamp: 2458158541117ns, Message: Starting tick
+Timestamp: 2458158547359ns, Message: Checked ticksToRun
+Timestamp: 2458162216826ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 543
+LogEvent for task: WorldPlayer Tick: 543
+Timestamp: 2458693217453ns, Message: Starting tick
+Timestamp: 2458693221861ns, Message: Checked ticksToRun
+Timestamp: 2458693408719ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 302
+LogEvent for task: WorldPlayer Tick: 302
+Timestamp: 2457545021801ns, Message: Starting tick
+Timestamp: 2457545024827ns, Message: Checked ticksToRun
+Timestamp: 2457545363618ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 423
+LogEvent for task: WorldPlayer Tick: 423
+Timestamp: 2458164256256ns, Message: Starting tick
+Timestamp: 2458164260864ns, Message: Checked ticksToRun
+Timestamp: 2458165159258ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 544
+LogEvent for task: WorldPlayer Tick: 544
+Timestamp: 2458696193918ns, Message: Starting tick
+Timestamp: 2458696199278ns, Message: Checked ticksToRun
+Timestamp: 2458696963442ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 420
+LogEvent for task: WorldPlayer Tick: 420
+Timestamp: 2458146800041ns, Message: Starting tick
+Timestamp: 2458146804499ns, Message: Checked ticksToRun
+Timestamp: 2458147083579ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 541
+LogEvent for task: WorldPlayer Tick: 541
+Timestamp: 2458682026091ns, Message: Starting tick
+Timestamp: 2458682029597ns, Message: Checked ticksToRun
+Timestamp: 2458682212899ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 300
+LogEvent for task: WorldPlayer Tick: 300
+Timestamp: 2457534967277ns, Message: Starting tick
+Timestamp: 2457534969942ns, Message: Checked ticksToRun
+Timestamp: 2457535302552ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 421
+LogEvent for task: WorldPlayer Tick: 421
+Timestamp: 2458150064985ns, Message: Starting tick
+Timestamp: 2458150070866ns, Message: Checked ticksToRun
+Timestamp: 2458151333779ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 542
+LogEvent for task: WorldPlayer Tick: 542
+Timestamp: 2458685998532ns, Message: Starting tick
+Timestamp: 2458686022747ns, Message: Checked ticksToRun
+Timestamp: 2458688407821ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 540
+LogEvent for task: WorldPlayer Tick: 540
+Timestamp: 2458678856044ns, Message: Starting tick
+Timestamp: 2458678858529ns, Message: Checked ticksToRun
+Timestamp: 2458678977861ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 309
+LogEvent for task: WorldPlayer Tick: 309
+Timestamp: 2457586206036ns, Message: Starting tick
+Timestamp: 2457586211286ns, Message: Checked ticksToRun
+Timestamp: 2457586631018ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 307
+LogEvent for task: WorldPlayer Tick: 307
+Timestamp: 2457572315245ns, Message: Starting tick
+Timestamp: 2457572318821ns, Message: Checked ticksToRun
+Timestamp: 2457572562145ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 428
+LogEvent for task: WorldPlayer Tick: 428
+Timestamp: 2458179233462ns, Message: Starting tick
+Timestamp: 2458179237579ns, Message: Checked ticksToRun
+Timestamp: 2458180194562ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 549
+LogEvent for task: WorldPlayer Tick: 549
+Timestamp: 2458708464411ns, Message: Starting tick
+Timestamp: 2458708470342ns, Message: Checked ticksToRun
+Timestamp: 2458708678380ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 308
+LogEvent for task: WorldPlayer Tick: 308
+Timestamp: 2457579647897ns, Message: Starting tick
+Timestamp: 2457579652535ns, Message: Checked ticksToRun
+Timestamp: 2457584990551ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 429
+LogEvent for task: WorldPlayer Tick: 429
+Timestamp: 2458184392985ns, Message: Starting tick
+Timestamp: 2458184396602ns, Message: Checked ticksToRun
+Timestamp: 2458184769076ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 305
+LogEvent for task: WorldPlayer Tick: 305
+Timestamp: 2457562678469ns, Message: Starting tick
+Timestamp: 2457562682126ns, Message: Checked ticksToRun
+Timestamp: 2457563297022ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 426
+LogEvent for task: WorldPlayer Tick: 426
+Timestamp: 2458173222642ns, Message: Starting tick
+Timestamp: 2458173227070ns, Message: Checked ticksToRun
+Timestamp: 2458173448423ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 547
+LogEvent for task: WorldPlayer Tick: 547
+Timestamp: 2458704640777ns, Message: Starting tick
+Timestamp: 2458704644684ns, Message: Checked ticksToRun
+Timestamp: 2458705948623ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 306
+LogEvent for task: WorldPlayer Tick: 306
+Timestamp: 2457567066345ns, Message: Starting tick
+Timestamp: 2457567071554ns, Message: Checked ticksToRun
+Timestamp: 2457567809539ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 427
+LogEvent for task: WorldPlayer Tick: 427
+Timestamp: 2458176138415ns, Message: Starting tick
+Timestamp: 2458176140920ns, Message: Checked ticksToRun
+Timestamp: 2458177126526ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 548
+LogEvent for task: WorldPlayer Tick: 548
+Timestamp: 2458706509538ns, Message: Starting tick
+Timestamp: 2458706512033ns, Message: Checked ticksToRun
+Timestamp: 2458706674937ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 314
+LogEvent for task: WorldPlayer Tick: 314
+Timestamp: 2457608268844ns, Message: Starting tick
+Timestamp: 2457608275396ns, Message: Checked ticksToRun
+Timestamp: 2457609306818ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 435
+LogEvent for task: WorldPlayer Tick: 435
+Timestamp: 2458205267659ns, Message: Starting tick
+Timestamp: 2458205274371ns, Message: Checked ticksToRun
+Timestamp: 2458208136604ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 315
+LogEvent for task: WorldPlayer Tick: 315
+Timestamp: 2457613192958ns, Message: Starting tick
+Timestamp: 2457613198228ns, Message: Checked ticksToRun
+Timestamp: 2457613612179ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 436
+LogEvent for task: WorldPlayer Tick: 436
+Timestamp: 2458215388857ns, Message: Starting tick
+Timestamp: 2458215392814ns, Message: Checked ticksToRun
+Timestamp: 2458215666404ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 312
+LogEvent for task: WorldPlayer Tick: 312
+Timestamp: 2457596726097ns, Message: Starting tick
+Timestamp: 2457596730756ns, Message: Checked ticksToRun
+Timestamp: 2457597400303ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 433
+LogEvent for task: WorldPlayer Tick: 433
+Timestamp: 2458196584931ns, Message: Starting tick
+Timestamp: 2458196590802ns, Message: Checked ticksToRun
+Timestamp: 2458196789031ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 554
+LogEvent for task: WorldPlayer Tick: 554
+Timestamp: 2458723881506ns, Message: Starting tick
+Timestamp: 2458723902916ns, Message: Checked ticksToRun
+Timestamp: 2458724110152ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 313
+LogEvent for task: WorldPlayer Tick: 313
+Timestamp: 2457602779536ns, Message: Starting tick
+Timestamp: 2457602784054ns, Message: Checked ticksToRun
+Timestamp: 2457603310936ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 434
+LogEvent for task: WorldPlayer Tick: 434
+Timestamp: 2458199740170ns, Message: Starting tick
+Timestamp: 2458199744508ns, Message: Checked ticksToRun
+Timestamp: 2458200245662ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 555
+LogEvent for task: WorldPlayer Tick: 555
+Timestamp: 2458727148213ns, Message: Starting tick
+Timestamp: 2458727153783ns, Message: Checked ticksToRun
+Timestamp: 2458727406053ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 310
+LogEvent for task: WorldPlayer Tick: 310
+Timestamp: 2457588961159ns, Message: Starting tick
+Timestamp: 2457588965598ns, Message: Checked ticksToRun
+Timestamp: 2457590889252ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 431
+LogEvent for task: WorldPlayer Tick: 431
+Timestamp: 2458189930983ns, Message: Starting tick
+Timestamp: 2458189933768ns, Message: Checked ticksToRun
+Timestamp: 2458190380230ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 552
+LogEvent for task: WorldPlayer Tick: 552
+Timestamp: 2458714848616ns, Message: Starting tick
+Timestamp: 2458714852163ns, Message: Checked ticksToRun
+Timestamp: 2458719538494ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 311
+LogEvent for task: WorldPlayer Tick: 311
+Timestamp: 2457592742976ns, Message: Starting tick
+Timestamp: 2457592747835ns, Message: Checked ticksToRun
+Timestamp: 2457593034269ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 432
+LogEvent for task: WorldPlayer Tick: 432
+Timestamp: 2458193958998ns, Message: Starting tick
+Timestamp: 2458193962876ns, Message: Checked ticksToRun
+Timestamp: 2458195541507ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 553
+LogEvent for task: WorldPlayer Tick: 553
+Timestamp: 2458721251115ns, Message: Starting tick
+Timestamp: 2458721264961ns, Message: Checked ticksToRun
+Timestamp: 2458721829493ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 550
+LogEvent for task: WorldPlayer Tick: 550
+Timestamp: 2458710569623ns, Message: Starting tick
+Timestamp: 2458710572929ns, Message: Checked ticksToRun
+Timestamp: 2458711571831ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 430
+LogEvent for task: WorldPlayer Tick: 430
+Timestamp: 2458186691628ns, Message: Starting tick
+Timestamp: 2458186694724ns, Message: Checked ticksToRun
+Timestamp: 2458188343355ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 551
+LogEvent for task: WorldPlayer Tick: 551
+Timestamp: 2458713487510ns, Message: Starting tick
+Timestamp: 2458713493160ns, Message: Checked ticksToRun
+Timestamp: 2458713740852ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 318
+LogEvent for task: WorldPlayer Tick: 318
+Timestamp: 2457633625959ns, Message: Starting tick
+Timestamp: 2457633631089ns, Message: Checked ticksToRun
+Timestamp: 2457635055984ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 439
+LogEvent for task: WorldPlayer Tick: 439
+Timestamp: 2458226837057ns, Message: Starting tick
+Timestamp: 2458226839792ns, Message: Checked ticksToRun
+Timestamp: 2458226992377ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 319
+LogEvent for task: WorldPlayer Tick: 319
+Timestamp: 2457638859931ns, Message: Starting tick
+Timestamp: 2457638864690ns, Message: Checked ticksToRun
+Timestamp: 2457639425134ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 316
+LogEvent for task: WorldPlayer Tick: 316
+Timestamp: 2457620936616ns, Message: Starting tick
+Timestamp: 2457620962865ns, Message: Checked ticksToRun
+Timestamp: 2457623194724ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 437
+LogEvent for task: WorldPlayer Tick: 437
+Timestamp: 2458218198462ns, Message: Starting tick
+Timestamp: 2458218201778ns, Message: Checked ticksToRun
+Timestamp: 2458218615418ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 317
+LogEvent for task: WorldPlayer Tick: 317
+Timestamp: 2457626669228ns, Message: Starting tick
+Timestamp: 2457626673916ns, Message: Checked ticksToRun
+Timestamp: 2457626948077ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 438
+LogEvent for task: WorldPlayer Tick: 438
+Timestamp: 2458225142700ns, Message: Starting tick
+Timestamp: 2458225145546ns, Message: Checked ticksToRun
+Timestamp: 2458225363872ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 196
+LogEvent for task: WorldPlayer Tick: 196
+Timestamp: 2456851906080ns, Message: Starting tick
+Timestamp: 2456851911430ns, Message: Checked ticksToRun
+Timestamp: 2456852264788ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 197
+LogEvent for task: WorldPlayer Tick: 197
+Timestamp: 2456853949577ns, Message: Starting tick
+Timestamp: 2456853952994ns, Message: Checked ticksToRun
+Timestamp: 2456854457964ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 194
+LogEvent for task: WorldPlayer Tick: 194
+Timestamp: 2456836283141ns, Message: Starting tick
+Timestamp: 2456836289663ns, Message: Checked ticksToRun
+Timestamp: 2456836786920ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 195
+LogEvent for task: WorldPlayer Tick: 195
+Timestamp: 2456842334496ns, Message: Starting tick
+Timestamp: 2456842338143ns, Message: Checked ticksToRun
+Timestamp: 2456842690479ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 192
+LogEvent for task: WorldPlayer Tick: 192
+Timestamp: 2456826864592ns, Message: Starting tick
+Timestamp: 2456826869451ns, Message: Checked ticksToRun
+Timestamp: 2456829421186ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 193
+LogEvent for task: WorldPlayer Tick: 193
+Timestamp: 2456831868806ns, Message: Starting tick
+Timestamp: 2456831872784ns, Message: Checked ticksToRun
+Timestamp: 2456832335345ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 190
+LogEvent for task: WorldPlayer Tick: 190
+Timestamp: 2456818630931ns, Message: Starting tick
+Timestamp: 2456818637063ns, Message: Checked ticksToRun
+Timestamp: 2456818924799ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 191
+LogEvent for task: WorldPlayer Tick: 191
+Timestamp: 2456823565054ns, Message: Starting tick
+Timestamp: 2456823567920ns, Message: Checked ticksToRun
+Timestamp: 2456824180231ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 189
+LogEvent for task: WorldPlayer Tick: 189
+Timestamp: 2456811174037ns, Message: Starting tick
+Timestamp: 2456811178786ns, Message: Checked ticksToRun
+Timestamp: 2456811465921ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 187
+LogEvent for task: WorldPlayer Tick: 187
+Timestamp: 2456806191875ns, Message: Starting tick
+Timestamp: 2456806195842ns, Message: Checked ticksToRun
+Timestamp: 2456807244366ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 188
+LogEvent for task: WorldPlayer Tick: 188
+Timestamp: 2456809163081ns, Message: Starting tick
+Timestamp: 2456809166657ns, Message: Checked ticksToRun
+Timestamp: 2456809448993ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 198
+LogEvent for task: WorldPlayer Tick: 198
+Timestamp: 2456861483905ns, Message: Starting tick
+Timestamp: 2456861490448ns, Message: Checked ticksToRun
+Timestamp: 2456862353686ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 199
+LogEvent for task: WorldPlayer Tick: 199
+Timestamp: 2456868213384ns, Message: Starting tick
+Timestamp: 2456868217331ns, Message: Checked ticksToRun
+Timestamp: 2456868556593ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 174
+LogEvent for task: WorldPlayer Tick: 174
+Timestamp: 2456725877662ns, Message: Starting tick
+Timestamp: 2456725881489ns, Message: Checked ticksToRun
+Timestamp: 2456727322374ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 295
+LogEvent for task: WorldPlayer Tick: 295
+Timestamp: 2457504468892ns, Message: Starting tick
+Timestamp: 2457504615395ns, Message: Checked ticksToRun
+Timestamp: 2457505458005ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 175
+LogEvent for task: WorldPlayer Tick: 175
+Timestamp: 2456732554432ns, Message: Starting tick
+Timestamp: 2456732557057ns, Message: Checked ticksToRun
+Timestamp: 2456733041861ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 296
+LogEvent for task: WorldPlayer Tick: 296
+Timestamp: 2457507417456ns, Message: Starting tick
+Timestamp: 2457507423848ns, Message: Checked ticksToRun
+Timestamp: 2457516192576ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 172
+LogEvent for task: WorldPlayer Tick: 172
+Timestamp: 2456718985631ns, Message: Starting tick
+Timestamp: 2456718989037ns, Message: Checked ticksToRun
+Timestamp: 2456719512372ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 293
+LogEvent for task: WorldPlayer Tick: 293
+Timestamp: 2457495280062ns, Message: Starting tick
+Timestamp: 2457495286464ns, Message: Checked ticksToRun
+Timestamp: 2457495955350ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 173
+LogEvent for task: WorldPlayer Tick: 173
+Timestamp: 2456722429277ns, Message: Starting tick
+Timestamp: 2456722434357ns, Message: Checked ticksToRun
+Timestamp: 2456722920442ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 294
+LogEvent for task: WorldPlayer Tick: 294
+Timestamp: 2457499148389ns, Message: Starting tick
+Timestamp: 2457499151375ns, Message: Checked ticksToRun
+Timestamp: 2457499516164ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 170
+LogEvent for task: WorldPlayer Tick: 170
+Timestamp: 2456702623635ns, Message: Starting tick
+Timestamp: 2456702627332ns, Message: Checked ticksToRun
+Timestamp: 2456704378034ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 291
+LogEvent for task: WorldPlayer Tick: 291
+Timestamp: 2457484060056ns, Message: Starting tick
+Timestamp: 2457484067340ns, Message: Checked ticksToRun
+Timestamp: 2457486176169ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 171
+LogEvent for task: WorldPlayer Tick: 171
+Timestamp: 2456715949113ns, Message: Starting tick
+Timestamp: 2456715953732ns, Message: Checked ticksToRun
+Timestamp: 2456716250034ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 292
+LogEvent for task: WorldPlayer Tick: 292
+Timestamp: 2457489559884ns, Message: Starting tick
+Timestamp: 2457489565675ns, Message: Checked ticksToRun
+Timestamp: 2457490444382ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 290
+LogEvent for task: WorldPlayer Tick: 290
+Timestamp: 2457480417950ns, Message: Starting tick
+Timestamp: 2457480422248ns, Message: Checked ticksToRun
+Timestamp: 2457480694566ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 169
+LogEvent for task: WorldPlayer Tick: 169
+Timestamp: 2456699534329ns, Message: Starting tick
+Timestamp: 2456699540771ns, Message: Checked ticksToRun
+Timestamp: 2456700157340ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 167
+LogEvent for task: WorldPlayer Tick: 167
+Timestamp: 2456686917060ns, Message: Starting tick
+Timestamp: 2456686922020ns, Message: Checked ticksToRun
+Timestamp: 2456687368702ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 288
+LogEvent for task: WorldPlayer Tick: 288
+Timestamp: 2457471201588ns, Message: Starting tick
+Timestamp: 2457471206157ns, Message: Checked ticksToRun
+Timestamp: 2457472440827ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 168
+LogEvent for task: WorldPlayer Tick: 168
+Timestamp: 2456689812265ns, Message: Starting tick
+Timestamp: 2456689815731ns, Message: Checked ticksToRun
+Timestamp: 2456690192052ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 289
+LogEvent for task: WorldPlayer Tick: 289
+Timestamp: 2457475804264ns, Message: Starting tick
+Timestamp: 2457475807590ns, Message: Checked ticksToRun
+Timestamp: 2457476068396ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 165
+LogEvent for task: WorldPlayer Tick: 165
+Timestamp: 2456676264432ns, Message: Starting tick
+Timestamp: 2456676283929ns, Message: Checked ticksToRun
+Timestamp: 2456676853259ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 286
+LogEvent for task: WorldPlayer Tick: 286
+Timestamp: 2457462168568ns, Message: Starting tick
+Timestamp: 2457462172616ns, Message: Checked ticksToRun
+Timestamp: 2457462538117ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 166
+LogEvent for task: WorldPlayer Tick: 166
+Timestamp: 2456678526537ns, Message: Starting tick
+Timestamp: 2456678531146ns, Message: Checked ticksToRun
+Timestamp: 2456679428808ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 287
+LogEvent for task: WorldPlayer Tick: 287
+Timestamp: 2457466246436ns, Message: Starting tick
+Timestamp: 2457466251886ns, Message: Checked ticksToRun
+Timestamp: 2457469155406ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 185
+LogEvent for task: WorldPlayer Tick: 185
+Timestamp: 2456790858706ns, Message: Starting tick
+Timestamp: 2456790863675ns, Message: Checked ticksToRun
+Timestamp: 2456793139175ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 186
+LogEvent for task: WorldPlayer Tick: 186
+Timestamp: 2456796398087ns, Message: Starting tick
+Timestamp: 2456796403978ns, Message: Checked ticksToRun
+Timestamp: 2456797164916ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 183
+LogEvent for task: WorldPlayer Tick: 183
+Timestamp: 2456770228217ns, Message: Starting tick
+Timestamp: 2456770232675ns, Message: Checked ticksToRun
+Timestamp: 2456772305798ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 184
+LogEvent for task: WorldPlayer Tick: 184
+Timestamp: 2456777289133ns, Message: Starting tick
+Timestamp: 2456777294573ns, Message: Checked ticksToRun
+Timestamp: 2456783350546ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 181
+LogEvent for task: WorldPlayer Tick: 181
+Timestamp: 2456760154627ns, Message: Starting tick
+Timestamp: 2456760157743ns, Message: Checked ticksToRun
+Timestamp: 2456760978523ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 182
+LogEvent for task: WorldPlayer Tick: 182
+Timestamp: 2456764366435ns, Message: Starting tick
+Timestamp: 2456764370072ns, Message: Checked ticksToRun
+Timestamp: 2456765076328ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 180
+LogEvent for task: WorldPlayer Tick: 180
+Timestamp: 2456753755935ns, Message: Starting tick
+Timestamp: 2456753759562ns, Message: Checked ticksToRun
+Timestamp: 2456754044373ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 178
+LogEvent for task: WorldPlayer Tick: 178
+Timestamp: 2456742956043ns, Message: Starting tick
+Timestamp: 2456742960812ns, Message: Checked ticksToRun
+Timestamp: 2456744913821ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 299
+LogEvent for task: WorldPlayer Tick: 299
+Timestamp: 2457531739814ns, Message: Starting tick
+Timestamp: 2457531744242ns, Message: Checked ticksToRun
+Timestamp: 2457532222193ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 179
+LogEvent for task: WorldPlayer Tick: 179
+Timestamp: 2456750162560ns, Message: Starting tick
+Timestamp: 2456750167549ns, Message: Checked ticksToRun
+Timestamp: 2456750521629ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 176
+LogEvent for task: WorldPlayer Tick: 176
+Timestamp: 2456733888208ns, Message: Starting tick
+Timestamp: 2456733890211ns, Message: Checked ticksToRun
+Timestamp: 2456734118026ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 297
+LogEvent for task: WorldPlayer Tick: 297
+Timestamp: 2457518009992ns, Message: Starting tick
+Timestamp: 2457518014751ns, Message: Checked ticksToRun
+Timestamp: 2457519611626ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 177
+LogEvent for task: WorldPlayer Tick: 177
+Timestamp: 2456737886157ns, Message: Starting tick
+Timestamp: 2456737892398ns, Message: Checked ticksToRun
+Timestamp: 2456738593434ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 298
+LogEvent for task: WorldPlayer Tick: 298
+Timestamp: 2457523273059ns, Message: Starting tick
+Timestamp: 2457523278028ns, Message: Checked ticksToRun
+Timestamp: 2457525103639ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 152
+LogEvent for task: WorldPlayer Tick: 152
+Timestamp: 2456613281752ns, Message: Starting tick
+Timestamp: 2456613286721ns, Message: Checked ticksToRun
+Timestamp: 2456613901888ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 273
+LogEvent for task: WorldPlayer Tick: 273
+Timestamp: 2457389089145ns, Message: Starting tick
+Timestamp: 2457389094015ns, Message: Checked ticksToRun
+Timestamp: 2457390137960ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 394
+LogEvent for task: WorldPlayer Tick: 394
+Timestamp: 2458032380183ns, Message: Starting tick
+Timestamp: 2458032385012ns, Message: Checked ticksToRun
+Timestamp: 2458032751164ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 153
+LogEvent for task: WorldPlayer Tick: 153
+Timestamp: 2456615898929ns, Message: Starting tick
+Timestamp: 2456615903557ns, Message: Checked ticksToRun
+Timestamp: 2456616483558ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 274
+LogEvent for task: WorldPlayer Tick: 274
+Timestamp: 2457395546186ns, Message: Starting tick
+Timestamp: 2457395552588ns, Message: Checked ticksToRun
+Timestamp: 2457399854504ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 395
+LogEvent for task: WorldPlayer Tick: 395
+Timestamp: 2458038583651ns, Message: Starting tick
+Timestamp: 2458038587799ns, Message: Checked ticksToRun
+Timestamp: 2458039080567ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 150
+LogEvent for task: WorldPlayer Tick: 150
+Timestamp: 2456596699225ns, Message: Starting tick
+Timestamp: 2456596704115ns, Message: Checked ticksToRun
+Timestamp: 2456599121268ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 271
+LogEvent for task: WorldPlayer Tick: 271
+Timestamp: 2457378381655ns, Message: Starting tick
+Timestamp: 2457378387396ns, Message: Checked ticksToRun
+Timestamp: 2457381316183ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 392
+LogEvent for task: WorldPlayer Tick: 392
+Timestamp: 2458021225439ns, Message: Starting tick
+Timestamp: 2458021231541ns, Message: Checked ticksToRun
+Timestamp: 2458021945250ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 151
+LogEvent for task: WorldPlayer Tick: 151
+Timestamp: 2456608918332ns, Message: Starting tick
+Timestamp: 2456608921859ns, Message: Checked ticksToRun
+Timestamp: 2456610181907ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 272
+LogEvent for task: WorldPlayer Tick: 272
+Timestamp: 2457383770356ns, Message: Starting tick
+Timestamp: 2457383774393ns, Message: Checked ticksToRun
+Timestamp: 2457384269185ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 393
+LogEvent for task: WorldPlayer Tick: 393
+Timestamp: 2458026174240ns, Message: Starting tick
+Timestamp: 2458026177115ns, Message: Checked ticksToRun
+Timestamp: 2458026533910ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 390
+LogEvent for task: WorldPlayer Tick: 390
+Timestamp: 2458009605539ns, Message: Starting tick
+Timestamp: 2458009610348ns, Message: Checked ticksToRun
+Timestamp: 2458010176513ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 270
+LogEvent for task: WorldPlayer Tick: 270
+Timestamp: 2457372765301ns, Message: Starting tick
+Timestamp: 2457372771092ns, Message: Checked ticksToRun
+Timestamp: 2457374474195ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 391
+LogEvent for task: WorldPlayer Tick: 391
+Timestamp: 2458017659555ns, Message: Starting tick
+Timestamp: 2458017666418ns, Message: Checked ticksToRun
+Timestamp: 2458018334403ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 149
+LogEvent for task: WorldPlayer Tick: 149
+Timestamp: 2456591660297ns, Message: Starting tick
+Timestamp: 2456591664955ns, Message: Checked ticksToRun
+Timestamp: 2456593486790ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 147
+LogEvent for task: WorldPlayer Tick: 147
+Timestamp: 2456572467356ns, Message: Starting tick
+Timestamp: 2456572473999ns, Message: Checked ticksToRun
+Timestamp: 2456582346473ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 268
+LogEvent for task: WorldPlayer Tick: 268
+Timestamp: 2457359563984ns, Message: Starting tick
+Timestamp: 2457359567811ns, Message: Checked ticksToRun
+Timestamp: 2457363203956ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 389
+LogEvent for task: WorldPlayer Tick: 389
+Timestamp: 2458007218622ns, Message: Starting tick
+Timestamp: 2458007222369ns, Message: Checked ticksToRun
+Timestamp: 2458007565328ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 148
+LogEvent for task: WorldPlayer Tick: 148
+Timestamp: 2456583606792ns, Message: Starting tick
+Timestamp: 2456583610498ns, Message: Checked ticksToRun
+Timestamp: 2456587603629ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 269
+LogEvent for task: WorldPlayer Tick: 269
+Timestamp: 2457367186256ns, Message: Starting tick
+Timestamp: 2457367190333ns, Message: Checked ticksToRun
+Timestamp: 2457371277829ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 145
+LogEvent for task: WorldPlayer Tick: 145
+Timestamp: 2456557636603ns, Message: Starting tick
+Timestamp: 2456557639769ns, Message: Checked ticksToRun
+Timestamp: 2456558314476ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 266
+LogEvent for task: WorldPlayer Tick: 266
+Timestamp: 2457345753652ns, Message: Starting tick
+Timestamp: 2457345758762ns, Message: Checked ticksToRun
+Timestamp: 2457351567645ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 387
+LogEvent for task: WorldPlayer Tick: 387
+Timestamp: 2457999545365ns, Message: Starting tick
+Timestamp: 2457999549713ns, Message: Checked ticksToRun
+Timestamp: 2457999824244ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 146
+LogEvent for task: WorldPlayer Tick: 146
+Timestamp: 2456561045565ns, Message: Starting tick
+Timestamp: 2456561050605ns, Message: Checked ticksToRun
+Timestamp: 2456562079502ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 267
+LogEvent for task: WorldPlayer Tick: 267
+Timestamp: 2457352632790ns, Message: Starting tick
+Timestamp: 2457352638550ns, Message: Checked ticksToRun
+Timestamp: 2457353609129ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 388
+LogEvent for task: WorldPlayer Tick: 388
+Timestamp: 2458003417159ns, Message: Starting tick
+Timestamp: 2458003422418ns, Message: Checked ticksToRun
+Timestamp: 2458003869481ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 143
+LogEvent for task: WorldPlayer Tick: 143
+Timestamp: 2456534843445ns, Message: Starting tick
+Timestamp: 2456534878400ns, Message: Checked ticksToRun
+Timestamp: 2456535421993ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 264
+LogEvent for task: WorldPlayer Tick: 264
+Timestamp: 2457335234363ns, Message: Starting tick
+Timestamp: 2457335239432ns, Message: Checked ticksToRun
+Timestamp: 2457336427245ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 385
+LogEvent for task: WorldPlayer Tick: 385
+Timestamp: 2457989967108ns, Message: Starting tick
+Timestamp: 2457989970374ns, Message: Checked ticksToRun
+Timestamp: 2457990778590ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 144
+LogEvent for task: WorldPlayer Tick: 144
+Timestamp: 2456549523237ns, Message: Starting tick
+Timestamp: 2456549556819ns, Message: Checked ticksToRun
+Timestamp: 2456551386709ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 265
+LogEvent for task: WorldPlayer Tick: 265
+Timestamp: 2457341185541ns, Message: Starting tick
+Timestamp: 2457341188997ns, Message: Checked ticksToRun
+Timestamp: 2457344173117ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 386
+LogEvent for task: WorldPlayer Tick: 386
+Timestamp: 2457992583724ns, Message: Starting tick
+Timestamp: 2457992587160ns, Message: Checked ticksToRun
+Timestamp: 2457992959253ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 163
+LogEvent for task: WorldPlayer Tick: 163
+Timestamp: 2456662777904ns, Message: Starting tick
+Timestamp: 2456662780749ns, Message: Checked ticksToRun
+Timestamp: 2456663707616ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 284
+LogEvent for task: WorldPlayer Tick: 284
+Timestamp: 2457454160056ns, Message: Starting tick
+Timestamp: 2457454163904ns, Message: Checked ticksToRun
+Timestamp: 2457454447893ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 164
+LogEvent for task: WorldPlayer Tick: 164
+Timestamp: 2456668232567ns, Message: Starting tick
+Timestamp: 2456668236174ns, Message: Checked ticksToRun
+Timestamp: 2456674759178ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 285
+LogEvent for task: WorldPlayer Tick: 285
+Timestamp: 2457457144898ns, Message: Starting tick
+Timestamp: 2457457148975ns, Message: Checked ticksToRun
+Timestamp: 2457457495461ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 161
+LogEvent for task: WorldPlayer Tick: 161
+Timestamp: 2456655858371ns, Message: Starting tick
+Timestamp: 2456655863872ns, Message: Checked ticksToRun
+Timestamp: 2456657409061ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 282
+LogEvent for task: WorldPlayer Tick: 282
+Timestamp: 2457447180843ns, Message: Starting tick
+Timestamp: 2457447186944ns, Message: Checked ticksToRun
+Timestamp: 2457447574186ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 162
+LogEvent for task: WorldPlayer Tick: 162
+Timestamp: 2456660614814ns, Message: Starting tick
+Timestamp: 2456660618781ns, Message: Checked ticksToRun
+Timestamp: 2456661135203ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 283
+LogEvent for task: WorldPlayer Tick: 283
+Timestamp: 2457451169504ns, Message: Starting tick
+Timestamp: 2457451173602ns, Message: Checked ticksToRun
+Timestamp: 2457451895567ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 280
+LogEvent for task: WorldPlayer Tick: 280
+Timestamp: 2457434948211ns, Message: Starting tick
+Timestamp: 2457434952088ns, Message: Checked ticksToRun
+Timestamp: 2457437730805ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 160
+LogEvent for task: WorldPlayer Tick: 160
+Timestamp: 2456650742890ns, Message: Starting tick
+Timestamp: 2456650745495ns, Message: Checked ticksToRun
+Timestamp: 2456652211266ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 281
+LogEvent for task: WorldPlayer Tick: 281
+Timestamp: 2457440102424ns, Message: Starting tick
+Timestamp: 2457440106161ns, Message: Checked ticksToRun
+Timestamp: 2457441369264ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 158
+LogEvent for task: WorldPlayer Tick: 158
+Timestamp: 2456643812668ns, Message: Starting tick
+Timestamp: 2456643817056ns, Message: Checked ticksToRun
+Timestamp: 2456644375046ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 279
+LogEvent for task: WorldPlayer Tick: 279
+Timestamp: 2457427149219ns, Message: Starting tick
+Timestamp: 2457427153638ns, Message: Checked ticksToRun
+Timestamp: 2457427718490ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 159
+LogEvent for task: WorldPlayer Tick: 159
+Timestamp: 2456645391149ns, Message: Starting tick
+Timestamp: 2456645395417ns, Message: Checked ticksToRun
+Timestamp: 2456645924222ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 156
+LogEvent for task: WorldPlayer Tick: 156
+Timestamp: 2456632261285ns, Message: Starting tick
+Timestamp: 2456632265192ns, Message: Checked ticksToRun
+Timestamp: 2456632744175ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 277
+LogEvent for task: WorldPlayer Tick: 277
+Timestamp: 2457421174167ns, Message: Starting tick
+Timestamp: 2457421178745ns, Message: Checked ticksToRun
+Timestamp: 2457421524600ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 398
+LogEvent for task: WorldPlayer Tick: 398
+Timestamp: 2458055789039ns, Message: Starting tick
+Timestamp: 2458055792505ns, Message: Checked ticksToRun
+Timestamp: 2458056044124ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 157
+LogEvent for task: WorldPlayer Tick: 157
+Timestamp: 2456639200605ns, Message: Starting tick
+Timestamp: 2456639204602ns, Message: Checked ticksToRun
+Timestamp: 2456640033336ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 278
+LogEvent for task: WorldPlayer Tick: 278
+Timestamp: 2457424649021ns, Message: Starting tick
+Timestamp: 2457424653520ns, Message: Checked ticksToRun
+Timestamp: 2457424981070ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 399
+LogEvent for task: WorldPlayer Tick: 399
+Timestamp: 2458057632774ns, Message: Starting tick
+Timestamp: 2458057635489ns, Message: Checked ticksToRun
+Timestamp: 2458058035664ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 154
+LogEvent for task: WorldPlayer Tick: 154
+Timestamp: 2456621097655ns, Message: Starting tick
+Timestamp: 2456621099919ns, Message: Checked ticksToRun
+Timestamp: 2456622252567ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 275
+LogEvent for task: WorldPlayer Tick: 275
+Timestamp: 2457401410483ns, Message: Starting tick
+Timestamp: 2457401413739ns, Message: Checked ticksToRun
+Timestamp: 2457402272128ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 396
+LogEvent for task: WorldPlayer Tick: 396
+Timestamp: 2458042501250ns, Message: Starting tick
+Timestamp: 2458042511009ns, Message: Checked ticksToRun
+Timestamp: 2458043054622ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 155
+LogEvent for task: WorldPlayer Tick: 155
+Timestamp: 2456628749332ns, Message: Starting tick
+Timestamp: 2456628753760ns, Message: Checked ticksToRun
+Timestamp: 2456629097450ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 276
+LogEvent for task: WorldPlayer Tick: 276
+Timestamp: 2457410138555ns, Message: Starting tick
+Timestamp: 2457410143123ns, Message: Checked ticksToRun
+Timestamp: 2457420298345ns, Message: Ran world
+
+================================================================================
+
+Task: WorldPlayer Tick: 397
+LogEvent for task: WorldPlayer Tick: 397
+Timestamp: 2458049542841ns, Message: Starting tick
+Timestamp: 2458049547770ns, Message: Checked ticksToRun
+Timestamp: 2458049992228ns, Message: Ran world
+
+================================================================================
+

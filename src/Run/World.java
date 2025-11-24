@@ -65,9 +65,7 @@ public class World implements Runnable {
      * then one thread for updating the world with the actions of the Things.
      */
     private synchronized void tick() {
-        if (Main.IN_DEPTH_DEBUG_MODE) {
-            Logger.logEvent("Tick: " + tickCount, "Tick started");
-        }
+        Logger.logEvent("Tick: " + tickCount, "Tick started");
         tickCount++;
 
         // Remove dead things before ticking
@@ -77,7 +75,7 @@ public class World implements Runnable {
             }
         }
 
-        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Removed dead things");}
+        Logger.logEvent("Tick: " + tickCount, "Removed dead things");
         
         List<Future<?>> futures = new ArrayList<>(things.size());
 
@@ -101,7 +99,7 @@ public class World implements Runnable {
             }
         }
         
-        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Threads run");}
+        Logger.logEvent("Tick: " + tickCount, "Threads run");
         
         thingsToUpdate = new HashSet<>();
         eggsToUpdate = new HashSet<>();
@@ -117,16 +115,16 @@ public class World implements Runnable {
             }
         }
         
-        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Created update sets");}
+        Logger.logEvent("Tick: " + tickCount, "Created update sets");
 
         thingsDoAction(thingsToUpdate);
-        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Things did action");}
+        Logger.logEvent("Tick: " + tickCount, "Things did action");
         thingsDoAction(eggsToUpdate);
-        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Eggs did action");}
+        Logger.logEvent("Tick: " + tickCount, "Eggs did action");
         thingsDoAction(nothingToUpdate);
-        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Nothing did action");}
+        Logger.logEvent("Tick: " + tickCount, "Nothing did action");
         updateSnapshot();
-        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Updated cached grids");}
+        Logger.logEvent("Tick: " + tickCount, "Updated cached grids");
     }
 
     private void thingsDoAction(Set<Thing> things) {
