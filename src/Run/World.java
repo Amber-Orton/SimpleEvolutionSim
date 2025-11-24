@@ -25,6 +25,7 @@ public class World implements Runnable {
     private Thing[][] grid;
     private Color[][] colorGrid;
     private boolean[][] changedGrid;
+    private volatile Snapshot latestSnapshot;
     protected Nothing[][] nothingGrid;
     
     private final Wall DEFAULTWALL = new Wall();
@@ -124,6 +125,8 @@ public class World implements Runnable {
         if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Eggs did action");}
         thingsDoAction(nothingToUpdate);
         if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Nothing did action");}
+        updateSnapshot();
+        if (Main.IN_DEPTH_DEBUG_MODE) {Logger.logEvent("Tick: " + tickCount, "Updated cached grids");}
     }
 
     private void thingsDoAction(Set<Thing> things) {
@@ -247,6 +250,52 @@ public class World implements Runnable {
             }
             changedGrid[pos.getRow()][pos.getCol()] = true;
         }
+    }
+
+    /**
+     * Creates a snapshot of the current world state for GUI rendering.
+     * This must be called when it is known the state of the world is stable.
+     */
+    public void updateSnapshot() {
+        Thing[][] gridCopy = new Thing[height][width];
+        Color[][] colorCopy = new Color[height][width];
+        boolean[][] changedCopy = new boolean[height][width];
+
+        for (int r = 0; r < height; r++) {
+            for (int c = 0; c < width; c++) {
+                gridCopy[r][c] = grid[r][c];
+                colorCopy[r][c] = colorGrid[r][c];
+                changedCopy[r][c] = changedGrid[r][c];
+            }
+        }
+
+        latestSnapshot = new Snapshot(gridCopy, colorCopy, changedCopy);
+    }
+
+    /**
+     * Snapshot container returned by {@link #getLatestSnapshot()}.
+     * Arrays returned here are deep copies representing a single point in time.
+     */
+    public static class Snapshot {
+        public final Thing[][] grid;
+        public final Color[][] colorGrid;
+        public final boolean[][] changedGrid;
+
+        public Snapshot(Thing[][] grid, Color[][] colorGrid, boolean[][] changedGrid) {
+            this.grid = grid;
+            this.colorGrid = colorGrid;
+            this.changedGrid = changedGrid;
+        }
+    }
+
+
+    /**
+     * Returns the most recently published snapshot, a representation of the world the last time it was known stable.
+     * used to get a recent state of the world when all grids were garanteed to be at the same time. 
+     * @return the latest stable snapshot; may return null until the world has produced its first snapshot.
+     */
+    public Snapshot getLatestSnapshot() {
+        return latestSnapshot;
     }
 
     public void posHasChanged(Position pos) {

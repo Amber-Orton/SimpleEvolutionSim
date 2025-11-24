@@ -3,6 +3,7 @@ package Run;
 import javax.swing.*;
 
 import Logger.Logger;
+import Run.World.Snapshot;
 import Things.Animal;
 import Things.Egg;
 import Things.Food;
@@ -16,7 +17,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.function.Consumer;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
@@ -639,11 +639,10 @@ class WorldGridPanel extends JPanel {
         try {
             // Draw world cells
 
-            //TODO: still not totally thread safe
-            boolean[][] changedGrid = world.getChangedGrid();
-            Thing[][] thingGrid = world.getThingGrid();
-            Color[][] colorGrid = world.getColorGrid();
-
+            Snapshot snapshot = world.getLatestSnapshot();
+            Thing[][] thingGrid = snapshot.grid;
+            Color[][] colorGrid = snapshot.colorGrid;
+            boolean[][] changedGrid = snapshot.changedGrid;
 
             double scale = Math.min(getHeight() / (double) imgH, getWidth() / (double) imgW);
             boolean drawBorders = (scale * 8 >= 8);
