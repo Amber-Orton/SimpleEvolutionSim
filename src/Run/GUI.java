@@ -75,7 +75,7 @@ public class GUI {
                     Main.executorService.shutdown();
                     worldGridPanel.renderExecutor.shutdown();
                     if (Main.LOGGING_ENABLED) {
-                        Logger.write();
+                        Logger.close();
                     }
                 } catch (IOException ex) {
                     Logger.logError("GUI", "Failed to close resources: " + ex.getMessage());

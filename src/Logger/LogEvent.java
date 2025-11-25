@@ -27,4 +27,11 @@ public class LogEvent {
         }
         return sb.toString();
     }
+
+    public long getLastEventTime() {
+        if (timestamps.isEmpty()) {
+            return -1;
+        }
+        return timestamps.get(timestamps.size() - 1);
+    }
 }
