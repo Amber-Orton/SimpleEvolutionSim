@@ -788,21 +788,36 @@ class WorldStatsPanel {
             v -> { Main.ANIMAL_STAT_TOTAL = v; Main.updateAttributes(); }
         ));
         worldStatsContent.add(SliderFactory.makeIntSlider(
+            "Animal Existence Cost", 0, 10, Main.ANIMAL_EXISTANCE_COST,
+            v -> { Main.ANIMAL_EXISTANCE_COST = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeIntSlider(
             "Animal Attack Cost", 0, 50, Main.ANIMAL_ATTACK_COST,
             v -> { Main.ANIMAL_ATTACK_COST = v; Main.updateAttributes(); }
         ));
-
         worldStatsContent.add(SliderFactory.makeIntSlider(
             "Animal Move Cost", 0, 20, Main.ANIMAL_MOVE_COST,
             v -> { Main.ANIMAL_MOVE_COST = v; Main.updateAttributes(); }
         ));
         worldStatsContent.add(SliderFactory.makeIntSlider(
-            "Animal Rest Energy", 0, 20, Main.ANIMAL_REST_ENERGY,
-            v -> { Main.ANIMAL_REST_ENERGY = v; Main.updateAttributes(); }
+            "Animal Eat Cost", 0, 20, Main.ANIMAL_EAT_COST,
+            v -> { Main.ANIMAL_EAT_COST = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeIntSlider(
+            "Animal Turn Cost", 0, 20, Main.ANIMAL_TURN_COST,
+            v -> { Main.ANIMAL_TURN_COST = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeIntSlider(
+            "Animal Rest Energy", 0, 20, Main.ANIMAL_REST_COST,
+            v -> { Main.ANIMAL_REST_COST = v; Main.updateAttributes(); }
         ));
         worldStatsContent.add(SliderFactory.makeIntSlider(
             "Animal Rest Health", 0, 20, Main.ANIMAL_REST_HEALTH,
             v -> { Main.ANIMAL_REST_HEALTH = v; Main.updateAttributes(); }
+        ));
+        worldStatsContent.add(SliderFactory.makeIntSlider(
+            "Egg Hatch Cycles", 1, 20, Main.EGG_HATCH_CYCLES,
+            v -> { Main.EGG_HATCH_CYCLES = v; Main.updateAttributes(); }
         ));
         worldStatsContent.add(SliderFactory.makeZeroToOneSlider(
             "Mutation Rate (0..1)", Main.MUTATION_RATE,

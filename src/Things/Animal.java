@@ -54,20 +54,19 @@ public class Animal extends Edible implements HasAppearance {
         action = think();
         super.run();
     }
-
-
+    
+    
     @Override
     public void doAction(){
+        removeEnergy(attributes.getExistanceCost());
         if (!isAlive) {return;}
         switch (action) {
             case TURN_LEFT:
-                facing = facing.turnLeft();
-                world.posHasChanged(pos);
+                turnLeft();
                 break;
             
             case TURN_RIGHT:
-                facing = facing.turnRight();
-                world.posHasChanged(pos);
+                turnRight();
                 break;
 
             case MOVE:
@@ -228,6 +227,7 @@ public class Animal extends Edible implements HasAppearance {
      * @return true if an edible thing was eaten, false otherwise
      */
     protected boolean eat() {
+        removeEnergy(attributes.getEatCost());
         Thing thingToEat = getFacingThing();
         if (thingToEat instanceof Edible) {
             Edible edibleToEat = (Edible)thingToEat;
@@ -241,7 +241,7 @@ public class Animal extends Edible implements HasAppearance {
 
     
     protected void rest() {
-        removeEnergy(attributes.getRestEnergy());
+        removeEnergy(attributes.getRestCost());
         addHealth(attributes.getRestHealth());
     }
 
@@ -263,6 +263,17 @@ public class Animal extends Edible implements HasAppearance {
         }
     }
 
+    private void turnLeft() {
+        removeEnergy(attributes.getTurnCost());
+        facing = facing.turnLeft();
+        world.posHasChanged(pos);
+    }
+            
+    private void turnRight() {
+        removeEnergy(attributes.getTurnCost());
+        facing = facing.turnRight();
+        world.posHasChanged(pos);
+    }
     /**
      * Check if the new position is adjacent (up, down, left, right) of the current position.
      * @param newPos The new position to check.

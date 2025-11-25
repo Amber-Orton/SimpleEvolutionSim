@@ -15,9 +15,12 @@ public class Main {
      * defaults have been provided
      */
     protected static int ANIMAL_STAT_TOTAL = 100;
+    protected static int ANIMAL_EXISTANCE_COST = 0;
     protected static int ANIMAL_ATTACK_COST = 5;
     protected static int ANIMAL_MOVE_COST = 1;
-    protected static int ANIMAL_REST_ENERGY = 3;
+    protected static int ANIMAL_EAT_COST = 0;
+    protected static int ANIMAL_TURN_COST = 0;
+    protected static int ANIMAL_REST_COST = 3;
     protected static int ANIMAL_REST_HEALTH = 2;
     protected static int EGG_HATCH_CYCLES = 3;
     protected static float MUTATION_RATE = 0.1f;
@@ -81,7 +84,7 @@ public class Main {
     }
 
     public static void updateAttributes() {
-        AnimalAttributes.setWorldAttributes(ANIMAL_STAT_TOTAL, ANIMAL_ATTACK_COST, MUTATION_RATE, MUTATION_FACTOR, NODE_INSERT_OR_DELETE_RATE, MAX_LAYERS, ANIMAL_MOVE_COST, ANIMAL_REST_ENERGY, ANIMAL_REST_HEALTH, EGG_HATCH_CYCLES);
+        AnimalAttributes.setWorldAttributes(ANIMAL_STAT_TOTAL, ANIMAL_ATTACK_COST, MUTATION_RATE, MUTATION_FACTOR, NODE_INSERT_OR_DELETE_RATE, MAX_LAYERS, ANIMAL_EXISTANCE_COST, ANIMAL_MOVE_COST, ANIMAL_EAT_COST, ANIMAL_TURN_COST, ANIMAL_REST_COST, ANIMAL_REST_HEALTH, EGG_HATCH_CYCLES);
         Nothing.setWorldAttributes(FOOD_GROW_RATE, NEW_FOOD_ENERGY);
     }
 

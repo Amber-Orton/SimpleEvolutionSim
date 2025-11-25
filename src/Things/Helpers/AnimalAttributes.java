@@ -13,7 +13,10 @@ public class AnimalAttributes {
     private static float mutationFactor;
     private static float nodeInsertOrDeleteRate;
     private static int maxLayers;
-    private static int restEnergy;
+    private static int existanceCost;
+    private static int restCost;
+    private static int eatCost;
+    private static int turnCost;
     private static int restHealth;
     private static int hatchCycles;
 
@@ -33,15 +36,18 @@ public class AnimalAttributes {
         this.appearance = appearance;
     }
 
-    public static void setWorldAttributes(int statTotal, int attackCost, float mutationRate, float mutationFactor, float nodeInsertOrDeleteRate, int maxLayers, int moveCost, int restEnergy, int restHealth, int hatchCycles) {
+    public static void setWorldAttributes(int statTotal, int attackCost, float mutationRate, float mutationFactor, float nodeInsertOrDeleteRate, int maxLayers, int existanceCost, int moveCost, int eatCost, int turnCost, int restEnergy, int restHealth, int hatchCycles) {
         AnimalAttributes.statTotal = statTotal;
         AnimalAttributes.attackCost = attackCost;
         AnimalAttributes.mutationRate = mutationRate;
         AnimalAttributes.mutationFactor = mutationFactor;
         AnimalAttributes.nodeInsertOrDeleteRate = nodeInsertOrDeleteRate;
         AnimalAttributes.maxLayers = maxLayers;
+        AnimalAttributes.existanceCost = existanceCost;
         AnimalAttributes.moveCost = moveCost;
-        AnimalAttributes.restEnergy = restEnergy;
+        AnimalAttributes.eatCost = eatCost;
+        AnimalAttributes.turnCost = turnCost;
+        AnimalAttributes.restCost = restEnergy;
         AnimalAttributes.restHealth = restHealth;
         AnimalAttributes.hatchCycles = hatchCycles;
     }
@@ -259,8 +265,20 @@ public class AnimalAttributes {
         return moveCost;
     }
 
-    public int getRestEnergy() {
-        return restEnergy;
+    public int getExistanceCost() {
+        return existanceCost;
+    }
+
+    public int getTurnCost() {
+        return turnCost;
+    }
+
+    public int getEatCost() {
+        return eatCost;
+    }
+
+    public int getRestCost() {
+        return restCost;
     }
 
     public int getRestHealth() {
