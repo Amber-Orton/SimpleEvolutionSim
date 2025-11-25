@@ -41,6 +41,7 @@ public class WorldPlayer implements Runnable {
                     e.printStackTrace();
                     Main.play = false;
                     GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                    Logger.logError("WorldPlayer", "Exception during GUI update: " + e.getMessage());
                     executor.shutdown();
                     return;
                 }
@@ -55,6 +56,7 @@ public class WorldPlayer implements Runnable {
                     } catch (InterruptedException e) {
                         Main.play = false;
                         GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                        Logger.logError("WorldPlayer", "Interrupted during sleep: " + e.getMessage());
                         executor.shutdown();
                         return;
                     }
@@ -81,6 +83,7 @@ public class WorldPlayer implements Runnable {
             SwingUtilities.invokeAndWait(() -> GUI.getInstance().updateAfterTick(startTime));
         } catch (Exception e) {
             e.printStackTrace();
+            Logger.logError("WorldPlayer Once", "Exception during GUI update: " + e.getMessage());
         }
         Main.lastTickTime = System.nanoTime() - startTime;
         System.out.println("Ticked! in: " + (Main.lastTickTime / 1_000_000.0) + " ms");

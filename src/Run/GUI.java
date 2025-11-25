@@ -78,6 +78,7 @@ public class GUI {
                         Logger.write();
                     }
                 } catch (IOException ex) {
+                    Logger.logError("GUI", "Failed to close resources: " + ex.getMessage());
                     ex.printStackTrace();
                 }
             }
@@ -354,6 +355,7 @@ public class GUI {
                 if (val < 0) val = 0;
                 Main.tickMillis = val;
             } catch (NumberFormatException ex) {
+                Logger.logError("GUI", "Invalid number format for MSPT: " + ex.getMessage());
                 msptField.setText(Integer.toString(Main.tickMillis));
             }
         };
@@ -378,6 +380,7 @@ public class GUI {
                 if (val < 0) val = 0;
                 Main.ticksToRun = val;
             } catch (NumberFormatException ex) {
+                Logger.logError("GUI", "Invalid number format for Ticks to Run: " + ex.getMessage());
                 ticksToRun.setText(Integer.toString(Main.ticksToRun));
             }
         };
@@ -901,6 +904,7 @@ class SliderFactory {
                 }
                 if (onChange != null) onChange.accept(raw);
             } catch (NumberFormatException ex) {
+                Logger.logError("GUI", "Invalid number format for slider: " + ex.getMessage());
                 tf.setText(Integer.toString(slider.getValue()));
             }
         };
@@ -959,6 +963,7 @@ class SliderFactory {
                 }
                 if (onChange != null) onChange.accept(raw);
             } catch (NumberFormatException ex) {
+                Logger.logError("GUI", "Invalid number format for slider: " + ex.getMessage());
                 tf.setText(String.format("%.4f", slider.getValue() / 100f));
             }
         };
@@ -1017,6 +1022,7 @@ class SliderFactory {
                 }
                 if (onChange != null) onChange.accept(raw);
             } catch (NumberFormatException ex) {
+                Logger.logError("GUI", "Invalid number format for slider: " + ex.getMessage());
                 tf.setText(String.format("%.3f", (float) slider.getValue()));
             }
         };

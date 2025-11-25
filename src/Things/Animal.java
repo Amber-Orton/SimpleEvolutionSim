@@ -2,6 +2,7 @@ package Things;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
+import Logger.Logger;
 import Run.Main;
 import Run.World;
 import Things.Helpers.ACTION;
@@ -45,6 +46,7 @@ public class Animal extends Edible implements HasAppearance {
         } catch (Exception e) {
             e.printStackTrace();
             this.name = "Animal_errorname " + (parent != null ? parent.getName().split(" ")[0]: "NoParent");
+            Logger.logError("Animal Creation", "Failed to generate name for animal: " + e.getMessage());
         }
         System.out.println(getName() + " is born");
     }

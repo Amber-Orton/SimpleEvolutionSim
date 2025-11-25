@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import Logger.Logger;
 import Things.Nothing;
 import Things.Helpers.AnimalAttributes;
 import Things.Helpers.NameCreator;
@@ -75,6 +76,7 @@ public class Main {
             NameCreator.open();
         } catch (IOException e) {
             e.printStackTrace();
+            Logger.logError("Main", "Failed to open NameCreator: " + e.getMessage());
             System.exit(1);
         }
         updateAttributes();

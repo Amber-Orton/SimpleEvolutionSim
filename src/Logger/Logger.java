@@ -27,6 +27,14 @@ public class Logger {
         logEvent.logEvent(message);
     }
 
+    public static void logError(String task, String message) {
+        if (!logs.containsKey(task)) {
+            logs.put(task, new LogEvent(task));
+        }
+        LogEvent logEvent = logs.get(task);
+        logEvent.logEvent("ERROR: " + message);
+    }
+
     public static void write() {
         try {
             // Create log directory if it doesn't exist
