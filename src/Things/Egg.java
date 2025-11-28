@@ -3,13 +3,15 @@ import java.awt.Color;
 
 import Run.World;
 import Things.Helpers.AnimalAttributes;
+import Things.Helpers.Livable;
 import Things.Helpers.Position;
 
-public class Egg extends Edible{
+public class Egg extends Edible implements Livable {
     private AnimalAttributes attributes;
     private Animal parent;
     private int cyclesToHatch;
     private boolean isHatched = false;
+    private boolean isAlive = true;
     private Animal child;
 
     public Egg(World world, Position pos, AnimalAttributes attributes, Animal parent) {
@@ -73,6 +75,22 @@ public class Egg extends Edible{
 
     public Animal getParent() {
         return parent;
+    }
+
+    @Override
+    public Thing clone() {
+        return new Egg(world, pos, attributes, parent);
+    }
+
+    @Override
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    @Override
+    public void die() {
+        System.out.println(getName() + " has died.");
+        isAlive= false;
     }
 
     @Override

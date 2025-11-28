@@ -13,6 +13,7 @@ import Things.Egg;
 import Things.Nothing;
 import Things.Thing;
 import Things.Wall;
+import Things.Helpers.Livable;
 import Things.Helpers.Position;
 
 public class World implements Runnable {
@@ -192,20 +193,28 @@ public class World implements Runnable {
 
     /**
      * changes Thing at the location of origionalThing to newThing as long as origionalThing is in grid at origionalThing.pos
-     * fails and returns false if origionalThing is not where it is supposed to be
+     * fails and throws exception if origionalThing is not at origionalThing.pos
      * @param origionalThing Thing to replace
      * @param newThing Thing to replace with
-     * @return true if the Thing was replaced false otherwise
      */
-    public boolean replaceThing(Thing origionalThing, Thing newThing){
+    public void replaceThing(Thing origionalThing, Thing newThing){
         things.remove(origionalThing);
         if (getThingAt(origionalThing.getPos()) == origionalThing){
             changeGridAt(origionalThing.getPos(), null);
             putThingAt(origionalThing.getPos(), newThing);
-            return true;
         } else {
-            return false;
+            throw new IllegalArgumentException("Cannot replace Thing at " + origionalThing.getPos() + " as the origional Thing is not there.");
         }
+    }
+
+    /**
+     * changes Thing at pos to newThing as long as there is a Thing at pos
+     * fails and throws exception if there is no Thing at pos
+     * @param pos position to replace Thing at
+     * @param newThing Thing to replace with
+     */
+    public void replaceThingAt(Position pos, Thing newThing){
+        replaceThing(getThingAt(pos), newThing);
     }
 
 
@@ -219,12 +228,21 @@ public class World implements Runnable {
     }
 
     /**
+     * removes all references to thing at pos in this instance of world.
+     * does not edit thing
+     * @param pos the position to remove the thing at
+     */
+    public void removeThingAt(Position pos){
+        removeThing(getThingAt(pos));
+    }
+
+    /**
      * removes all references to thing in this instance of world using removeThing(Thing)
      * interrupts things thread to kill it
      * @param thing the thing to kill
      */
-    public void killThing(Thing thing) {
-        removeThing(thing);
+    public void killThing(Livable thing) {
+        removeThing((Thing)thing);
         thing.die();
     }
 

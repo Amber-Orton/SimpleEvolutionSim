@@ -16,6 +16,11 @@ public class Food extends Edible{
     }
 
     @Override
+    public Thing clone() {
+        return new Food(world, pos, energy);
+    }
+
+    @Override
     public boolean needsToTick() {
         return false;
     }

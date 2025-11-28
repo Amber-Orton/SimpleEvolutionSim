@@ -230,8 +230,10 @@ public class AnimalAttributes {
     private float generateMutationFactor() {
         return 1.0f + (float)(Main.random.nextGaussian() * mutationFactor);
     }
-    
 
+    public AnimalAttributes clone() {
+        return new AnimalAttributes(maxEnergy, maxHealth, attackDamage, reproductionCost, neuralNet.clone(), appearance.clone());
+    }
 
     public float getAttackDamage() {
         return attackDamage;

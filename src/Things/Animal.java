@@ -9,11 +9,12 @@ import Things.Helpers.ACTION;
 import Things.Helpers.AnimalAttributes;
 import Things.Helpers.DIRECTION;
 import Things.Helpers.HasAppearance;
+import Things.Helpers.Livable;
 import Things.Helpers.NameCreator;
 import Things.Helpers.Position;
 
 
-public class Animal extends Edible implements HasAppearance {
+public class Animal extends Edible implements HasAppearance, Livable {
 
     protected AnimalAttributes attributes;
     protected float health;
@@ -21,6 +22,7 @@ public class Animal extends Edible implements HasAppearance {
 
     protected ACTION action;
     protected DIRECTION facing;
+    protected boolean isAlive = true;
 
 
     /**
@@ -49,6 +51,16 @@ public class Animal extends Edible implements HasAppearance {
             Logger.logError("Animal Creation", "Failed to generate name for animal: " + e.getMessage());
         }
         System.out.println(getName() + " is born");
+    }
+
+    // A private constructor used for cloning
+    private Animal(World world, Position pos, AnimalAttributes attributes, DIRECTION facing, float health, float energy, String name) {
+        super(world, pos);
+        this.attributes = attributes;
+        this.facing = facing;
+        this.health = health;
+        this.energy = energy;
+        this.name = name;
     }
 
     @Override
@@ -233,7 +245,9 @@ public class Animal extends Edible implements HasAppearance {
         Thing thingToEat = getFacingThing();
         if (thingToEat instanceof Edible) {
             Edible edibleToEat = (Edible)thingToEat;
-            world.killThing(thingToEat);
+            if (edibleToEat instanceof Livable) {
+                world.killThing((Livable)thingToEat);
+            }
             addEnergy(edibleToEat.getEnergy());
             return true;
         } else {
@@ -360,9 +374,14 @@ public class Animal extends Edible implements HasAppearance {
     }
 
     @Override
+    public boolean isAlive() {
+        return isAlive;
+    }
+
+    @Override
     public void die() {
         System.out.println(getName() + " has died.");
-        super.die();
+        isAlive= false;
     }
 
     @Override
@@ -379,6 +398,11 @@ public class Animal extends Edible implements HasAppearance {
             }
         }
     }
+
+    @Override
+    public Thing clone() {
+        return new Animal(world, pos, attributes.clone(), facing, health, energy, name + "clone");
+    } 
 
     @Override
     public boolean needsToTick() {

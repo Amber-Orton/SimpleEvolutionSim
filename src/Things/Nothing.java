@@ -35,6 +35,11 @@ public class Nothing extends Thing {
     }
 
     @Override
+    public Thing clone() {
+        return this; // Nothing instances are immutable singletons per position
+    }
+
+    @Override
     public boolean needsToTick() {
         return true;
     }

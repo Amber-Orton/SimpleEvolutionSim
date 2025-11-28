@@ -20,6 +20,14 @@ public class Wall extends Thing {
     }
 
     @Override
+    public Thing clone() {
+        if (world == null) {
+            return this; //default wall instance
+        }
+        return new Wall(world, pos);
+    }
+
+    @Override
     public boolean needsToTick() {
         return false;
     }
