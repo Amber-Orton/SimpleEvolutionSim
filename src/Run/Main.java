@@ -54,7 +54,7 @@ public class Main {
     /**
      * Critical information for running the simulation and GUI
      */
-    protected static long lastTickTime;
+    public static long lastTickTime;
     protected static long lastUpdateWorldViewTotalTime;
     protected static long lastUpdateWorldViewActualTime;
     protected static long lastUpdateWorldViewStartTime;

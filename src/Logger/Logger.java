@@ -43,12 +43,12 @@ public class Logger {
     public static void logEvent(String task, String message) {
         if (!Main.IN_DEPTH_DEBUG_MODE) return;
         LOGGER.info(String.format("[%s] %s", task, message));
-        clearOldLogs(50_000_000_000_000L);
+        //clearOldLogs(Main.lastTickTime * 100L);
     }
 
     public static void logError(String task, String message) {
         LOGGER.severe(String.format("[%s] %s", task, message));
-        clearOldLogs(50_000_000_000_000L);
+        //clearOldLogs(Main.lastTickTime * 100L);
     }
 
     public static void close() {
