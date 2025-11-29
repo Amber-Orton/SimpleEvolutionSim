@@ -1,5 +1,4 @@
 package Run;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -23,7 +22,6 @@ public class World implements Runnable {
     private Set<Thing> eggsToUpdate = new HashSet<>();
     private Set<Thing> nothingToUpdate = new HashSet<>();
     private Thing[][] grid;
-    private Color[][] colorGrid;
     private volatile boolean[][] changedGrid;
     private volatile Snapshot latestSnapshot;
     protected Nothing[][] nothingGrid;
@@ -42,7 +40,6 @@ public class World implements Runnable {
         this.height = height;
         this.grid = new Thing[height][width];
         this.nothingGrid = new Nothing[height][width];
-        colorGrid = new Color[height][width];
         changedGrid = new boolean[height][width];
         for (boolean[] row : changedGrid) {
             Arrays.fill(row, true);//initialise to true since the world has changed from completly empty to populated on boot
@@ -93,7 +90,7 @@ public class World implements Runnable {
                 future.get();
             } catch (InterruptedException | ExecutionException e) {
                 Main.play = false;
-                GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                OldGUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
                 System.err.println("Paused!: Error occurred while updating world: " + e.getMessage());
                 Logger.logError("World", "Error occurred while updating world: " + e.getMessage());
                 e.printStackTrace();
@@ -230,7 +227,6 @@ public class World implements Runnable {
 
     /**
      * Changes the Thing at the specified position in the grid.
-     * updates the colour grid accordingly
      * caller responsible for all other actions only checks if the position is valid.
      * careful when calling can end up with duplicate entries in grid[][]
      *      does not update thing to reflect this change
@@ -240,9 +236,6 @@ public class World implements Runnable {
     private void changeGridAt(Position pos, Thing thing) {
         if (posIsInBounds(pos)) {
             grid[pos.getRow()][pos.getCol()] = thing;
-            if (thing != null) {
-                colorGrid[pos.getRow()][pos.getCol()] = thing.getColor();
-            }
             changedGrid[pos.getRow()][pos.getCol()] = true;
         }
     }
@@ -253,13 +246,11 @@ public class World implements Runnable {
      */
     public void updateSnapshot() {
         Thing[][] gridCopy = new Thing[height][width];
-        Color[][] colorCopy = new Color[height][width];
         boolean[][] changedCopy = latestSnapshot == null ? new boolean[height][width] : latestSnapshot.changedGrid;
 
         for (int r = 0; r < height; r++) {
             for (int c = 0; c < width; c++) {
                 gridCopy[r][c] = grid[r][c];
-                colorCopy[r][c] = colorGrid[r][c];
                 if (!changedCopy[r][c] && changedGrid[r][c]) {
                     changedCopy[r][c] = true;
                     changedGrid[r][c] = false;
@@ -267,7 +258,7 @@ public class World implements Runnable {
             }
         }
 
-        latestSnapshot = new Snapshot(gridCopy, colorCopy, changedCopy);
+        latestSnapshot = new Snapshot(gridCopy, changedCopy);
     }
 
     /**
@@ -276,13 +267,25 @@ public class World implements Runnable {
      */
     public static class Snapshot {
         public final Thing[][] grid;
-        public final Color[][] colorGrid;
         public final boolean[][] changedGrid;
 
-        public Snapshot(Thing[][] grid, Color[][] colorGrid, boolean[][] changedGrid) {
+        public Snapshot(Thing[][] grid, boolean[][] changedGrid) {
             this.grid = grid;
-            this.colorGrid = colorGrid;
             this.changedGrid = changedGrid;
+        }
+
+        public void resetChangedGrid(boolean value) {
+            for (boolean[] row : changedGrid) {
+                Arrays.fill(row, value);
+            }
+        }
+
+        public void setChangedAt(int row, int col, boolean changed) {
+            changedGrid[row][col] = changed;
+        }
+        
+        public void setChangedAt(Position pos, boolean changed) {
+            setChangedAt(pos.getRow(), pos.getCol(), changed);
         }
     }
 
@@ -345,11 +348,6 @@ public class World implements Runnable {
     public Thing[][] getThingGrid() {
         return grid;
     }
-
-    public Color[][] getColorGrid() {
-        return colorGrid;
-    }
-
 
     public boolean[][] getChangedGrid() {
         return changedGrid;

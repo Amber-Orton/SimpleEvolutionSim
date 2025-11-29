@@ -17,7 +17,7 @@ public class WorldPlayer implements Runnable {
         try {
             if (Main.ticksToRun == 0) {
                 Main.play = false;
-                GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                OldGUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
             }
             while (Main.play && (Main.ticksToRun == -1 || Main.ticksToRun > 0)) {
                 int currentTick = Main.world.getTickCount();
@@ -28,7 +28,7 @@ public class WorldPlayer implements Runnable {
                     Main.ticksToRun--;
                     if (Main.ticksToRun == 0) {
                         Main.play = false;
-                        GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                        OldGUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
                     }
                 }
                 Logger.logEvent("WorldPlayer Tick: " + currentTick, "Checked ticksToRun");
@@ -36,11 +36,11 @@ public class WorldPlayer implements Runnable {
                 Logger.logEvent("WorldPlayer Tick: " + currentTick, "Ran world");
                 Main.lastTickTime = System.nanoTime() - startTime;
                 try {
-                    SwingUtilities.invokeAndWait(() -> GUI.getInstance().updateAfterTick(startTime));
+                    SwingUtilities.invokeAndWait(() -> OldGUI.getInstance().updateAfterTick(startTime));
                 } catch (Exception e) {
                     e.printStackTrace();
                     Main.play = false;
-                    GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                    OldGUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
                     Logger.logError("WorldPlayer", "Exception during GUI update: " + e.getMessage());
                     executor.shutdown();
                     return;
@@ -55,7 +55,7 @@ public class WorldPlayer implements Runnable {
                         Thread.sleep(sleepMs);
                     } catch (InterruptedException e) {
                         Main.play = false;
-                        GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                        OldGUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
                         Logger.logError("WorldPlayer", "Interrupted during sleep: " + e.getMessage());
                         executor.shutdown();
                         return;
@@ -80,7 +80,7 @@ public class WorldPlayer implements Runnable {
         Main.world.run();
         try {
             Main.lastTickTime = System.nanoTime() - startTime;
-            SwingUtilities.invokeAndWait(() -> GUI.getInstance().updateAfterTick(startTime));
+            SwingUtilities.invokeAndWait(() -> OldGUI.getInstance().updateAfterTick(startTime));
         } catch (Exception e) {
             e.printStackTrace();
             Logger.logError("WorldPlayer Once", "Exception during GUI update: " + e.getMessage());

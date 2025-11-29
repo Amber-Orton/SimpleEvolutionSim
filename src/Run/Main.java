@@ -55,9 +55,9 @@ public class Main {
      * Critical information for running the simulation and GUI
      */
     public static long lastTickTime;
-    protected static long lastUpdateWorldViewTotalTime;
-    protected static long lastUpdateWorldViewActualTime;
-    protected static long lastUpdateWorldViewStartTime;
+    // protected static long lastUpdateWorldViewTotalTime;
+    // protected static long lastUpdateWorldViewActualTime;
+    // protected static long lastUpdateWorldViewStartTime;
     protected static boolean waitForLongUpdateAfterTick = true;
     protected static boolean doUpdateWorldView = true;
     protected static volatile boolean play = false;
@@ -66,6 +66,7 @@ public class Main {
     protected static World world;
     protected static final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     public static final Random random = new Random();
+    protected static GUI gui;
 
     //do not change unless you know what youre doing
     public static final int NEURAL_NET_INPUT_SIZE = 18;
@@ -81,7 +82,7 @@ public class Main {
         }
         updateAttributes();
         world = createWorld();
-        GUI gui = GUI.getInstanceOrChangeWorld(world);
+        gui = new GUI(world);
         gui.run();
     }
 
@@ -92,6 +93,10 @@ public class Main {
 
     public static World createWorld() {
         return WorldCreator.createWorld(WORLD_WIDTH, WORLD_HEIGHT, MAX_LAYERS, ANIMAL_STAT_TOTAL, INITIAL_ANIMAL_DENSITY, INITIAL_NEURAL_NET_RANDOMNESS);
+    }
+
+    public static GUI getGUI() {
+        return gui;
     }
 }
 
