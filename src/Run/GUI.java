@@ -97,7 +97,10 @@ class WorldPanel extends JPanel {
                 Position prevPosition = selectedPosition;
                 selectedPosition = getPositionFromCoordinates(e.getX(), e.getY());
                 System.out.println("Clicked at: " + selectedPosition);
-                if (selectedPosition == null) return;
+                if (selectedPosition == null) {
+                    selectedPosition = prevPosition;
+                    return;
+                }
                 snapshot.resetChangedGrid(false);
                 if (prevPosition != null) {
                     snapshot.setChangedAt(prevPosition, true);
