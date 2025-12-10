@@ -1,6 +1,5 @@
-package Run;
+package Run.GUI;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -13,68 +12,16 @@ import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-
+import Run.World;
 import Run.World.Snapshot;
 import Things.Thing;
 import Things.Helpers.HasAppearance;
 import Things.Helpers.Position;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class GUI {
-
-    private World world;
-    private JFrame frame;
-    private JPanel mainPanel;
-    private WorldPanel worldPanel;
-    private ControlPanel controlPanel;
-    
-    public GUI(World world) {
-        this.world = world;
-    }
-    
-    public void run() {
-        SwingUtilities.invokeLater(() -> {
-            frame = new JFrame("Evolution Simulator");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(800, 600);
-            
-            
-            
-            worldPanel = new WorldPanel(this, world);
-            
-            controlPanel = new ControlPanel(world);
-            
-            mainPanel = new JPanel(new BorderLayout());
-            mainPanel.add(worldPanel, BorderLayout.CENTER);
-            mainPanel.add(controlPanel, BorderLayout.EAST);
-            
-            frame.add(mainPanel);
-            frame.setVisible(true);
-        });
-        
-        
-    }
-    
-    public WorldPanel getWorldPanel() {
-        return worldPanel;
-    }
-
-    public ControlPanel getControlPanel() {
-        return controlPanel;
-    }
-
-    public JPanel getMainPanel() {
-        return mainPanel;
-    }
-}
-    
-    
-class WorldPanel extends JPanel {
+public class WorldPanel extends UpdateableJPanel {
     private final GUI gui;
     private final World world;
     private final ExecutorService bufferedImageExecutor;
@@ -253,18 +200,9 @@ class WorldPanel extends JPanel {
         }
         return null;
     }
-}
 
-
-// TODO: placeholder
-class ControlPanel extends JPanel {
-    private final World world;
-
-    public ControlPanel(World world) {
-        this.world = world;
-    }
-
-    public void click(Position position) {
-        // TODO: placeholder
+    @Override
+    public void updateAfterTick() {
+        asyncCreateBufferedImageAndRender();
     }
 }

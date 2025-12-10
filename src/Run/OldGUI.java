@@ -346,17 +346,17 @@ public class OldGUI {
         JPanel msptPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
         msptPanel.setBorder(BorderFactory.createTitledBorder("MSPT"));
         
-        JTextField msptField = new JTextField(Integer.toString(Main.tickMillis), 8);
+        JTextField msptField = new JTextField(Integer.toString(Main.targetMSPT), 8);
         msptField.setMaximumSize(new Dimension(100, 28));
         
         Runnable applyMspt = () -> {
             try {
                 int val = Integer.parseInt(msptField.getText().trim());
                 if (val < 0) val = 0;
-                Main.tickMillis = val;
+                Main.targetMSPT = val;
             } catch (NumberFormatException ex) {
                 Logger.logError("GUI", "Invalid number format for MSPT: " + ex.getMessage());
-                msptField.setText(Integer.toString(Main.tickMillis));
+                msptField.setText(Integer.toString(Main.targetMSPT));
             }
         };
         

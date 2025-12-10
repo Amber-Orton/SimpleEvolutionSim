@@ -6,41 +6,47 @@ import java.util.concurrent.Executors;
 import javax.swing.SwingUtilities;
 
 import Logger.Logger;
+import Run.GUI.GUI;
 
 public class WorldPlayer implements Runnable {
 
-   private final ExecutorService onceExecutor = Executors.newSingleThreadExecutor();
-    
+    private final ExecutorService onceExecutor = Executors.newSingleThreadExecutor();
+    private final GUI gui;
+    private final World world;
+
+    public WorldPlayer(World world, GUI gui) {
+        this.gui = gui;
+        this.world = world;
+    }
+
     @Override
     public void run() {
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         try {
             if (Main.ticksToRun == 0) {
-                Main.play = false;
-                OldGUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                Main.pause();
             }
             while (Main.play && (Main.ticksToRun == -1 || Main.ticksToRun > 0)) {
-                int currentTick = Main.world.getTickCount();
+                int currentTick = world.getTickCount();
                 Logger.logEvent("WorldPlayer Tick: " + currentTick, "Starting tick");
                 long startTime = System.nanoTime();
 
                 if (Main.ticksToRun > 0) {
                     Main.ticksToRun--;
                     if (Main.ticksToRun == 0) {
-                        Main.play = false;
-                        OldGUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                        Main.pause();
                     }
                 }
                 Logger.logEvent("WorldPlayer Tick: " + currentTick, "Checked ticksToRun");
-                Main.world.run();
+                world.run();
                 Logger.logEvent("WorldPlayer Tick: " + currentTick, "Ran world");
                 Main.lastTickTime = System.nanoTime() - startTime;
                 try {
-                    SwingUtilities.invokeAndWait(() -> OldGUI.getInstance().updateAfterTick(startTime));
+                    // TODO: change to GUI overhaul
+                    SwingUtilities.invokeAndWait(() -> gui.updateAfterTick(startTime));
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Main.play = false;
-                    OldGUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                    Main.pause();
                     Logger.logError("WorldPlayer", "Exception during GUI update: " + e.getMessage());
                     executor.shutdown();
                     return;
@@ -49,13 +55,12 @@ public class WorldPlayer implements Runnable {
 
                 // Fix elapsed/sleep calculation to avoid overflow and unit mismatch
                 long elapsedMs = (System.nanoTime() - startTime) / 1_000_000L;
-                long sleepMs = (long) Main.tickMillis - elapsedMs;
+                long sleepMs = (long) Main.targetMSPT - elapsedMs;
                 if (sleepMs > 0L) {
                     try {
                         Thread.sleep(sleepMs);
                     } catch (InterruptedException e) {
-                        Main.play = false;
-                        OldGUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                        Main.pause();
                         Logger.logError("WorldPlayer", "Interrupted during sleep: " + e.getMessage());
                         executor.shutdown();
                         return;
@@ -77,10 +82,10 @@ public class WorldPlayer implements Runnable {
             Main.ticksToRun--;
         }
         if (Main.play) return;
-        Main.world.run();
+        world.run();
         try {
             Main.lastTickTime = System.nanoTime() - startTime;
-            SwingUtilities.invokeAndWait(() -> OldGUI.getInstance().updateAfterTick(startTime));
+            SwingUtilities.invokeAndWait(() -> gui.updateAfterTick(startTime));
         } catch (Exception e) {
             e.printStackTrace();
             Logger.logError("WorldPlayer Once", "Exception during GUI update: " + e.getMessage());
