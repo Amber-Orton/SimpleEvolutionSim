@@ -1,6 +1,9 @@
 package Run.GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -28,11 +31,20 @@ public class GUI {
             
             
             
-            worldPanel = new WorldPanel(this, world);
+            worldPanel = new WorldPanel(world, this);
             
             controlPanel = new ControlPanel(world, this);
             
             mainPanel = new JPanel(new BorderLayout());
+
+            mainPanel.addComponentListener(new ComponentAdapter() {
+                @Override public void componentResized(ComponentEvent e) {
+                    worldPanel.setMaximumSize(new Dimension((int)(mainPanel.getWidth() * 0.75), mainPanel.getHeight()));
+                    controlPanel.setMinimumSize(new Dimension((int)(mainPanel.getWidth() * 0.1), mainPanel.getHeight()));
+                }
+            });
+
+
             mainPanel.add(worldPanel, BorderLayout.CENTER);
             mainPanel.add(controlPanel, BorderLayout.EAST);
             
@@ -62,5 +74,21 @@ public class GUI {
 
     public void updatePlayPauseButton() {
         controlPanel.updatePlayPauseButton();
+    }
+
+    public JFrame getFrame() {
+        return frame;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
+        worldPanel = new WorldPanel(world, this);
+        controlPanel = new ControlPanel(world, this);
+        mainPanel.removeAll();
+        mainPanel.add(worldPanel, BorderLayout.CENTER);
+        mainPanel.add(controlPanel, BorderLayout.EAST);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+        worldPanel.repaint();
     }
 }

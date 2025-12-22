@@ -33,6 +33,7 @@ public class Main {
     protected static float NEW_FOOD_ENERGY = 10;
     protected static int WORLD_WIDTH = 10;
     protected static int WORLD_HEIGHT = 10;
+    
     protected static float INITIAL_ANIMAL_DENSITY = 0.8f;
     protected static float INITIAL_NEURAL_NET_RANDOMNESS = 0.1f;
     public static final int[] ANIMAL_COLOR_PALETTE = new int[]{
@@ -45,16 +46,16 @@ public class Main {
 
     /**
      * other options
-     */
-    protected static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false;
-    public static boolean IN_DEPTH_DEBUG_MODE = false;
-    public static boolean autoDebug = false;
-    public static boolean LOGGING_ENABLED = true;
-
-
-    /**
-     * Critical information for running the simulation and GUI
-     */
+    */
+   protected static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false;
+   public static boolean IN_DEPTH_DEBUG_MODE = false;
+   public static boolean autoDebug = false;
+   public static boolean LOGGING_ENABLED = true;
+   
+   
+   /**
+    * Critical information for running the simulation and GUI
+   */
     public static long lastTickTime;
     // protected static long lastUpdateWorldViewTotalTime;
     // protected static long lastUpdateWorldViewActualTime;
@@ -68,11 +69,11 @@ public class Main {
     protected static final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     public static final Random random = new Random();
     protected static GUI gui;
-
+    
     //do not change unless you know what youre doing
     public static final int NEURAL_NET_INPUT_SIZE = 18;
     public static final int NEURAL_NET_OUTPUT_SIZE = 7;
-
+    
     public static void main(String[] args) {
         try {
             NameCreator.open();
@@ -86,24 +87,70 @@ public class Main {
         gui = new GUI(world);
         gui.run();
     }
-
+    
     public static void updateAttributes() {
         AnimalAttributes.setWorldAttributes(ANIMAL_STAT_TOTAL, ANIMAL_ATTACK_COST, MUTATION_RATE, MUTATION_FACTOR, NODE_INSERT_OR_DELETE_RATE, MAX_LAYERS, ANIMAL_EXISTANCE_COST, ANIMAL_MOVE_COST, ANIMAL_EAT_COST, ANIMAL_TURN_COST, ANIMAL_REST_COST, ANIMAL_REST_HEALTH, EGG_HATCH_CYCLES);
         Nothing.setWorldAttributes(FOOD_GROW_RATE, NEW_FOOD_ENERGY);
     }
-
+    
     public static World createWorld() {
         return WorldCreator.createWorld(WORLD_WIDTH, WORLD_HEIGHT, MAX_LAYERS, ANIMAL_STAT_TOTAL, INITIAL_ANIMAL_DENSITY, INITIAL_NEURAL_NET_RANDOMNESS);
     }
 
+    public static void createAndRunNewWorld() {
+        Main.world = createWorld();
+        gui.setWorld(world);
+    }
+    
     public static void pause() {
         play = false;
         gui.updatePlayPauseButton();
     }
-
+    
     public static void play() {
         play = true;
         gui.updatePlayPauseButton();
     }
+    
+    public static int getWORLD_WIDTH() {
+        return WORLD_WIDTH;
+    }
+    
+    public static void setWORLD_WIDTH(int wORLD_WIDTH) {
+        WORLD_WIDTH = wORLD_WIDTH;
+    }
+    
+    public static int getWORLD_HEIGHT() {
+        return WORLD_HEIGHT;
+    }
+    
+    public static void setWORLD_HEIGHT(int wORLD_HEIGHT) {
+        WORLD_HEIGHT = wORLD_HEIGHT;
+    }
+
+    public static int getMAX_LAYERS() {
+        return MAX_LAYERS;
+    }
+
+    public static void setMAX_LAYERS(int maxLayers) {
+        MAX_LAYERS = maxLayers;
+    }
+
+    public static float getINITIAL_ANIMAL_DENSITY() {
+        return INITIAL_ANIMAL_DENSITY;
+    }
+
+    public static void setINITIAL_ANIMAL_DENSITY(float d) {
+        INITIAL_ANIMAL_DENSITY = d;
+    }
+
+    public static float getINITIAL_NEURAL_NET_RANDOMNESS() {
+        return INITIAL_NEURAL_NET_RANDOMNESS;
+    }
+
+    public static void setINITIAL_NEURAL_NET_RANDOMNESS(float r) {
+        INITIAL_NEURAL_NET_RANDOMNESS = r;
+    }
+
 }
 

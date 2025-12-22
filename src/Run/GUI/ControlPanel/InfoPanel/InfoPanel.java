@@ -1,6 +1,9 @@
 package Run.GUI.ControlPanel.InfoPanel;
 
 import java.awt.BorderLayout;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+
 import javax.swing.border.TitledBorder;
 import Run.World;
 import Run.GUI.GUI;
@@ -25,6 +28,13 @@ public class InfoPanel extends UpdateableJPanel {
         this.setLayout(new BorderLayout());
 
         this.add(thingInfoDisplay, BorderLayout.CENTER);
+
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                thingInfoDisplay.setSize(getWidth(), getHeight());
+            }
+        });
     }
 
     @Override

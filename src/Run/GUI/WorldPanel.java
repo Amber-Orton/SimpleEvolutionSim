@@ -31,7 +31,7 @@ public class WorldPanel extends UpdateableJPanel {
     private int imgW;
     private int imgH;
     
-    public WorldPanel(GUI gui, World world) {
+    public WorldPanel(World world, GUI gui) {
         this.gui = gui;
         this.world = world;
 
@@ -83,7 +83,7 @@ public class WorldPanel extends UpdateableJPanel {
     }
 
     private void setSize() {
-        int maxColWidth = (int) (gui.getMainPanel().getWidth() / world.getWidth()*0.75);//max 75% of frame width
+        int maxColWidth = (int) (this.getWidth() / world.getWidth());
         int maxRowHeight = gui.getMainPanel().getHeight() / world.getHeight();
         int cellSize = Math.min(maxColWidth, maxRowHeight);
         imgW = cellSize * world.getWidth();

@@ -39,15 +39,13 @@ class ThingInfoDisplay  extends UpdateableJPanel {
         this.leftArea.setLineWrap(true);
         this.leftArea.setWrapStyleWord(true);
         JScrollPane leftScroll = new JScrollPane(leftArea);
-        leftScroll.setPreferredSize(new Dimension(300, 200));
-        leftScroll.setMinimumSize(new Dimension(50, 50));
+
 
         this.rightArea = new JTextArea();
         this.rightArea.setLineWrap(true);
         this.rightArea.setWrapStyleWord(true);
         JScrollPane rightScroll = new JScrollPane(rightArea);
-        rightScroll.setPreferredSize(new Dimension(300, 200));
-        rightScroll.setMinimumSize(new Dimension(50, 50));
+
 
         this.splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftScroll, rightScroll);
         this.splitPane.setResizeWeight(0.5);

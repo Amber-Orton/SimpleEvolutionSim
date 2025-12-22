@@ -121,7 +121,6 @@ public class TickPanel extends UpdateableJPanel {
 
         this.add(tickInfoTable, BorderLayout.EAST);
         this.add(ticksPassedPanel, BorderLayout.WEST);
-
     }
 
     public void updateTableModelTarget() {
