@@ -7,9 +7,9 @@ import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-import Run.World;
 import Run.GUI.GUI;
 import Run.GUI.UpdateableJPanel;
+import Run.World.World;
 import Things.Animal;
 import Things.Egg;
 import Things.Food;

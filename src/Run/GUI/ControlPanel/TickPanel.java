@@ -12,10 +12,10 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
 
 import Run.Main;
-import Run.World;
-import Run.WorldPlayer;
 import Run.GUI.GUI;
 import Run.GUI.UpdateableJPanel;
+import Run.World.World;
+import Run.World.WorldPlayer;
 import Logger.Logger;
 
 // Panel displaying tick information and controls is the top section of the control panel

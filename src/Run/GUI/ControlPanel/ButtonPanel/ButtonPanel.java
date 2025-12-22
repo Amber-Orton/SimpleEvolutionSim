@@ -7,8 +7,8 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import Run.World;
 import Run.GUI.GUI;
+import Run.World.World;
 
 public class ButtonPanel extends JPanel {
 

@@ -16,8 +16,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingUtilities;
 
 import Run.Main;
-import Run.GUI.GUI;
-import Run.World;
 
 public class NewWorldDialog {
 

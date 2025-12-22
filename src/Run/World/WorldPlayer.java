@@ -1,4 +1,4 @@
-package Run;
+package Run.World;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 import javax.swing.SwingUtilities;
 
 import Logger.Logger;
+import Run.Main;
 import Run.GUI.GUI;
 
 public class WorldPlayer implements Runnable {

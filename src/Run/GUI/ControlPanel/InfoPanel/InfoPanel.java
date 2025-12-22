@@ -5,9 +5,10 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 import javax.swing.border.TitledBorder;
-import Run.World;
+
 import Run.GUI.GUI;
 import Run.GUI.UpdateableJPanel;
+import Run.World.World;
 import Things.Helpers.Position;
 
 public class InfoPanel extends UpdateableJPanel {

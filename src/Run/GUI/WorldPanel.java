@@ -13,8 +13,9 @@ import java.awt.image.BufferedImage;
 import java.awt.image.RenderedImage;
 
 import javax.swing.SwingUtilities;
-import Run.World;
-import Run.World.Snapshot;
+
+import Run.World.World;
+import Run.World.World.Snapshot;
 import Things.Thing;
 import Things.Helpers.HasAppearance;
 import Things.Helpers.Position;

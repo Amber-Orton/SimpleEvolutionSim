@@ -6,6 +6,8 @@ import java.util.concurrent.Executors;
 
 import Logger.Logger;
 import Run.GUI.GUI;
+import Run.World.World;
+import Run.World.WorldCreator;
 import Things.Nothing;
 import Things.Helpers.AnimalAttributes;
 import Things.Helpers.NameCreator;

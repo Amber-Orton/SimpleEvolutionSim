@@ -3,11 +3,12 @@ package Run.GUI.ControlPanel;
 import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import Run.World;
+
 import Run.GUI.GUI;
 import Run.GUI.UpdateableJPanel;
 import Run.GUI.ControlPanel.ButtonPanel.ButtonPanel;
 import Run.GUI.ControlPanel.InfoPanel.InfoPanel;
+import Run.World.World;
 import Things.Helpers.Position;
 
 // Control panel on the right side of the GUI

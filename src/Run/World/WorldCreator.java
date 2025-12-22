@@ -1,8 +1,9 @@
-package Run;
+package Run.World;
 
 import java.util.ArrayList;
 
 import NeuralNet.NeuralNet;
+import Run.Main;
 import Things.Animal;
 import Things.Nothing;
 import Things.Helpers.AnimalAttributes;

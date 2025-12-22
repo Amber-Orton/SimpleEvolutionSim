@@ -3,7 +3,9 @@ package Run;
 import javax.swing.*;
 
 import Logger.Logger;
-import Run.World.Snapshot;
+import Run.World.World;
+import Run.World.WorldPlayer;
+import Run.World.World.Snapshot;
 import Things.Animal;
 import Things.Egg;
 import Things.Food;

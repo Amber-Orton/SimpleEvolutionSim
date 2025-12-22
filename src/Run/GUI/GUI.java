@@ -7,8 +7,9 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import Run.World;
+
 import Run.GUI.ControlPanel.ControlPanel;
+import Run.World.World;
 
 
 public class GUI {
