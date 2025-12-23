@@ -58,7 +58,7 @@ public class ButtonPanel extends JPanel {
     };
 
     private final java.awt.event.ActionListener worldOptionsButtonClicked = e -> {
-        
+        WorldOptionsDialog.showWorldOptionsDialog(gui.getFrame());
     };
 
     private final java.awt.event.ActionListener debugOptionsButtonClicked = e -> {

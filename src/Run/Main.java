@@ -154,5 +154,136 @@ public class Main {
         INITIAL_NEURAL_NET_RANDOMNESS = r;
     }
 
+
+
+
+
+
+
+    public static int getANIMAL_REST_COST() {
+        return ANIMAL_REST_COST;
+    }
+
+    public static void setANIMAL_REST_COST(int ANIMAL_REST_COST) {
+        Main.ANIMAL_REST_COST = ANIMAL_REST_COST;
+        updateAttributes();
+    }
+
+    public static int getANIMAL_STAT_TOTAL() {
+        return ANIMAL_STAT_TOTAL;
+    }
+
+    public static void setANIMAL_STAT_TOTAL(int ANIMAL_STAT_TOTAL) {
+        Main.ANIMAL_STAT_TOTAL = ANIMAL_STAT_TOTAL;
+        updateAttributes();
+    }
+
+    public static int getANIMAL_EAT_COST() {
+        return ANIMAL_EAT_COST;
+    }
+
+    public static void setANIMAL_EAT_COST(int ANIMAL_EAT_COST) {
+        Main.ANIMAL_EAT_COST = ANIMAL_EAT_COST;
+        updateAttributes();
+    }
+
+    public static int getANIMAL_TURN_COST() {
+        return ANIMAL_TURN_COST;
+    }
+
+    public static void setANIMAL_TURN_COST(int ANIMAL_TURN_COST) {
+        Main.ANIMAL_TURN_COST = ANIMAL_TURN_COST;
+        updateAttributes();
+    }
+
+    public static int getANIMAL_REST_HEAL_AMOUNT() {
+        return ANIMAL_REST_HEALTH;
+    }
+
+    public static void setANIMAL_REST_HEAL_AMOUNT(int ANIMAL_REST_HEALTH) {
+        Main.ANIMAL_REST_HEALTH = ANIMAL_REST_HEALTH;
+        updateAttributes();
+    }
+
+    public static int getEGG_HATCH_CYCLES() {
+        return EGG_HATCH_CYCLES;
+    }
+
+    public static void setEGG_HATCH_CYCLES(int EGG_HATCH_CYCLES) {
+        Main.EGG_HATCH_CYCLES = EGG_HATCH_CYCLES;
+        updateAttributes();
+    }
+
+    public static float getMUTATION_RATE() {
+        return MUTATION_RATE;
+    }
+
+    public static void setMUTATION_RATE(float MUTATION_RATE) {
+        Main.MUTATION_RATE = MUTATION_RATE;
+        updateAttributes();
+    }
+
+    public static float getMUTATION_FACTOR() {
+        return MUTATION_FACTOR;
+    }
+
+    public static void setMUTATION_FACTOR(float MUTATION_FACTOR) {
+        Main.MUTATION_FACTOR = MUTATION_FACTOR;
+        updateAttributes();
+    }
+
+    public static float getNODE_INSERT_OR_DELETE_RATE() {
+        return NODE_INSERT_OR_DELETE_RATE;
+    }
+
+    public static void setNODE_INSERT_OR_DELETE_RATE(float NODE_INSERT_OR_DELETE_RATE) {
+        Main.NODE_INSERT_OR_DELETE_RATE = NODE_INSERT_OR_DELETE_RATE;
+        updateAttributes();
+    }
+
+    public static float getFOOD_GROW_RATE() {
+        return FOOD_GROW_RATE;
+    }
+
+    public static void setFOOD_GROW_RATE(float FOOD_GROW_RATE) {
+        Main.FOOD_GROW_RATE = FOOD_GROW_RATE;
+        updateAttributes();
+    }
+
+    public static float getNEW_FOOD_ENERGY() {
+        return NEW_FOOD_ENERGY;
+    }
+
+    public static void setNEW_FOOD_ENERGY(float NEW_FOOD_ENERGY) {
+        Main.NEW_FOOD_ENERGY = NEW_FOOD_ENERGY;
+        updateAttributes();
+    }
+
+    public static int getANIMAL_EXISTENCE_COST() {
+        return ANIMAL_EXISTANCE_COST;
+    }
+
+    public static void setANIMAL_EXISTENCE_COST(int ANIMAL_EXISTANCE_COST) {
+        Main.ANIMAL_EXISTANCE_COST = ANIMAL_EXISTANCE_COST;
+        updateAttributes();
+    }
+
+    public static int getANIMAL_ATTACK_COST() {
+        return ANIMAL_ATTACK_COST;
+    }
+
+    public static void setANIMAL_ATTACK_COST(int ANIMAL_ATTACK_COST) {
+        Main.ANIMAL_ATTACK_COST = ANIMAL_ATTACK_COST;
+        updateAttributes();
+    }
+
+    public static int getANIMAL_MOVE_COST() {
+        return ANIMAL_MOVE_COST;
+    }
+
+    public static void setANIMAL_MOVE_COST(int ANIMAL_MOVE_COST) {
+        Main.ANIMAL_MOVE_COST = ANIMAL_MOVE_COST;
+        updateAttributes();
+    }
 }
 
