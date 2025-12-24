@@ -2,6 +2,7 @@ package Run.GUI.ControlPanel.ButtonPanel;
 
 import java.awt.Component;
 import java.awt.Dialog;
+import java.awt.Dimension;
 import java.awt.Window;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
@@ -226,6 +227,8 @@ public class WorldOptionsDialog {
 
         dlg.setContentPane(scrollPane);
         dlg.pack();
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        dlg.setSize(375, dlg.getHeight());
         dlg.setLocationRelativeTo(mainWin);
         dlg.setVisible(true);
     }
