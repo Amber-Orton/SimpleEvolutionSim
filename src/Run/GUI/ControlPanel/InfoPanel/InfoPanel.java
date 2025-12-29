@@ -63,4 +63,30 @@ public class InfoPanel extends UpdateableJPanel {
             this.repaint();
         }
     }
+
+
+    public InfoPanelVersions getCurrentVersion() {
+        return currentVersion;
+    }
+
+    public void setTo(InfoPanelVersions version) {
+        this.currentVersion = version;
+        this.removeAll();
+        switch (version) {
+            case InfoPanelVersions.ThingInfo:
+                this.add(thingInfoDisplay, BorderLayout.CENTER);
+                border.setTitle("Select to see info");
+                break;
+            case InfoPanelVersions.PaintOptions:
+                throw new UnsupportedOperationException("PaintOptions not implemented yet.");
+            // break;
+            case InfoPanelVersions.WorldInfo:
+                throw new UnsupportedOperationException("WorldInfo not implemented yet.");
+            // break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + version);
+        }
+        this.revalidate();
+        this.repaint();
+    }
 }

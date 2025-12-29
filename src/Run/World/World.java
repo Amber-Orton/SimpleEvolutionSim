@@ -1,9 +1,13 @@
 package Run.World;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
@@ -18,10 +22,8 @@ import Things.Helpers.Position;
 public class World implements Runnable {
     private int width;
     private int height;
-    private Set<Thing> things = new HashSet<>();
-    private Set<Thing> thingsToUpdate = new HashSet<>();
-    private Set<Thing> eggsToUpdate = new HashSet<>();
-    private Set<Thing> nothingToUpdate = new HashSet<>();
+    private Map<Class<? extends Thing>, Set<Thing>> things = new HashMap<>();
+    private Map<Integer, Set<Thing>> thingsToUpdate = new TreeMap<>();
     private Thing[][] grid;
     private volatile boolean[][] changedGrid;
     private volatile Snapshot latestSnapshot;
@@ -67,9 +69,11 @@ public class World implements Runnable {
         tickCount++;
 
         // Remove dead things before ticking
-        for (Thing thing : new HashSet<>(things)) {
-            if (!thing.isAlive()) {
-                removeThing(thing);
+        for (Set<Thing> thingSet : things.values()) {
+            for (Thing thing : new HashSet<>(thingSet)) {
+                if (!thing.isAlive()) {
+                    removeThing(thing);
+                }
             }
         }
 
@@ -78,9 +82,11 @@ public class World implements Runnable {
         List<Future<?>> futures = new ArrayList<>(things.size());
 
         //dispatch the Things
-        for (Thing thing : things) {
-            if (thing.needsToTick()) {
-                futures.add(Main.getExecutorService().submit(thing));
+        for (Set<Thing> thingSet : things.values()) {
+            for (Thing thing : thingSet) {
+                if (thing.needsToTick()) {
+                    futures.add(Main.getExecutorService().submit(thing));
+                }
             }
         }
         
@@ -99,28 +105,26 @@ public class World implements Runnable {
         
         Logger.logEvent("Tick: " + tickCount, "Threads run");
         
-        thingsToUpdate = new HashSet<>();
-        eggsToUpdate = new HashSet<>();
-        for (Thing thing : things) {
-            if (thing.needsToDoAction()) {
-                if (thing instanceof Egg) {
-                    eggsToUpdate.add(thing);
-                } else if (thing instanceof Nothing) {
-                    nothingToUpdate.add(thing);
-                } else {
-                    thingsToUpdate.add(thing);
-                }
+        thingsToUpdate.clear();
+        for (Class<? extends Thing> clazz : things.keySet()) {
+            if (clazz == Egg.class) {
+                thingsToUpdate.put(2, new HashSet<>(things.get(clazz)));
+            } else if (clazz == Nothing.class) {
+                thingsToUpdate.put(3, new HashSet<>(things.get(clazz)));
+            } else {
+                thingsToUpdate.put(1, new HashSet<>(things.get(clazz)));
             }
         }
+
+
         
         Logger.logEvent("Tick: " + tickCount, "Created update sets");
 
-        thingsDoAction(thingsToUpdate);
-        Logger.logEvent("Tick: " + tickCount, "Things did action");
-        thingsDoAction(eggsToUpdate);
-        Logger.logEvent("Tick: " + tickCount, "Eggs did action");
-        thingsDoAction(nothingToUpdate);
-        Logger.logEvent("Tick: " + tickCount, "Nothing did action");
+        for (Set<Thing> thingsToUpdate : thingsToUpdate.values()) {
+            Logger.logEvent("Tick: " + tickCount, "Updating set of size " + thingsToUpdate.size());
+            thingsDoAction(thingsToUpdate);
+        }
+        Logger.logEvent("Tick: " + tickCount, "Everything did action");
 
         updateSnapshot();
         Logger.logEvent("Tick: " + tickCount, "Updated cached grids");
@@ -171,7 +175,7 @@ public class World implements Runnable {
             thing.setPos(pos);
             thing.setWorld(this);
         }
-        things.add(thing);
+        things.getOrDefault(thing.getClass(), new HashSet<>()).add(thing);
     }
 
 
@@ -329,8 +333,17 @@ public class World implements Runnable {
     }
 
 
+    /**
+     * depreciated should not use
+     * TODO remove
+     * @return all Things in the world
+     */
     public Set<Thing> getThings() {
-        return things;
+        Set<Thing> out = new HashSet<>();
+        for (Set<Thing> thingSet : things.values()) {
+            out.addAll(thingSet);
+        }
+        return out;
     }
     
     public int getWidth() {
