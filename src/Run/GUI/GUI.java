@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import Run.Main;
 import Run.GUI.ControlPanel.ControlPanel;
 import Run.World.World;
 

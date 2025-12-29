@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
@@ -199,7 +198,7 @@ public class World implements Runnable {
      * @return true if the Thing was replaced false otherwise
      */
     public boolean replaceThing(Thing origionalThing, Thing newThing){
-        things.remove(origionalThing);
+        things.get(origionalThing.getClass()).remove(origionalThing);
         if (getThingAt(origionalThing.getPos()) == origionalThing){
             changeGridAt(origionalThing.getPos(), null);
             putThingAt(origionalThing.getPos(), newThing);
@@ -334,7 +333,7 @@ public class World implements Runnable {
 
 
     /**
-     * depreciated should not use
+     * depreciated use getThings(Class) and getThingsClasses() instead
      * TODO remove
      * @return all Things in the world
      */
@@ -344,6 +343,14 @@ public class World implements Runnable {
             out.addAll(thingSet);
         }
         return out;
+    }
+
+    public Set<Thing> getThings(Class<? extends Thing> clazz) {
+        return things.getOrDefault(clazz, new HashSet<>());
+    }
+
+    public Set<Class<? extends Thing>> getThingClasses() {
+        return things.keySet();
     }
     
     public int getWidth() {

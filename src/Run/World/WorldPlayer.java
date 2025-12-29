@@ -3,8 +3,6 @@ package Run.World;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import javax.swing.SwingUtilities;
-
 import Logger.Logger;
 import Run.Main;
 import Run.GUI.GUI;
@@ -12,11 +10,9 @@ import Run.GUI.GUI;
 public class WorldPlayer implements Runnable {
 
     private final ExecutorService onceExecutor = Executors.newSingleThreadExecutor();
-    private final GUI gui;
     private final World world;
 
     public WorldPlayer(World world, GUI gui) {
-        this.gui = gui;
         this.world = world;
     }
 

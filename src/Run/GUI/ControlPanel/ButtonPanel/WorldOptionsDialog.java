@@ -2,7 +2,6 @@ package Run.GUI.ControlPanel.ButtonPanel;
 
 import java.awt.Component;
 import java.awt.Dialog;
-import java.awt.Dimension;
 import java.awt.Window;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;

@@ -1,8 +1,7 @@
 package Run.GUI.ControlPanel;
 
 import java.awt.BorderLayout;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+
 
 import Run.GUI.GUI;
 import Run.GUI.UpdateableJPanel;
@@ -13,13 +12,11 @@ import Things.Helpers.Position;
 
 // Control panel on the right side of the GUI
 public class ControlPanel extends UpdateableJPanel {
-    private final World world;
     private final TickPanel tickPanel;
     private final InfoPanel infoPanel;
     private final ButtonPanel buttonPanel;
 
     public ControlPanel(World world, GUI gui) {
-        this.world = world;
         this.setLayout(new BorderLayout());
 
 
