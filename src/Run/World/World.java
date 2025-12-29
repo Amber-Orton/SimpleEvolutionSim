@@ -332,11 +332,6 @@ public class World implements Runnable {
     }
 
 
-    /**
-     * depreciated use getThings(Class) and getThingsClasses() instead
-     * TODO remove
-     * @return all Things in the world
-     */
     public Set<Thing> getThings() {
         Set<Thing> out = new HashSet<>();
         for (Set<Thing> thingSet : things.values()) {
