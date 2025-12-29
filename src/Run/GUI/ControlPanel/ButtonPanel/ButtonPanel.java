@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import Run.GUI.GUI;
+import Run.GUI.ControlPanel.InfoPanel.InfoPanelVersions;
 import Run.World.World;
 
 public class ButtonPanel extends JPanel {
@@ -42,11 +43,23 @@ public class ButtonPanel extends JPanel {
     }
 
     private final java.awt.event.ActionListener paintButtonClicked = e -> {
-        // gui.getControlPanel().getInfoPanel().setToPaintOptions();
+        if (gui.getControlPanel().getInfoPanel().getCurrentVersion() != InfoPanelVersions.PaintOptions) {
+            gui.getControlPanel().getInfoPanel().setTo(InfoPanelVersions.PaintOptions);
+            ((JButton) e.getSource()).setBackground(java.awt.Color.GREEN);
+        } else {
+            gui.getControlPanel().getInfoPanel().setTo(InfoPanelVersions.ThingInfo);
+            ((JButton) e.getSource()).setBackground(null);
+        }
     };
 
     private final java.awt.event.ActionListener moreWorldInfoButtonClicked = e -> {
-        // gui.getControlPanel().getInfoPanel().setToWorldInfo();
+        if (gui.getControlPanel().getInfoPanel().getCurrentVersion() != InfoPanelVersions.WorldInfo) {
+            gui.getControlPanel().getInfoPanel().setTo(InfoPanelVersions.WorldInfo);
+            ((JButton) e.getSource()).setBackground(java.awt.Color.GREEN);
+        } else {
+            gui.getControlPanel().getInfoPanel().setTo(InfoPanelVersions.ThingInfo);
+            ((JButton) e.getSource()).setBackground(null);
+        }
     };
 
     private final java.awt.event.ActionListener saveWorldButtonClicked = e -> {
@@ -62,6 +75,6 @@ public class ButtonPanel extends JPanel {
     };
 
     private final java.awt.event.ActionListener debugOptionsButtonClicked = e -> {
-        
+        DebugOptionsDialog.showNewWorldDialog(gui.getFrame());
     };
 }

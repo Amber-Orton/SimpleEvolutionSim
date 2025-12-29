@@ -14,6 +14,7 @@ import java.awt.image.RenderedImage;
 
 import javax.swing.SwingUtilities;
 
+import Run.Main;
 import Run.World.World;
 import Run.World.World.Snapshot;
 import Things.Thing;
@@ -92,22 +93,30 @@ public class WorldPanel extends UpdateableJPanel {
         setPreferredSize(new Dimension(imgW, imgH));
     }
 
-    private void render() {
+    private void asyncRender() {
         SwingUtilities.invokeLater(this::repaint);
+    }
+
+    private void render() {
+        try {
+            SwingUtilities.invokeAndWait(this::repaint);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void asyncCreateBufferedImageAndRender() {
         bufferedImageExecutor.submit(() -> {
             snapshot = world.getLatestSnapshot();
             backBuffer = createBufferedImage(snapshot);
-            render();
+            asyncRender();
         });
     }
 
     private void asyncCreateBufferedImageAndRender(Snapshot snapshot) {
         bufferedImageExecutor.submit(() -> {
             backBuffer = createBufferedImage(snapshot);
-            render();
+            asyncRender();
         });
     }
 
@@ -122,6 +131,16 @@ public class WorldPanel extends UpdateableJPanel {
         bufferedImageExecutor.submit(() -> {
             backBuffer = createBufferedImage(snapshot);
         });
+    }
+
+    private BufferedImage createBufferedImage() {
+        Snapshot snapshot = world.getLatestSnapshot();
+        return createBufferedImage(snapshot);
+    }
+
+    private void createBufferedImageAndRender() {
+        backBuffer = createBufferedImage();
+        render();
     }
 
     private BufferedImage createBufferedImage(Snapshot snapshot) {
@@ -204,6 +223,12 @@ public class WorldPanel extends UpdateableJPanel {
 
     @Override
     public void updateAfterTick() {
-        asyncCreateBufferedImageAndRender();
+        if (Main.isDoUpdateWorldView()){
+            if (Main.isWaitForLongUpdateAfterTick()){
+                createBufferedImageAndRender();
+            } else {
+                asyncCreateBufferedImageAndRender();
+            }
+        }
     }
 }

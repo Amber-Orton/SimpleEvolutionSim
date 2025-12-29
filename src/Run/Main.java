@@ -18,26 +18,26 @@ public class Main {
      * world attributes
      * defaults have been provided
      */
-    protected static int ANIMAL_STAT_TOTAL = 100;
-    protected static int ANIMAL_EXISTANCE_COST = 0;
-    protected static int ANIMAL_ATTACK_COST = 5;
-    protected static int ANIMAL_MOVE_COST = 1;
-    protected static int ANIMAL_EAT_COST = 0;
-    protected static int ANIMAL_TURN_COST = 0;
-    protected static int ANIMAL_REST_COST = 3;
-    protected static int ANIMAL_REST_HEALTH = 2;
-    protected static int EGG_HATCH_CYCLES = 3;
-    protected static float MUTATION_RATE = 0.1f;
-    protected static float MUTATION_FACTOR = 0.1f;
-    protected static float NODE_INSERT_OR_DELETE_RATE = 0.01f;
-    protected static int MAX_LAYERS = 5;
-    protected static float FOOD_GROW_RATE = 0.05f;
-    protected static float NEW_FOOD_ENERGY = 10;
-    protected static int WORLD_WIDTH = 10;
-    protected static int WORLD_HEIGHT = 10;
+    private static int ANIMAL_STAT_TOTAL = 100;
+    private static int ANIMAL_EXISTANCE_COST = 0;
+    private static int ANIMAL_ATTACK_COST = 5;
+    private static int ANIMAL_MOVE_COST = 1;
+    private static int ANIMAL_EAT_COST = 0;
+    private static int ANIMAL_TURN_COST = 0;
+    private static int ANIMAL_REST_COST = 3;
+    private static int ANIMAL_REST_HEALTH = 2;
+    private static int EGG_HATCH_CYCLES = 3;
+    private static float MUTATION_RATE = 0.1f;
+    private static float MUTATION_FACTOR = 0.1f;
+    private static float NODE_INSERT_OR_DELETE_RATE = 0.01f;
+    private static int MAX_LAYERS = 5;
+    private static float FOOD_GROW_RATE = 0.05f;
+    private static float NEW_FOOD_ENERGY = 10;
+    private static int WORLD_WIDTH = 10;
+    private static int WORLD_HEIGHT = 10;
     
-    protected static float INITIAL_ANIMAL_DENSITY = 0.8f;
-    protected static float INITIAL_NEURAL_NET_RANDOMNESS = 0.1f;
+    private static float INITIAL_ANIMAL_DENSITY = 0.8f;
+    private static float INITIAL_NEURAL_NET_RANDOMNESS = 0.1f;
     public static final int[] ANIMAL_COLOR_PALETTE = new int[]{
         0xFF0000, 0x00FF00, 0x0000FF, 0xFFFF00,
         0xFF00FF, 0x00FFFF, 0xFFFFFF, 0x000000,
@@ -49,12 +49,12 @@ public class Main {
     /**
      * other options
     */
-   protected static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false;
-   public static boolean IN_DEPTH_DEBUG_MODE = false;
-   public static boolean autoDebug = false;
-   public static boolean LOGGING_ENABLED = true;
+   private static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false;
+   private static boolean START_IN_INDEPTH_DEBUG_MODE = false;
+   private static boolean START_IN_AUTO_DEBUG_MODE = false;
+   private static boolean START_WITH_LOGGING_ENABLED = true;
    
-   
+
    /**
     * Critical information for running the simulation and GUI
    */
@@ -62,21 +62,24 @@ public class Main {
     // protected static long lastUpdateWorldViewTotalTime;
     // protected static long lastUpdateWorldViewActualTime;
     // protected static long lastUpdateWorldViewStartTime;
-    protected static boolean waitForLongUpdateAfterTick = true;
-    protected static boolean doUpdateWorldView = true;
-    public static volatile boolean play = false;
-    public static volatile long targetMSPT = 0;
-    public static volatile int ticksToRun = -1;
+    private static boolean waitForLongUpdateAfterTick = true;
+    private static boolean doUpdateWorldView = true;
+    
+    private static volatile boolean play = false;
+    private static volatile long targetMSPT = 0;
+    private static volatile int ticksToRun = -1;
     protected static World world;
     protected static final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-    public static final Random random = new Random();
-    protected static GUI gui;
+    private static final Random random = new Random();
+    private static GUI gui;
     
     //do not change unless you know what youre doing
     public static final int NEURAL_NET_INPUT_SIZE = 18;
     public static final int NEURAL_NET_OUTPUT_SIZE = 7;
     
     public static void main(String[] args) {
+        Logger.initialize();
+        
         try {
             NameCreator.open();
         } catch (IOException e) {
@@ -103,6 +106,16 @@ public class Main {
         Main.world = createWorld();
         gui.setWorld(world);
     }
+
+    public static void updateAfterTick(long startTime) {
+        gui.updateAfterTick(startTime);
+        if (Logger.isAutoDebug()) {
+            System.out.println(Logger.getMostRecentDebugInfo(Logger.isInDepthDebugMode()? 100 : 10));
+        }
+    }
+
+
+
     
     public static void pause() {
         play = false;
@@ -129,34 +142,109 @@ public class Main {
     public static void setWORLD_HEIGHT(int wORLD_HEIGHT) {
         WORLD_HEIGHT = wORLD_HEIGHT;
     }
-
+    
     public static int getMAX_LAYERS() {
         return MAX_LAYERS;
     }
-
+    
     public static void setMAX_LAYERS(int maxLayers) {
         MAX_LAYERS = maxLayers;
     }
-
+    
     public static float getINITIAL_ANIMAL_DENSITY() {
         return INITIAL_ANIMAL_DENSITY;
     }
-
+    
     public static void setINITIAL_ANIMAL_DENSITY(float d) {
         INITIAL_ANIMAL_DENSITY = d;
     }
-
+    
     public static float getINITIAL_NEURAL_NET_RANDOMNESS() {
         return INITIAL_NEURAL_NET_RANDOMNESS;
     }
-
+    
     public static void setINITIAL_NEURAL_NET_RANDOMNESS(float r) {
         INITIAL_NEURAL_NET_RANDOMNESS = r;
     }
+    
+    
+    
+    
+    
+    
+    public static ExecutorService getExecutorService() {
+        return executorService;
+    }
+    
+    public static boolean isPlay() {
+        return play;
+    }
+    
+    public static void setPlay(boolean playFlag) {
+        Main.play = playFlag;
+    }
+    
+    public static long getTargetMSPT() {
+        return targetMSPT;
+    }
+    
+    public static void setTargetMSPT(long mspt) {
+        Main.targetMSPT = mspt;
+    }
+    
+    public static int getTicksToRun() {
+        return ticksToRun;
+    }
+    
+    public static void setTicksToRun(int ticks) {
+        Main.ticksToRun = ticks;
+    }
 
+    public static Random getRandom() {
+        return random;
+    }
+    
+    public static boolean isSTART_IN_INDEPTH_DEBUG_MODE() {
+        return START_IN_INDEPTH_DEBUG_MODE;
+    }
+    
+    public static void setSTART_IN_INDEPTH_DEBUG_MODE(boolean sTART_IN_INDEPTH_DEBUG_MODE) {
+        START_IN_INDEPTH_DEBUG_MODE = sTART_IN_INDEPTH_DEBUG_MODE;
+    }
+    
+    public static boolean isSTART_IN_AUTO_DEBUG_MODE() {
+        return START_IN_AUTO_DEBUG_MODE;
+    }
+    
+    public static void setSTART_IN_AUTO_DEBUG_MODE(boolean sTART_IN_AUTO_DEBUG_MODE) {
+        START_IN_AUTO_DEBUG_MODE = sTART_IN_AUTO_DEBUG_MODE;
+    }
+    
+    public static boolean isSTART_WITH_LOGGING_ENABLED() {
+        return START_WITH_LOGGING_ENABLED;
+    }
+    
+    public static void setSTART_WITH_LOGGING_ENABLED(boolean sTART_WITH_LOGGING_ENABLED) {
+        START_WITH_LOGGING_ENABLED = sTART_WITH_LOGGING_ENABLED;
+    }
+    
+    public static boolean isWaitForLongUpdateAfterTick() {
+        return waitForLongUpdateAfterTick;
+    }
 
+    public static void setWaitForLongUpdateAfterTick(boolean waitForLongUpdateAfterTick) {
+        Main.waitForLongUpdateAfterTick = waitForLongUpdateAfterTick;
+    }
 
+    public static boolean isDoUpdateWorldView() {
+        return doUpdateWorldView;
+    }
 
+    public static void setDoUpdateWorldView(boolean doUpdateWorldView) {
+        Main.doUpdateWorldView = doUpdateWorldView;
+    }
+    
+    
 
 
 

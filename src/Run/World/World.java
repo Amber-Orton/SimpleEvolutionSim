@@ -9,7 +9,6 @@ import java.util.concurrent.Future;
 
 import Logger.Logger;
 import Run.Main;
-import Run.OldGUI;
 import Things.Egg;
 import Things.Nothing;
 import Things.Thing;
@@ -50,7 +49,7 @@ public class World implements Runnable {
     
 
     /**
-     * Used to tick automatically on time
+     * Used to tick automatically one time
      * The caller must first check and set readyToTick to false before calling
      */
     public synchronized void run() {
@@ -81,7 +80,7 @@ public class World implements Runnable {
         //dispatch the Things
         for (Thing thing : things) {
             if (thing.needsToTick()) {
-                futures.add(Main.executorService.submit(thing));
+                futures.add(Main.getExecutorService().submit(thing));
             }
         }
         
@@ -91,8 +90,7 @@ public class World implements Runnable {
             try {
                 future.get();
             } catch (InterruptedException | ExecutionException e) {
-                Main.play = false;
-                OldGUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                Main.pause();
                 System.err.println("Paused!: Error occurred while updating world: " + e.getMessage());
                 Logger.logError("World", "Error occurred while updating world: " + e.getMessage());
                 e.printStackTrace();

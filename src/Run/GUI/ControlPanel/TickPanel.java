@@ -37,8 +37,8 @@ public class TickPanel extends UpdateableJPanel {
         ticksPassedNumber = new JLabel("0/");
         targetTicksNumTextArea = new JTextField("∞");
         targetTicksNumTextArea.addActionListener( e -> {
-            Main.ticksToRun = Integer.parseInt(targetTicksNumTextArea.getText().trim());
-            targetTicksNumTextArea.setText(Main.ticksToRun <= 0 ? "∞" : Integer.toString(Main.ticksToRun));
+            Main.setTicksToRun(Integer.parseInt(targetTicksNumTextArea.getText().trim()));
+            targetTicksNumTextArea.setText(Main.getTicksToRun() <= 0 ? "∞" : Integer.toString(Main.getTicksToRun()));
         });
 
         JPanel ticksPassedInfoPanel = new JPanel();
@@ -51,11 +51,11 @@ public class TickPanel extends UpdateableJPanel {
             long startTime = System.nanoTime();
             worldPlayer.queueOneTick(startTime);
         });
-        playPauseButton = new JButton(Main.play ? "Pause" : "Play");
+        playPauseButton = new JButton(Main.isPlay() ? "Pause" : "Play");
         playPauseButton.addActionListener(e -> {
-            Main.play = !Main.play;
-            playPauseButton.setText(Main.play ? "Pause" : "Play");
-            if (Main.play) {
+            Main.setPlay(!Main.isPlay());
+            playPauseButton.setText(Main.isPlay() ? "Pause" : "Play");
+            if (Main.isPlay()) {
                 Thread worldPlayerThread = new Thread(worldPlayer);
                 worldPlayerThread.start();
             }
@@ -103,12 +103,12 @@ public class TickPanel extends UpdateableJPanel {
                     long target = Long.parseLong(s);
                     if (row == 2) { //MSPT
                         if (target < 0) target = 0;
-                        Main.targetMSPT = target;
+                        Main.setTargetMSPT(target);
                     } else { //TPS
                         if (target <= 0) {
-                            Main.targetMSPT = 0;
+                            Main.setTargetMSPT(0);
                         } else {
-                            Main.targetMSPT = 1_000L / target;
+                            Main.setTargetMSPT(1_000L / target);
                         }
                     }
                     updateTableModelTarget();
@@ -126,8 +126,8 @@ public class TickPanel extends UpdateableJPanel {
     public void updateTableModelTarget() {
         try {
             tableModelUpdating = true;
-            tickInfoTableModel.setValueAt(Main.targetMSPT == 0 ? "∞" : Long.toString(1_000L / Main.targetMSPT), 1, 2);
-            tickInfoTableModel.setValueAt(Main.targetMSPT == 0 ? "∞" : Long.toString(Main.targetMSPT), 2, 2);
+            tickInfoTableModel.setValueAt(Main.getTargetMSPT() == 0 ? "∞" : Long.toString(1_000L / Main.getTargetMSPT()), 1, 2);
+            tickInfoTableModel.setValueAt(Main.getTargetMSPT() == 0 ? "∞" : Long.toString(Main.getTargetMSPT()), 2, 2);
         } finally {
             tableModelUpdating = false;
         }
@@ -139,11 +139,11 @@ public class TickPanel extends UpdateableJPanel {
     }
 
     public void updatePlayPauseButton() {
-        playPauseButton.setText(Main.play ? "Pause" : "Play");
+        playPauseButton.setText(Main.isPlay() ? "Pause" : "Play");
     }
 
     public void updateAfterTick() {
-        targetTicksNumTextArea.setText(Main.ticksToRun <= 0 ? "∞" : Integer.toString(Main.ticksToRun));
+        targetTicksNumTextArea.setText(Main.getTicksToRun() <= 0 ? "∞" : Integer.toString(Main.getTicksToRun()));
         ticksPassedNumber.setText(Integer.toString(world.getTickCount()) + "/");
         updateTableModelActual();
     }

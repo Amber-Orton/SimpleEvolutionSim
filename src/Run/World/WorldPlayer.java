@@ -24,17 +24,17 @@ public class WorldPlayer implements Runnable {
     public void run() {
         final ExecutorService executor = Executors.newSingleThreadExecutor();
         try {
-            if (Main.ticksToRun == 0) {
+            if (Main.getTicksToRun() == 0) {
                 Main.pause();
             }
-            while (Main.play && (Main.ticksToRun == -1 || Main.ticksToRun > 0)) {
+            while (Main.isPlay() && (Main.getTicksToRun() == -1 || Main.getTicksToRun() > 0)) {
                 int currentTick = world.getTickCount();
                 Logger.logEvent("WorldPlayer Tick: " + currentTick, "Starting tick");
                 long startTime = System.nanoTime();
 
-                if (Main.ticksToRun > 0) {
-                    Main.ticksToRun--;
-                    if (Main.ticksToRun == 0) {
+                if (Main.getTicksToRun() > 0) {
+                    Main.setTicksToRun(Main.getTicksToRun() - 1);
+                    if (Main.getTicksToRun() == 0) {
                         Main.pause();
                     }
                 }
@@ -43,8 +43,7 @@ public class WorldPlayer implements Runnable {
                 Logger.logEvent("WorldPlayer Tick: " + currentTick, "Ran world");
                 Main.lastTickTime = System.nanoTime() - startTime;
                 try {
-                    // TODO: change to GUI overhaul
-                    SwingUtilities.invokeAndWait(() -> gui.updateAfterTick(startTime));
+                    Main.updateAfterTick(startTime);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Main.pause();
@@ -56,7 +55,7 @@ public class WorldPlayer implements Runnable {
 
                 // Fix elapsed/sleep calculation to avoid overflow and unit mismatch
                 long elapsedMs = (System.nanoTime() - startTime) / 1_000_000L;
-                long sleepMs = (long) Main.targetMSPT - elapsedMs;
+                long sleepMs = (long) Main.getTargetMSPT() - elapsedMs;
                 if (sleepMs > 0L) {
                     try {
                         Thread.sleep(sleepMs);
@@ -79,14 +78,14 @@ public class WorldPlayer implements Runnable {
 
     private void once(long invokeTime) {
         long startTime = System.nanoTime();
-        if (Main.ticksToRun > 0) {
-            Main.ticksToRun--;
+        if (Main.getTicksToRun() > 0) {
+            Main.setTicksToRun(Main.getTicksToRun() - 1);
         }
-        if (Main.play) return;
+        if (Main.isPlay()) return;
         world.run();
         try {
             Main.lastTickTime = System.nanoTime() - startTime;
-            SwingUtilities.invokeAndWait(() -> gui.updateAfterTick(startTime));
+            Main.updateAfterTick(startTime);
         } catch (Exception e) {
             e.printStackTrace();
             Logger.logError("WorldPlayer Once", "Exception during GUI update: " + e.getMessage());

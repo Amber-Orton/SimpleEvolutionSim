@@ -82,8 +82,8 @@ public class AnimalAttributes {
         NibbleGrid8x8 mutatedData = appearance.getData().clone();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (Main.random.nextDouble() < mutationRate) {
-                    mutatedData.set(i, j, Main.random.nextInt(16));
+                if (Main.getRandom().nextDouble() < mutationRate) {
+                    mutatedData.set(i, j, Main.getRandom().nextInt(16));
                 }
             }
         }
@@ -96,22 +96,22 @@ public class AnimalAttributes {
             for (float[][] nodeWeightsAndBias : layer) {
                 //mutate weights
                 for (int i = 0; i < nodeWeightsAndBias[0].length; i++) {
-                    if (Main.random.nextFloat() < mutationRate) {
+                    if (Main.getRandom().nextFloat() < mutationRate) {
                         nodeWeightsAndBias[0][i] *= generateMutationFactor();
                     }
                 }
                 //mutate the bias
-                if (Main.random.nextFloat() < mutationRate) {
+                if (Main.getRandom().nextFloat() < mutationRate) {
                     nodeWeightsAndBias[1][0] *= generateMutationFactor();
                 }
             }
         }
 
-        if (Main.random.nextFloat() < nodeInsertOrDeleteRate) {
-            int action = Main.random.nextInt(3);
+        if (Main.getRandom().nextFloat() < nodeInsertOrDeleteRate) {
+            int action = Main.getRandom().nextInt(3);
             if (action == 0) {
                 // Insert a new node
-                int layer = Main.random.nextInt(neuralNetNodesWeightsAndBiases.size()-1); // -1 since output layer are fixed in size
+                int layer = Main.getRandom().nextInt(neuralNetNodesWeightsAndBiases.size()-1); // -1 since output layer are fixed in size
                 float[][] newNode = new float[2][];// create the node
                 if (layer > 0) {
                     newNode[0] = new float[neuralNetNodesWeightsAndBiases.get(layer-1).size()];
@@ -121,9 +121,9 @@ public class AnimalAttributes {
                 newNode[1] = new float[1];
                 // initialise the bias and weights to be very small for small mutations
                 for (int i = 0; i < newNode[0].length; i++) {
-                    newNode[0][i] = Main.random.nextFloat()*mutationFactor;
+                    newNode[0][i] = Main.getRandom().nextFloat()*mutationFactor;
                 }
-                newNode[1][0] = Main.random.nextFloat()*mutationFactor;
+                newNode[1][0] = Main.getRandom().nextFloat()*mutationFactor;
 
 
                 //TODO: change to use arrayList instead of float[][]
@@ -137,16 +137,16 @@ public class AnimalAttributes {
                     for (int j = 0; j < newWeightsAndBias[0].length-1; j++) {
                         newWeightsAndBias[0][j] = oldWeightsAndBias[0][j];
                     }
-                    newWeightsAndBias[0][newWeightsAndBias[0].length-1] = Main.random.nextFloat()*mutationFactor;//add the new weight
+                    newWeightsAndBias[0][newWeightsAndBias[0].length-1] = Main.getRandom().nextFloat()*mutationFactor;//add the new weight
                     newWeightsAndBias[1][0] = oldWeightsAndBias[1][0];//copy the old bias
                     neuralNetNodesWeightsAndBiases.get(layer + 1).set(i, newWeightsAndBias);//put the new weights and bias back in the list
                 }
             } else if (action == 1) {
                 // add or remove a layer
-                if (Main.random.nextBoolean()) {
+                if (Main.getRandom().nextBoolean()) {
                     // Add a new layer
                     if (neuralNetNodesWeightsAndBiases.size() < maxLayers) {
-                        int layer = Main.random.nextInt(neuralNetNodesWeightsAndBiases.size());
+                        int layer = Main.getRandom().nextInt(neuralNetNodesWeightsAndBiases.size());
                         ArrayList<float[][]> newLayer = new ArrayList<>();
                         int previousLayerSize;
                         if (layer > 0) {
@@ -163,10 +163,10 @@ public class AnimalAttributes {
                             
                             // Initialize weights and bias with small random values
                             for (int j = 0; j < newNode[0].length; j++) {
-                                newNode[0][j] = Main.random.nextFloat() * mutationFactor;
+                                newNode[0][j] = Main.getRandom().nextFloat() * mutationFactor;
                             }
                             newNode[0][i] = 1.0f;//set weight of the directly previous node to be 1 to reduce the impact of adding a new layer
-                            newNode[1][0] = Main.random.nextFloat() * mutationFactor;
+                            newNode[1][0] = Main.getRandom().nextFloat() * mutationFactor;
                             newLayer.add(newNode);
                         }
                         
@@ -176,7 +176,7 @@ public class AnimalAttributes {
                 } else {
                     // Remove a layer
                     if (neuralNetNodesWeightsAndBiases.size() > 2) { // Keep at least one hidden layer
-                        int layer = Main.random.nextInt(neuralNetNodesWeightsAndBiases.size() - 1);
+                        int layer = Main.getRandom().nextInt(neuralNetNodesWeightsAndBiases.size() - 1);
                         
                         // Update weights for the layer after the removed layer
                         int previousLayerSize;
@@ -191,7 +191,7 @@ public class AnimalAttributes {
                             
                             // Initialize new weights with small random values
                             for (int i = 0; i < previousLayerSize; i++) {
-                                newWeights[i] = Main.random.nextFloat() * mutationFactor;
+                                newWeights[i] = Main.getRandom().nextFloat() * mutationFactor;
                             }
                             node[0] = newWeights;
                         }
@@ -202,9 +202,9 @@ public class AnimalAttributes {
                 }
             } else if (action == 2) {
                 // remove a node
-                int layer = Main.random.nextInt(neuralNetNodesWeightsAndBiases.size()-1);
+                int layer = Main.getRandom().nextInt(neuralNetNodesWeightsAndBiases.size()-1);
                 if (neuralNetNodesWeightsAndBiases.get(layer).size() > 1) {
-                    int node = Main.random.nextInt(neuralNetNodesWeightsAndBiases.get(layer).size());
+                    int node = Main.getRandom().nextInt(neuralNetNodesWeightsAndBiases.get(layer).size());
                     neuralNetNodesWeightsAndBiases.get(layer).remove(node);
 
                     //update next layer
@@ -228,7 +228,7 @@ public class AnimalAttributes {
     }
 
     private float generateMutationFactor() {
-        return 1.0f + (float)(Main.random.nextGaussian() * mutationFactor);
+        return 1.0f + (float)(Main.getRandom().nextGaussian() * mutationFactor);
     }
     
 

@@ -24,7 +24,8 @@ import Run.Main;
 public class WorldOptionsDialog {
     public static void showWorldOptionsDialog(Component parentRef) {
         Window mainWin = (parentRef instanceof Window) ? (Window) parentRef : SwingUtilities.getWindowAncestor(parentRef);
-        JDialog dlg = new JDialog(mainWin, "World Stats", Dialog.ModalityType.APPLICATION_MODAL);
+        JDialog dlg = new JDialog(mainWin, "Create New World", Dialog.ModalityType.MODELESS);
+        dlg.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         JPanel wrapper = new JPanel();
         JScrollPane scrollPane = new JScrollPane(wrapper);

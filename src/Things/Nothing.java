@@ -26,7 +26,7 @@ public class Nothing extends Thing {
 
     @Override
     public void run() {
-        if (Main.random.nextFloat() <= foodGrowRate) {
+        if (Main.getRandom().nextFloat() <= foodGrowRate) {
             willGrow = true;
         } else {
             willGrow = false;
