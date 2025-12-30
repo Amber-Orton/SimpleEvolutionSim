@@ -28,11 +28,9 @@ public class PaintOptionsDisplay extends UpdatableDisplayPanel {
     private JButton cloneSelectedButton;
     private List<JButton> paintButtons = new ArrayList<>();
     private World world;
-    private GUI gui;
     
     public PaintOptionsDisplay(World world, GUI gui) {
         this.world = world;
-        this.gui = gui;
 
         JPanel leftPanel = new JPanel();
         JPanel rightPanel = new JPanel();

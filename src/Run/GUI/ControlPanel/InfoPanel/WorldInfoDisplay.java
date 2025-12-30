@@ -3,7 +3,6 @@ package Run.GUI.ControlPanel.InfoPanel;
 import javax.swing.text.JTextComponent;
 
 import Run.GUI.GUI;
-import Run.GUI.UpdatableJPanel;
 import Run.World.World;
 import Things.Animal;
 import Things.Egg;

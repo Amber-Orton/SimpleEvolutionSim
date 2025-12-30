@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.border.TitledBorder;
 
-import Logger.Logger;
 import Run.GUI.GUI;
 import Run.GUI.UpdatableJPanel;
 import Run.World.World;

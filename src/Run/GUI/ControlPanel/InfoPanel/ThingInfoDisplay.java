@@ -8,7 +8,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import Run.GUI.GUI;
-import Run.GUI.UpdatableJPanel;
 import Run.World.World;
 import Things.Animal;
 import Things.Egg;
