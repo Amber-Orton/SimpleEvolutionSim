@@ -197,7 +197,7 @@ public class World implements Runnable {
      * @param origionalThing Thing to replace
      * @param newThing Thing to replace with
      */
-    public boolean replaceThing(Thing origionalThing, Thing newThing){
+    public void replaceThing(Thing origionalThing, Thing newThing){
         things.get(origionalThing.getClass()).remove(origionalThing);
         if (getThingAt(origionalThing.getPos()) == origionalThing){
             changeGridAt(origionalThing.getPos(), null);

@@ -1,6 +1,8 @@
 package Run.GUI.ControlPanel.ButtonPanel;
 
 import java.awt.GridLayout;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -12,6 +14,7 @@ import Run.World.World;
 public class ButtonPanel extends JPanel {
 
     private GUI gui;
+    private List<JButton> buttons = new ArrayList<>();
 
     public ButtonPanel(World world, GUI gui) {
         this.gui = gui;
@@ -32,6 +35,13 @@ public class ButtonPanel extends JPanel {
         worldOptionsButton.addActionListener(worldOptionsButtonClicked);
         debugOptionsButton.addActionListener(debugOptionsButtonClicked);
 
+        buttons.add(paintButton);
+        buttons.add(moreWorldInfoButton);
+        buttons.add(saveWorldButton);
+        buttons.add(newWorldButton);
+        buttons.add(worldOptionsButton);
+        buttons.add(debugOptionsButton);
+
         this.add(paintButton);
         this.add(moreWorldInfoButton);
         this.add(saveWorldButton);
@@ -43,6 +53,7 @@ public class ButtonPanel extends JPanel {
     private final java.awt.event.ActionListener paintButtonClicked = e -> {
         if (gui.getControlPanel().getInfoPanel().getCurrentVersion() != InfoPanelVersions.PaintOptions) {
             gui.getControlPanel().getInfoPanel().setTo(InfoPanelVersions.PaintOptions);
+            resetButtonColors();
             ((JButton) e.getSource()).setBackground(java.awt.Color.GREEN);
         } else {
             gui.getControlPanel().getInfoPanel().setTo(InfoPanelVersions.ThingInfo);
@@ -53,6 +64,7 @@ public class ButtonPanel extends JPanel {
     private final java.awt.event.ActionListener moreWorldInfoButtonClicked = e -> {
         if (gui.getControlPanel().getInfoPanel().getCurrentVersion() != InfoPanelVersions.WorldInfo) {
             gui.getControlPanel().getInfoPanel().setTo(InfoPanelVersions.WorldInfo);
+            resetButtonColors();
             ((JButton) e.getSource()).setBackground(java.awt.Color.GREEN);
         } else {
             gui.getControlPanel().getInfoPanel().setTo(InfoPanelVersions.ThingInfo);
@@ -60,8 +72,14 @@ public class ButtonPanel extends JPanel {
         }
     };
 
+    private void resetButtonColors() {
+        for (JButton button : buttons) {
+            button.setBackground(null);
+        }
+    }
+
     private final java.awt.event.ActionListener saveWorldButtonClicked = e -> {
-        
+        throw new UnsupportedOperationException("Not implemented yet");
     };
 
     private final java.awt.event.ActionListener newWorldButtonClicked = e -> {

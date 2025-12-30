@@ -3,22 +3,23 @@ package Run.GUI.ControlPanel.InfoPanel;
 import java.awt.BorderLayout;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
 
 import javax.swing.border.TitledBorder;
 
 import Logger.Logger;
 import Run.GUI.GUI;
-import Run.GUI.UpdateableJPanel;
+import Run.GUI.UpdatableJPanel;
 import Run.World.World;
 import Things.Helpers.Position;
 
-public class InfoPanel extends UpdateableJPanel {
+public class InfoPanel extends UpdatableJPanel {
 
     private World world;
     private GUI gui;
     private InfoPanelVersions currentVersion;
 
-    private UpdateableJPanel panelInUse;
+    private UpdatableDisplayPanel panelInUse;
     private TitledBorder border;
     
     public InfoPanel(World world, GUI gui) {
@@ -46,17 +47,12 @@ public class InfoPanel extends UpdateableJPanel {
         panelInUse.updateAfterTick();
     }
 
-    public void click(Position position) {
+    public void click(Position position, MouseEvent event) {
+        panelInUse.click(position, event);
         if (currentVersion == InfoPanelVersions.ThingInfo) {
-            try {
-                ((ThingInfoDisplay) panelInUse).click(position);
-            } catch (ClassCastException e) {
-                Logger.logError("InfoPanel clicked: ", e.getMessage());
-                throw new IllegalStateException("Panel in use is not ThingInfoDisplay");
-            }
             border.setTitle("Info - " + world.getThingAt(position).getName());
-            this.repaint();
         }
+        this.repaint();
     }
 
 
@@ -68,23 +64,23 @@ public class InfoPanel extends UpdateableJPanel {
         this.currentVersion = version;
 
         this.removeAll();
-        UpdateableJPanel newPanel;
         switch (version) {
             case InfoPanelVersions.ThingInfo:
-                newPanel = new ThingInfoDisplay(world, gui);
+                panelInUse = new ThingInfoDisplay(world, gui);
                 border.setTitle("Select to see info");
                 break;
             case InfoPanelVersions.PaintOptions:
-                throw new UnsupportedOperationException("PaintOptions not implemented yet.");
+                panelInUse = new PaintOptionsDisplay(world, gui);
+                border.setTitle("Paint");
+                break;
             case InfoPanelVersions.WorldInfo:
-                newPanel = new WorldInfoDisplay(world, gui);
+                panelInUse = new WorldInfoDisplay(world, gui);
                 border.setTitle("World Information");
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + version);
         }
 
-        panelInUse = newPanel;
         this.add(panelInUse, BorderLayout.CENTER);
         panelInUse.revalidate();
         this.revalidate();

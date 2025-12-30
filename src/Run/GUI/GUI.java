@@ -4,12 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 import Run.GUI.ControlPanel.ControlPanel;
 import Run.World.World;
+import Things.Thing;
+import Things.Helpers.Position;
 
 
 public class GUI {
@@ -19,6 +23,8 @@ public class GUI {
     private JPanel mainPanel;
     private WorldPanel worldPanel;
     private ControlPanel controlPanel;
+
+    private Position selectedPosition;
     
     public GUI(World world) {
         this.world = world;
@@ -54,6 +60,22 @@ public class GUI {
         });
         
         
+    }
+
+    public void click(Position position, MouseEvent e) {
+        controlPanel.click(position, e);
+        if (e.getButton() == MouseEvent.BUTTON1) {
+            selectedPosition = position;
+        }
+    }
+
+    public Position getSelectedPosition() {
+        return selectedPosition;
+    }
+
+    public Thing getSelectedThing() {
+        if (selectedPosition == null) return null;
+        return world.getThingAt(selectedPosition);
     }
 
     public void updateAfterTick(long tickStartTime) {

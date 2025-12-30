@@ -23,7 +23,7 @@ import Things.Helpers.Position;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class WorldPanel extends UpdateableJPanel {
+public class WorldPanel extends UpdatableJPanel {
     private final GUI gui;
     private final World world;
     private final ExecutorService bufferedImageExecutor;
@@ -44,21 +44,22 @@ public class WorldPanel extends UpdateableJPanel {
         addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent e) {
                 Position prevPosition = selectedPosition;
-                selectedPosition = getPositionFromCoordinates(e.getX(), e.getY());
-                System.out.println("Clicked at: " + selectedPosition);
-                if (selectedPosition == null) {
-                    selectedPosition = prevPosition;
-                    return;
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    selectedPosition = getPositionFromCoordinates(e.getX(), e.getY());
+                    if (selectedPosition == null) {
+                        selectedPosition = prevPosition;
+                        return;
+                    }
+                    snapshot.resetChangedGrid(false);
+                    if (prevPosition != null) {
+                        snapshot.setChangedAt(prevPosition, true);
+                        createBufferedImage(snapshot);
+                        snapshot.setChangedAt(prevPosition, false);
+                    }
+                    snapshot.setChangedAt(selectedPosition, true);
+                    asyncCreateBufferedImageAndRender(snapshot);
                 }
-                snapshot.resetChangedGrid(false);
-                if (prevPosition != null) {
-                    snapshot.setChangedAt(prevPosition, true);
-                    createBufferedImage(snapshot);
-                    snapshot.setChangedAt(prevPosition, false);
-                }
-                snapshot.setChangedAt(selectedPosition, true);
-                asyncCreateBufferedImageAndRender(snapshot);
-                gui.getControlPanel().click(selectedPosition);
+                gui.click(selectedPosition, e);
             }
         });
 

@@ -1,17 +1,17 @@
 package Run.GUI.ControlPanel;
 
 import java.awt.BorderLayout;
-
+import java.awt.event.MouseEvent;
 
 import Run.GUI.GUI;
-import Run.GUI.UpdateableJPanel;
+import Run.GUI.UpdatableJPanel;
 import Run.GUI.ControlPanel.ButtonPanel.ButtonPanel;
 import Run.GUI.ControlPanel.InfoPanel.InfoPanel;
 import Run.World.World;
 import Things.Helpers.Position;
 
 // Control panel on the right side of the GUI
-public class ControlPanel extends UpdateableJPanel {
+public class ControlPanel extends UpdatableJPanel {
     private final TickPanel tickPanel;
     private final InfoPanel infoPanel;
     private final ButtonPanel buttonPanel;
@@ -30,8 +30,8 @@ public class ControlPanel extends UpdateableJPanel {
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
-    public void click(Position position) {
-        infoPanel.click(position);
+    public void click(Position position, MouseEvent e) {
+        infoPanel.click(position, e);
     }
 
     public void updateAfterTick() {

@@ -1,13 +1,14 @@
 package Run.GUI.ControlPanel.InfoPanel;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import Run.GUI.GUI;
-import Run.GUI.UpdateableJPanel;
+import Run.GUI.UpdatableJPanel;
 import Run.World.World;
 import Things.Animal;
 import Things.Egg;
@@ -19,7 +20,7 @@ import Things.Helpers.Position;
 /**
  * Handles displaying information about Things in the GUI text areas.
  */
-class ThingInfoDisplay  extends UpdateableJPanel {
+class ThingInfoDisplay  extends UpdatableDisplayPanel {
 
     private Thing currentThing;
 
@@ -53,7 +54,7 @@ class ThingInfoDisplay  extends UpdateableJPanel {
         this.add(splitPane, BorderLayout.CENTER);
     }
 
-    public void click(Position position) {
+    public void click(Position position, MouseEvent event) {
         currentThing = world.getThingAt(position);
         display();
     }

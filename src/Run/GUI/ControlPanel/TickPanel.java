@@ -13,13 +13,13 @@ import javax.swing.table.DefaultTableModel;
 
 import Run.Main;
 import Run.GUI.GUI;
-import Run.GUI.UpdateableJPanel;
+import Run.GUI.UpdatableJPanel;
 import Run.World.World;
 import Run.World.WorldPlayer;
 import Logger.Logger;
 
 // Panel displaying tick information and controls is the top section of the control panel
-public class TickPanel extends UpdateableJPanel {
+public class TickPanel extends UpdatableJPanel {
     private final World world;
     private final JLabel ticksPassedNumber;
     private final DefaultTableModel tickInfoTableModel;
