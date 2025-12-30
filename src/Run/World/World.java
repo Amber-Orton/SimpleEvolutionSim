@@ -1,14 +1,17 @@
-package Run;
-import java.awt.Color;
+package Run.World;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import Logger.Logger;
+import Run.Main;
 import Things.Egg;
 import Things.Nothing;
 import Things.Thing;
@@ -19,12 +22,9 @@ import Things.Helpers.Position;
 public class World implements Runnable {
     private int width;
     private int height;
-    private Set<Thing> things = new HashSet<>();
-    private Set<Thing> thingsToUpdate = new HashSet<>();
-    private Set<Thing> eggsToUpdate = new HashSet<>();
-    private Set<Thing> nothingToUpdate = new HashSet<>();
+    private Map<Class<? extends Thing>, Set<Thing>> things = new HashMap<>();
+    private Map<Integer, Set<Thing>> thingsToUpdate = new TreeMap<>();
     private Thing[][] grid;
-    private Color[][] colorGrid;
     private volatile boolean[][] changedGrid;
     private volatile Snapshot latestSnapshot;
     protected Nothing[][] nothingGrid;
@@ -43,7 +43,6 @@ public class World implements Runnable {
         this.height = height;
         this.grid = new Thing[height][width];
         this.nothingGrid = new Nothing[height][width];
-        colorGrid = new Color[height][width];
         changedGrid = new boolean[height][width];
         for (boolean[] row : changedGrid) {
             Arrays.fill(row, true);//initialise to true since the world has changed from completly empty to populated on boot
@@ -52,7 +51,7 @@ public class World implements Runnable {
     
 
     /**
-     * Used to tick automatically on time
+     * Used to tick automatically one time
      * The caller must first check and set readyToTick to false before calling
      */
     public synchronized void run() {
@@ -70,9 +69,11 @@ public class World implements Runnable {
         tickCount++;
 
         // Remove dead things before ticking
-        for (Thing thing : new HashSet<>(things)) {
-            if (!thing.isAlive()) {
-                removeThing(thing);
+        for (Set<Thing> thingSet : things.values()) {
+            for (Thing thing : new HashSet<>(thingSet)) {
+                if (!thing.isAlive()) {
+                    removeThing(thing);
+                }
             }
         }
 
@@ -81,9 +82,11 @@ public class World implements Runnable {
         List<Future<?>> futures = new ArrayList<>(things.size());
 
         //dispatch the Things
-        for (Thing thing : things) {
-            if (thing.needsToTick()) {
-                futures.add(Main.executorService.submit(thing));
+        for (Set<Thing> thingSet : things.values()) {
+            for (Thing thing : thingSet) {
+                if (thing.needsToTick()) {
+                    futures.add(Main.getExecutorService().submit(thing));
+                }
             }
         }
         
@@ -93,8 +96,7 @@ public class World implements Runnable {
             try {
                 future.get();
             } catch (InterruptedException | ExecutionException e) {
-                Main.play = false;
-                GUI.getInstance().playPauseButton.setText(Main.play ? "Pause" : "Play");
+                Main.pause();
                 System.err.println("Paused!: Error occurred while updating world: " + e.getMessage());
                 Logger.logError("World", "Error occurred while updating world: " + e.getMessage());
                 e.printStackTrace();
@@ -103,28 +105,26 @@ public class World implements Runnable {
         
         Logger.logEvent("Tick: " + tickCount, "Threads run");
         
-        thingsToUpdate = new HashSet<>();
-        eggsToUpdate = new HashSet<>();
-        for (Thing thing : things) {
-            if (thing.needsToDoAction()) {
-                if (thing instanceof Egg) {
-                    eggsToUpdate.add(thing);
-                } else if (thing instanceof Nothing) {
-                    nothingToUpdate.add(thing);
-                } else {
-                    thingsToUpdate.add(thing);
-                }
+        thingsToUpdate.clear();
+        for (Class<? extends Thing> clazz : things.keySet()) {
+            if (clazz == Egg.class) {
+                thingsToUpdate.put(2, new HashSet<>(things.get(clazz)));
+            } else if (clazz == Nothing.class) {
+                thingsToUpdate.put(3, new HashSet<>(things.get(clazz)));
+            } else {
+                thingsToUpdate.put(1, new HashSet<>(things.get(clazz)));
             }
         }
+
+
         
         Logger.logEvent("Tick: " + tickCount, "Created update sets");
 
-        thingsDoAction(thingsToUpdate);
-        Logger.logEvent("Tick: " + tickCount, "Things did action");
-        thingsDoAction(eggsToUpdate);
-        Logger.logEvent("Tick: " + tickCount, "Eggs did action");
-        thingsDoAction(nothingToUpdate);
-        Logger.logEvent("Tick: " + tickCount, "Nothing did action");
+        for (Set<Thing> thingsToUpdate : thingsToUpdate.values()) {
+            Logger.logEvent("Tick: " + tickCount, "Updating set of size " + thingsToUpdate.size());
+            thingsDoAction(thingsToUpdate);
+        }
+        Logger.logEvent("Tick: " + tickCount, "Everything did action");
 
         updateSnapshot();
         Logger.logEvent("Tick: " + tickCount, "Updated cached grids");
@@ -175,7 +175,7 @@ public class World implements Runnable {
             thing.setPos(pos);
             thing.setWorld(this);
         }
-        things.add(thing);
+        things.getOrDefault(thing.getClass(), new HashSet<>()).add(thing);
     }
 
 
@@ -197,8 +197,8 @@ public class World implements Runnable {
      * @param origionalThing Thing to replace
      * @param newThing Thing to replace with
      */
-    public void replaceThing(Thing origionalThing, Thing newThing){
-        things.remove(origionalThing);
+    public boolean replaceThing(Thing origionalThing, Thing newThing){
+        things.get(origionalThing.getClass()).remove(origionalThing);
         if (getThingAt(origionalThing.getPos()) == origionalThing){
             changeGridAt(origionalThing.getPos(), null);
             putThingAt(origionalThing.getPos(), newThing);
@@ -248,7 +248,6 @@ public class World implements Runnable {
 
     /**
      * Changes the Thing at the specified position in the grid.
-     * updates the colour grid accordingly
      * caller responsible for all other actions only checks if the position is valid.
      * careful when calling can end up with duplicate entries in grid[][]
      *      does not update thing to reflect this change
@@ -258,9 +257,6 @@ public class World implements Runnable {
     private void changeGridAt(Position pos, Thing thing) {
         if (posIsInBounds(pos)) {
             grid[pos.getRow()][pos.getCol()] = thing;
-            if (thing != null) {
-                colorGrid[pos.getRow()][pos.getCol()] = thing.getColor();
-            }
             changedGrid[pos.getRow()][pos.getCol()] = true;
         }
     }
@@ -271,13 +267,11 @@ public class World implements Runnable {
      */
     public void updateSnapshot() {
         Thing[][] gridCopy = new Thing[height][width];
-        Color[][] colorCopy = new Color[height][width];
         boolean[][] changedCopy = latestSnapshot == null ? new boolean[height][width] : latestSnapshot.changedGrid;
 
         for (int r = 0; r < height; r++) {
             for (int c = 0; c < width; c++) {
                 gridCopy[r][c] = grid[r][c];
-                colorCopy[r][c] = colorGrid[r][c];
                 if (!changedCopy[r][c] && changedGrid[r][c]) {
                     changedCopy[r][c] = true;
                     changedGrid[r][c] = false;
@@ -285,7 +279,7 @@ public class World implements Runnable {
             }
         }
 
-        latestSnapshot = new Snapshot(gridCopy, colorCopy, changedCopy);
+        latestSnapshot = new Snapshot(gridCopy, changedCopy);
     }
 
     /**
@@ -294,13 +288,25 @@ public class World implements Runnable {
      */
     public static class Snapshot {
         public final Thing[][] grid;
-        public final Color[][] colorGrid;
         public final boolean[][] changedGrid;
 
-        public Snapshot(Thing[][] grid, Color[][] colorGrid, boolean[][] changedGrid) {
+        public Snapshot(Thing[][] grid, boolean[][] changedGrid) {
             this.grid = grid;
-            this.colorGrid = colorGrid;
             this.changedGrid = changedGrid;
+        }
+
+        public void resetChangedGrid(boolean value) {
+            for (boolean[] row : changedGrid) {
+                Arrays.fill(row, value);
+            }
+        }
+
+        public void setChangedAt(int row, int col, boolean changed) {
+            changedGrid[row][col] = changed;
+        }
+        
+        public void setChangedAt(Position pos, boolean changed) {
+            setChangedAt(pos.getRow(), pos.getCol(), changed);
         }
     }
 
@@ -345,7 +351,19 @@ public class World implements Runnable {
 
 
     public Set<Thing> getThings() {
-        return things;
+        Set<Thing> out = new HashSet<>();
+        for (Set<Thing> thingSet : things.values()) {
+            out.addAll(thingSet);
+        }
+        return out;
+    }
+
+    public Set<Thing> getThings(Class<? extends Thing> clazz) {
+        return things.getOrDefault(clazz, new HashSet<>());
+    }
+
+    public Set<Class<? extends Thing>> getThingClasses() {
+        return things.keySet();
     }
     
     public int getWidth() {
@@ -363,11 +381,6 @@ public class World implements Runnable {
     public Thing[][] getThingGrid() {
         return grid;
     }
-
-    public Color[][] getColorGrid() {
-        return colorGrid;
-    }
-
 
     public boolean[][] getChangedGrid() {
         return changedGrid;

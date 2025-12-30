@@ -99,7 +99,7 @@ class NibbleGrid8x8 {
     }
 
     protected NibbleGrid8x8() {
-        Main.random.nextBytes(data); // or pass Random as constructor param
+        Main.getRandom().nextBytes(data); // or pass Random as constructor param
     }
 
     // idx = row*8 + col

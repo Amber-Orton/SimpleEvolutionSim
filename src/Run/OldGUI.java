@@ -3,7 +3,9 @@ package Run;
 import javax.swing.*;
 
 import Logger.Logger;
-import Run.World.Snapshot;
+import Run.World.World;
+import Run.World.WorldPlayer;
+import Run.World.World.Snapshot;
 import Things.Animal;
 import Things.Egg;
 import Things.Food;
@@ -26,9 +28,9 @@ import java.util.concurrent.Executors;
 /**
  * Main GUI for the Simple Evolution Simulation.
  */
-public class GUI {
+public class OldGUI {
     private World world;
-    private static GUI instance;
+    private static OldGUI instance;
     private WorldGridPanel worldGridPanel;
 
     private JTextField tickCountDisplay;
@@ -45,20 +47,20 @@ public class GUI {
 
     private boolean updateWorldViewWorking = false;
 
-    public static GUI getInstance() {
+    public static OldGUI getInstance() {
         return instance;
     }
 
-    public static GUI getInstanceOrChangeWorld(World world) {
+    public static OldGUI getInstanceOrChangeWorld(World world) {
         if (instance == null) {
-            instance = new GUI(world);
+            instance = new OldGUI(world);
         } else {
             instance.world = world;
         }
         return instance;
     }
 
-    private GUI(World world) {
+    private OldGUI(World world) {
         this.world = world;
     }
 
@@ -346,17 +348,17 @@ public class GUI {
         JPanel msptPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 8, 8));
         msptPanel.setBorder(BorderFactory.createTitledBorder("MSPT"));
         
-        JTextField msptField = new JTextField(Integer.toString(Main.tickMillis), 8);
+        JTextField msptField = new JTextField(Integer.toString(Main.targetMSPT), 8);
         msptField.setMaximumSize(new Dimension(100, 28));
         
         Runnable applyMspt = () -> {
             try {
                 int val = Integer.parseInt(msptField.getText().trim());
                 if (val < 0) val = 0;
-                Main.tickMillis = val;
+                Main.targetMSPT = val;
             } catch (NumberFormatException ex) {
                 Logger.logError("GUI", "Invalid number format for MSPT: " + ex.getMessage());
-                msptField.setText(Integer.toString(Main.tickMillis));
+                msptField.setText(Integer.toString(Main.targetMSPT));
             }
         };
         
@@ -482,7 +484,7 @@ public class GUI {
             Main.updateAttributes();
             World newWorld = Main.createWorld();
             Main.world = newWorld;
-            GUI gui = GUI.getInstanceOrChangeWorld(newWorld);
+            OldGUI gui = OldGUI.getInstanceOrChangeWorld(newWorld);
             dlg.dispose();
             if (mainWin != null) mainWin.dispose();
             SwingUtilities.invokeLater(gui::run);
