@@ -43,13 +43,13 @@ public class WorldPanel extends UpdatableJPanel {
 
         addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent e) {
-                Position prevPosition = selectedPosition;
+                Position pos = getPositionFromCoordinates(e.getX(), e.getY());
+                if (pos == null) {
+                    return;
+                }
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    selectedPosition = getPositionFromCoordinates(e.getX(), e.getY());
-                    if (selectedPosition == null) {
-                        selectedPosition = prevPosition;
-                        return;
-                    }
+                    Position prevPosition = selectedPosition;
+                    selectedPosition = pos;
                     snapshot.resetChangedGrid(false);
                     if (prevPosition != null) {
                         snapshot.setChangedAt(prevPosition, true);
@@ -58,8 +58,9 @@ public class WorldPanel extends UpdatableJPanel {
                     }
                     snapshot.setChangedAt(selectedPosition, true);
                     asyncCreateBufferedImageAndRender(snapshot);
+                    Main.setSelectedPosition(selectedPosition);
                 }
-                gui.click(selectedPosition, e);
+                gui.click(pos, e);
             }
         });
 
@@ -135,7 +136,7 @@ public class WorldPanel extends UpdatableJPanel {
     }
 
     private BufferedImage createBufferedImage() {
-        Snapshot snapshot = world.getLatestSnapshot();
+        snapshot = world.getLatestSnapshot();
         return createBufferedImage(snapshot);
     }
 

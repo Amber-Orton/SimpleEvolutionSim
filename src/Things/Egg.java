@@ -49,7 +49,7 @@ public class Egg extends Edible implements Livable {
     }
 
 
-    public void hatch() {
+    private void hatch() {
         child = new Animal(world, pos, attributes.generateMutatedAttributes(), parent);
         isHatched = true;
 
@@ -89,7 +89,6 @@ public class Egg extends Edible implements Livable {
 
     @Override
     public void die() {
-        System.out.println(getName() + " has died.");
         isAlive= false;
     }
 

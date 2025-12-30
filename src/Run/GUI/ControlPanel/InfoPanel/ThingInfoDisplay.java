@@ -79,6 +79,8 @@ class ThingInfoDisplay  extends UpdatableDisplayPanel {
                         + "\nEnergy: " + animal.getEnergy() + '/' + animal.getAnimalAttributes().getMaxEnergy()
                         + "\nAttack Damage: " + animal.getAnimalAttributes().getAttackDamage()
                         + "\nReproduction Cost: " + animal.getAnimalAttributes().getReproductionCost()
+                        + "\nFacing: " + animal.getFacingDirection()
+                        + "\nParent: " + (animal.getName().contains("NoParent") ? "None" : animal.getName().split(" ")[1])
                         + "\nLast Action: " + animal.getAction());
         if (animal.getHealth() <= 0) {
             rightArea.setText("This animal is dead.");

@@ -64,6 +64,9 @@ public class Nothing extends Thing {
      * this is only called if the Nothing is set to grow.
      */
     public void doAction() {
+        if (world.getThingAt(pos) != this) {
+            return; // Already replaced
+        }
         world.replaceThing(this, new Food(world, pos, newFoodEnergy));
     }
 

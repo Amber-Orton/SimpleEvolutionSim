@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 
+import Run.Main;
 import Run.GUI.GUI;
 import Run.Paint.PaintCloneOf;
 import Run.Paint.PaintFood;
@@ -47,8 +48,8 @@ public class PaintOptionsDisplay extends UpdatableDisplayPanel {
         cloneSelectedButton = new JButton("Clone Selected");
         cloneSelectedButton.addActionListener(e -> {
             resetColors();
-            if (gui.getSelectedThing() != null) {
-                paintOption = new PaintCloneOf(world, gui.getSelectedThing());
+            if (Main.getSelectedThing() != null) {
+                paintOption = new PaintCloneOf(world, Main.getSelectedThing());
                 cloneSelectedButton.setBackground(Color.GREEN);
             } else {
                 paintOption = null;
@@ -80,10 +81,9 @@ public class PaintOptionsDisplay extends UpdatableDisplayPanel {
         leftPanel.add(randomAnimalButton);
         leftPanel.add(randomEggButton);
 
-        JScrollPane leftScroll = new JScrollPane(leftPanel);
         JScrollPane rightScroll = new JScrollPane(rightPanel);
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftScroll, rightScroll);
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightScroll);
         this.add(splitPane);
     }
 
@@ -96,10 +96,12 @@ public class PaintOptionsDisplay extends UpdatableDisplayPanel {
     @Override
     public void click(Position position, MouseEvent event) {
         if (event.getButton() == MouseEvent.BUTTON3) {
+            if (paintOption == null) return;
+            System.out.println("Painting at " + position);
             paintOption.paint(position);
-        } else if (event.getButton() == MouseEvent.BUTTON1 && paintOption == null) {
+        } else if (event.getButton() == MouseEvent.BUTTON1 && Main.getSelectedThing() != null && (paintOption == null || paintOption instanceof PaintCloneOf)) {
             cloneSelectedButton.setBackground(Color.GREEN);
-            paintOption = new PaintCloneOf(world, gui.getSelectedThing());
+            paintOption = new PaintCloneOf(world, Main.getSelectedThing());
             cloneSelectedButton.setText("Clone Selected");
         }
     }

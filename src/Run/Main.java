@@ -9,8 +9,10 @@ import Run.GUI.GUI;
 import Run.World.World;
 import Run.World.WorldCreator;
 import Things.Nothing;
+import Things.Thing;
 import Things.Helpers.AnimalAttributes;
 import Things.Helpers.NameCreator;
+import Things.Helpers.Position;
 
 public class Main {
 
@@ -72,6 +74,8 @@ public class Main {
     protected static final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     private static final Random random = new Random();
     private static GUI gui;
+    private static Position selectedPosition;
+    private static Thing selectedThing;
     
     //do not change unless you know what youre doing
     public static final int NEURAL_NET_INPUT_SIZE = 18;
@@ -244,7 +248,23 @@ public class Main {
         Main.doUpdateWorldView = doUpdateWorldView;
     }
     
+    public static Position getSelectedPosition() {
+        return selectedPosition;
+    }
+
+    public static void setSelectedPosition(Position selectedPosition) {
+        Main.selectedPosition = selectedPosition;
+        Main.selectedThing = selectedPosition != null ? Main.world.getThingAt(selectedPosition) : null;
+    }
+
+    public static Thing getSelectedThing() {
+        return selectedThing;
+    }
     
+    public static void setSelectedThing(Thing selectedThing) {
+        Main.selectedThing = selectedThing;
+        Main.selectedPosition = selectedThing != null ? selectedThing.getPos() : null;
+    }
 
 
 

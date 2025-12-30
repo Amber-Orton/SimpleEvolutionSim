@@ -9,7 +9,7 @@ public class Paint {
 
     protected static void paintThingAt(Position pos, Thing thing, World world) {
         KillThingAt(pos, world);
-        world.replaceThingAt(pos, thing);
+        world.addThing(pos, thing);
     }
 
     protected static void KillThingAt(Position pos, World world) {

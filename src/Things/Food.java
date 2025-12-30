@@ -45,4 +45,9 @@ public class Food extends Edible{
         return 2;
     }
 
+    @Override
+    public String toString() {
+        return "Energy: " + energy + " " + super.toString() + ":Food";
+    }
+
 }

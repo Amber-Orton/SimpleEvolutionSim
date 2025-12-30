@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import Run.Main;
 import Run.GUI.ControlPanel.ControlPanel;
 import Run.World.World;
 import Things.Thing;
@@ -64,18 +65,6 @@ public class GUI {
 
     public void click(Position position, MouseEvent e) {
         controlPanel.click(position, e);
-        if (e.getButton() == MouseEvent.BUTTON1) {
-            selectedPosition = position;
-        }
-    }
-
-    public Position getSelectedPosition() {
-        return selectedPosition;
-    }
-
-    public Thing getSelectedThing() {
-        if (selectedPosition == null) return null;
-        return world.getThingAt(selectedPosition);
     }
 
     public void updateAfterTick(long tickStartTime) {
