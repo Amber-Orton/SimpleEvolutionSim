@@ -49,7 +49,6 @@ public class WorldPlayer implements Runnable {
                 }
                 System.out.println("Ticked! in: " + (Main.lastTickTime / 1_000_000_000.0) + " seconds");
 
-                // Fix elapsed/sleep calculation to avoid overflow and unit mismatch
                 long elapsedMs = (System.nanoTime() - startTime) / 1_000_000L;
                 long sleepMs = (long) Main.getTargetMSPT() - elapsedMs;
                 if (sleepMs > 0L) {
@@ -84,7 +83,7 @@ public class WorldPlayer implements Runnable {
             Main.updateAfterTick(startTime);
         } catch (Exception e) {
             e.printStackTrace();
-            Logger.logError("WorldPlayer Once", "Exception during GUI update: " + e.getMessage());
+            Logger.logError("WorldPlayer Once", "Exception during update after tick: " + e.getMessage());
         }
         Main.lastTickTime = System.nanoTime() - startTime;
         System.out.println("Ticked! in: " + (Main.lastTickTime / 1_000_000.0) + " ms");

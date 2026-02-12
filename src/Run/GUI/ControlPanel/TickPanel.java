@@ -13,13 +13,13 @@ import javax.swing.table.DefaultTableModel;
 
 import Run.Main;
 import Run.GUI.GUI;
-import Run.GUI.UpdateableJPanel;
+import Run.GUI.UpdatableJPanel;
 import Run.World.World;
 import Run.World.WorldPlayer;
 import Logger.Logger;
 
 // Panel displaying tick information and controls is the top section of the control panel
-public class TickPanel extends UpdateableJPanel {
+public class TickPanel extends UpdatableJPanel {
     private final World world;
     private final JLabel ticksPassedNumber;
     private final DefaultTableModel tickInfoTableModel;
@@ -103,12 +103,12 @@ public class TickPanel extends UpdateableJPanel {
                     long target = Long.parseLong(s);
                     if (row == 2) { //MSPT
                         if (target < 0) target = 0;
-                        Main.setTargetMSPT(target);
+                        Main.setTargetMSPT(1_000L / target);
                     } else { //TPS
                         if (target <= 0) {
                             Main.setTargetMSPT(0);
                         } else {
-                            Main.setTargetMSPT(1_000L / target);
+                            Main.setTargetMSPT(target);
                         }
                     }
                     updateTableModelTarget();
@@ -134,6 +134,11 @@ public class TickPanel extends UpdateableJPanel {
     }
 
     public void updateTableModelActual() {
+        if (Main.lastTickTime == 0) {
+            tickInfoTableModel.setValueAt("", 1, 1);
+            tickInfoTableModel.setValueAt("", 2, 1);
+            return;
+        }
         tickInfoTableModel.setValueAt(Long.toString(Main.lastTickTime / 1_000_000L), 1, 1);
         tickInfoTableModel.setValueAt(Long.toString(1_000_000_000L / Main.lastTickTime), 2, 1);
     }
@@ -142,7 +147,7 @@ public class TickPanel extends UpdateableJPanel {
         playPauseButton.setText(Main.isPlay() ? "Pause" : "Play");
     }
 
-    public void updateAfterTick() {
+    public void update() {
         targetTicksNumTextArea.setText(Main.getTicksToRun() <= 0 ? "∞" : Integer.toString(Main.getTicksToRun()));
         ticksPassedNumber.setText(Integer.toString(world.getTickCount()) + "/");
         updateTableModelActual();

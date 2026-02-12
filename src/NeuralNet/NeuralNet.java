@@ -9,7 +9,7 @@ public class NeuralNet {
     ArrayList<ArrayList<Node>> neuralNetNodes = new ArrayList<>();
     int inputPos;
     float[] inputs;
-    ArrayList<ArrayList<float[][]>> neuralNetNodesWeightsAndBiases;
+    final ArrayList<ArrayList<float[][]>> neuralNetNodesWeightsAndBiases;
 
     public NeuralNet(ArrayList<ArrayList<float[][]>> neuralNetNodesWeightsAndBiases){
         this.neuralNetNodesWeightsAndBiases = neuralNetNodesWeightsAndBiases;//save for easy copying
@@ -91,5 +91,9 @@ public class NeuralNet {
         return "NeuralNet{" +
                 neuralNetNodes +
                 '}';
+    }
+
+    public NeuralNet clone() {
+        return new NeuralNet(neuralNetNodesWeightsAndBiases);
     }
 }

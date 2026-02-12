@@ -16,6 +16,11 @@ public class Food extends Edible{
     }
 
     @Override
+    public Thing clone() {
+        return new Food(world, pos, energy);
+    }
+
+    @Override
     public boolean needsToTick() {
         return false;
     }
@@ -38,6 +43,11 @@ public class Food extends Edible{
     @Override
     protected int getasInt() {
         return 2;
+    }
+
+    @Override
+    public String toString() {
+        return "Energy: " + energy + " " + super.toString() + ":Food";
     }
 
 }

@@ -3,14 +3,13 @@ package Run.GUI.ControlPanel.InfoPanel;
 import javax.swing.text.JTextComponent;
 
 import Run.GUI.GUI;
-import Run.GUI.UpdateableJPanel;
 import Run.World.World;
 import Things.Animal;
 import Things.Egg;
 import Things.Food;
 import Things.Wall;
 
-public class WorldInfoDisplay extends UpdateableJPanel {
+public class WorldInfoDisplay extends UpdatableDisplayPanel {
 
     private JTextComponent infoArea;
     private World world;
@@ -36,7 +35,12 @@ public class WorldInfoDisplay extends UpdateableJPanel {
         infoArea.setText(info.toString());
     }
 
-    public void updateAfterTick() {
+    public void update() {
         displayWorldInfo();
+    }
+
+    @Override
+    public void click(Things.Helpers.Position position, java.awt.event.MouseEvent event) {
+        // TODO: add selected thing info display on right
     }
 }

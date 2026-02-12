@@ -9,7 +9,7 @@ public abstract class Thing implements Runnable {
 
     protected Position pos;
     protected World world;
-    protected boolean isAlive;
+    // protected boolean isAlive;
 
 
     protected Thing() {
@@ -18,19 +18,15 @@ public abstract class Thing implements Runnable {
     public Thing(World world, Position pos) {
         this.world = world;
         setPos(pos);
-        this.isAlive = true;
     }
     
     @Override
     public void run() {
         // Default behavior: do nothing
-        if (!isAlive){
-            world = null;
-        }
     }
 
     public void doAction() {
-        return;//defult to do nothing
+        //defult to do nothing
     }
     
     @Override
@@ -64,9 +60,9 @@ public abstract class Thing implements Runnable {
         // default do nothing
     }
     
-
+    //default, cannot die
     public boolean isAlive() {
-        return isAlive;
+        return true;
     }
 
     public abstract String getName();
@@ -74,11 +70,10 @@ public abstract class Thing implements Runnable {
     //for seeing input to neural net
     protected abstract int getasInt();
 
-    public void die(){
-        isAlive= false;
-    }
 
     public abstract boolean needsToTick();
 
     public abstract boolean needsToDoAction();
+
+    public abstract Thing clone();
 }

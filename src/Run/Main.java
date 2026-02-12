@@ -6,17 +6,21 @@ import java.util.concurrent.Executors;
 
 import Logger.Logger;
 import Run.GUI.GUI;
+import Run.GUI.ControlPanel.ButtonPanel.DebugOptionsDialog;
 import Run.World.World;
 import Run.World.WorldCreator;
 import Things.Nothing;
+import Things.Thing;
 import Things.Helpers.AnimalAttributes;
 import Things.Helpers.NameCreator;
+import Things.Helpers.Position;
 
 public class Main {
 
     /*
      * world attributes
      * defaults have been provided
+     * can be changed at runtime
      */
     private static int ANIMAL_STAT_TOTAL = 100;
     private static int ANIMAL_EXISTANCE_COST = 0;
@@ -49,7 +53,7 @@ public class Main {
     /**
      * other options
     */
-   private static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false;
+   private static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false; // set to true to show world options dialog on first open, false to go straight to sim with default settings as defined above.
    private static boolean START_IN_INDEPTH_DEBUG_MODE = false;
    private static boolean START_IN_AUTO_DEBUG_MODE = false;
    private static boolean START_WITH_LOGGING_ENABLED = true;
@@ -71,7 +75,9 @@ public class Main {
     protected static World world;
     protected static final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     private static final Random random = new Random();
-    private static GUI gui;
+    private static final GUI gui = new GUI();
+    private static Position selectedPosition;
+    private static Thing selectedThing;
     
     //do not change unless you know what youre doing
     public static final int NEURAL_NET_INPUT_SIZE = 18;
@@ -88,9 +94,13 @@ public class Main {
             System.exit(1);
         }
         updateAttributes();
+        if (SHOW_OPTIONS_ON_FIRST_OPEN) {
+            WORLD_HEIGHT = 1;
+            WORLD_WIDTH = 1;
+        }
         world = createWorld();
-        gui = new GUI(world);
-        gui.run();
+        gui.setWorld(world);
+        gui.run(SHOW_OPTIONS_ON_FIRST_OPEN);
     }
     
     public static void updateAttributes() {
@@ -103,12 +113,12 @@ public class Main {
     }
 
     public static void createAndRunNewWorld() {
-        Main.world = createWorld();
+        world = createWorld();
         gui.setWorld(world);
     }
 
     public static void updateAfterTick(long startTime) {
-        gui.updateAfterTick(startTime);
+        gui.update(startTime);
         if (Logger.isAutoDebug()) {
             System.out.println(Logger.getMostRecentDebugInfo(Logger.isInDepthDebugMode()? 100 : 10));
         }
@@ -170,7 +180,9 @@ public class Main {
     
     
     
-    
+    public static GUI getGui() {
+        return gui;
+    }
     
     public static ExecutorService getExecutorService() {
         return executorService;
@@ -244,7 +256,23 @@ public class Main {
         Main.doUpdateWorldView = doUpdateWorldView;
     }
     
+    public static Position getSelectedPosition() {
+        return selectedPosition;
+    }
+
+    public static void setSelectedPosition(Position selectedPosition) {
+        Main.selectedPosition = selectedPosition;
+        Main.selectedThing = selectedPosition != null ? Main.world.getThingAt(selectedPosition) : null;
+    }
+
+    public static Thing getSelectedThing() {
+        return selectedThing;
+    }
     
+    public static void setSelectedThing(Thing selectedThing) {
+        Main.selectedThing = selectedThing;
+        Main.selectedPosition = selectedThing != null ? selectedThing.getPos() : null;
+    }
 
 
 

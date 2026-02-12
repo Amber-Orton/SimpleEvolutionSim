@@ -85,6 +85,10 @@ public class Appearance {
     protected NibbleGrid8x8 getData() {
         return data;
     }
+
+    public Appearance clone() {
+        return new Appearance(data.clone());
+    }
 }
 
 class NibbleGrid8x8 {

@@ -1,13 +1,13 @@
 package Run.GUI.ControlPanel.InfoPanel;
 
 import java.awt.BorderLayout;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JSplitPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import Run.GUI.GUI;
-import Run.GUI.UpdateableJPanel;
 import Run.World.World;
 import Things.Animal;
 import Things.Egg;
@@ -19,7 +19,7 @@ import Things.Helpers.Position;
 /**
  * Handles displaying information about Things in the GUI text areas.
  */
-class ThingInfoDisplay  extends UpdateableJPanel {
+class ThingInfoDisplay  extends UpdatableDisplayPanel {
 
     private Thing currentThing;
 
@@ -53,8 +53,13 @@ class ThingInfoDisplay  extends UpdateableJPanel {
         this.add(splitPane, BorderLayout.CENTER);
     }
 
-    public void click(Position position) {
+    public void click(Position position, MouseEvent event) {
         currentThing = world.getThingAt(position);
+        display();
+    }
+
+    protected void display(Thing thing) {
+        currentThing = thing;
         display();
     }
 
@@ -78,6 +83,8 @@ class ThingInfoDisplay  extends UpdateableJPanel {
                         + "\nEnergy: " + animal.getEnergy() + '/' + animal.getAnimalAttributes().getMaxEnergy()
                         + "\nAttack Damage: " + animal.getAnimalAttributes().getAttackDamage()
                         + "\nReproduction Cost: " + animal.getAnimalAttributes().getReproductionCost()
+                        + "\nFacing: " + animal.getFacingDirection()
+                        + "\nParent: " + (animal.getName().contains("NoParent") ? "None" : animal.getName().split(" ")[1])
                         + "\nLast Action: " + animal.getAction());
         if (animal.getHealth() <= 0) {
             rightArea.setText("This animal is dead.");
@@ -119,7 +126,7 @@ class ThingInfoDisplay  extends UpdateableJPanel {
     }
 
     @Override
-    public void updateAfterTick() {
+    public void update() {
         display();
     }
 }

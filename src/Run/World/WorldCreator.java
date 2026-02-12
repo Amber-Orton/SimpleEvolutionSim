@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import NeuralNet.NeuralNet;
 import Run.Main;
 import Things.Animal;
+import Things.Egg;
 import Things.Nothing;
 import Things.Helpers.AnimalAttributes;
 import Things.Helpers.Appearance;
@@ -28,8 +29,7 @@ public class WorldCreator {
         for (int row = 0; row < world.getHeight(); row++) {
             for (int col = 0; col < world.getWidth(); col++) {
                 Position position = new Position(row, col);
-                world.nothingGrid[row][col] = new Nothing(world, new Position(row, col));
-                world.putThingAt(position, world.nothingGrid[row][col]); // Empty cell
+                world.putThingAt(position, new Nothing(world, position)); // Empty cell
             }
         }
 
@@ -167,5 +167,19 @@ public class WorldCreator {
         int extraC = remaining - extraA - extraB;
 
         return new int[] { minA + extraA, minB + extraB, minC + extraC };
+    }
+
+    public static Animal createRandomAnimal(World world, Position pos) {
+        NeuralNet net = buildRandomNeuralNet(Main.getMAX_LAYERS(), INPUT_SIZE, OUTPUT_SIZE, Main.getINITIAL_NEURAL_NET_RANDOMNESS());
+        AnimalAttributes attrs = buildRandomAnimalAttributes(Main.getANIMAL_STAT_TOTAL(), net);
+        return new Animal(world, pos, attrs, null);
+    }
+
+    public static Egg createRandomEgg(World world, Position pos) {
+        NeuralNet net = buildRandomNeuralNet(Main.getMAX_LAYERS(), INPUT_SIZE, OUTPUT_SIZE, Main.getINITIAL_NEURAL_NET_RANDOMNESS());
+        AnimalAttributes attrs = buildRandomAnimalAttributes(Main.getANIMAL_STAT_TOTAL(), net);
+        Egg egg = new Egg(world, pos, attrs, null);
+        System.out.println("made a random egg: " + egg);
+        return egg;
     }
 }

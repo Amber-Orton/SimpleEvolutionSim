@@ -24,7 +24,7 @@ import Things.Helpers.Position;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class WorldPanel extends UpdateableJPanel {
+public class WorldPanel extends UpdatableJPanel {
     private final GUI gui;
     private final World world;
     private final ExecutorService bufferedImageExecutor;
@@ -44,39 +44,32 @@ public class WorldPanel extends UpdateableJPanel {
 
         addMouseListener(new MouseAdapter() {
             @Override public void mouseClicked(MouseEvent e) {
-                Position prevPosition = selectedPosition;
-                selectedPosition = getPositionFromCoordinates(e.getX(), e.getY());
-                System.out.println("Clicked at: " + selectedPosition);
-                if (selectedPosition == null) {
-                    selectedPosition = prevPosition;
+                Position pos = getPositionFromCoordinates(e.getX(), e.getY());
+                if (pos == null) {
                     return;
                 }
-                snapshot.resetChangedGrid(false);
-                if (prevPosition != null) {
-                    snapshot.setChangedAt(prevPosition, true);
-                    createBufferedImage(snapshot);
-                    snapshot.setChangedAt(prevPosition, false);
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                    Position prevPosition = selectedPosition;
+                    selectedPosition = pos;
+                    snapshot.resetChangedGrid(false);
+                    if (prevPosition != null) {
+                        snapshot.setChangedAt(prevPosition, true);
+                        createBufferedImage(snapshot);
+                        snapshot.setChangedAt(prevPosition, false);
+                    }
+                    snapshot.setChangedAt(selectedPosition, true);
+                    asyncCreateBufferedImageAndRender(snapshot);
+                    Main.setSelectedPosition(selectedPosition);
                 }
-                snapshot.setChangedAt(selectedPosition, true);
-                asyncCreateBufferedImageAndRender(snapshot);
-                gui.getControlPanel().click(selectedPosition);
+                gui.click(pos, e);
             }
-        });
-
-        addComponentListener(new ComponentAdapter() {
-            @Override public void componentResized(ComponentEvent e) {
-                setSize();
-                snapshot.resetChangedGrid(true);
-                asyncCreateBufferedImage(snapshot);
-            }
-        });
-        
+        });        
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+        
         BufferedImage buf = backBuffer;
         if (buf == null) {
             Logger.logError("WorldPanel", "Back buffer is null during paintComponent.");
@@ -85,14 +78,22 @@ public class WorldPanel extends UpdateableJPanel {
             g.drawImage(buf, 0, 0, imgW, imgH, null);
         }
     }
-
-    private void setSize() {
-        int maxColWidth = (int) (this.getWidth() / world.getWidth());
+    
+    protected void setSize() {
+        int maxWidth = (int) (gui.getMainPanel().getWidth()/0.75);
+        // check control panel is big enough, if not, shrink world panel to give it more room
+        if (gui.getMainPanel().getWidth() - maxWidth < 350) {
+            maxWidth = (int) (gui.getMainPanel().getWidth() - 350);
+        }
+        int maxColWidth = (int) (maxWidth / world.getWidth());
         int maxRowHeight = gui.getMainPanel().getHeight() / world.getHeight();
         int cellSize = Math.min(maxColWidth, maxRowHeight);
         imgW = cellSize * world.getWidth();
         imgH = cellSize * world.getHeight();
         setPreferredSize(new Dimension(imgW, imgH));
+        snapshot.resetChangedGrid(true);
+        asyncCreateBufferedImageAndRender(snapshot);
+        gui.getMainPanel().revalidate();
     }
 
     private void asyncRender() {
@@ -136,7 +137,7 @@ public class WorldPanel extends UpdateableJPanel {
     }
 
     private BufferedImage createBufferedImage() {
-        Snapshot snapshot = world.getLatestSnapshot();
+        snapshot = world.getLatestSnapshot();
         return createBufferedImage(snapshot);
     }
 
@@ -224,9 +225,9 @@ public class WorldPanel extends UpdateableJPanel {
     }
 
     @Override
-    public void updateAfterTick() {
+    public void update() {
         if (Main.isDoUpdateWorldView()){
-            if (Main.isWaitForLongUpdateAfterTick()){
+            if (Main.isWaitForLongUpdateAfterTick() && !SwingUtilities.isEventDispatchThread()) {
                 createBufferedImageAndRender();
             } else {
                 asyncCreateBufferedImageAndRender();

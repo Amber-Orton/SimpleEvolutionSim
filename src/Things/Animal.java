@@ -9,11 +9,12 @@ import Things.Helpers.ACTION;
 import Things.Helpers.AnimalAttributes;
 import Things.Helpers.DIRECTION;
 import Things.Helpers.HasAppearance;
+import Things.Helpers.Livable;
 import Things.Helpers.NameCreator;
 import Things.Helpers.Position;
 
 
-public class Animal extends Edible implements HasAppearance {
+public class Animal extends Edible implements HasAppearance, Livable {
 
     protected AnimalAttributes attributes;
     protected float health;
@@ -21,6 +22,7 @@ public class Animal extends Edible implements HasAppearance {
 
     protected ACTION action;
     protected DIRECTION facing;
+    protected boolean isAlive = true;
 
 
     /**
@@ -48,7 +50,16 @@ public class Animal extends Edible implements HasAppearance {
             this.name = "Animal_errorname " + (parent != null ? parent.getName().split(" ")[0]: "NoParent");
             Logger.logError("Animal Creation", "Failed to generate name for animal: " + e.getMessage());
         }
-        System.out.println(getName() + " is born");
+    }
+
+    // A private constructor used for cloning
+    private Animal(World world, Position pos, AnimalAttributes attributes, DIRECTION facing, float health, float energy, String name) {
+        super(world, pos);
+        this.attributes = attributes;
+        this.facing = facing;
+        this.health = health;
+        this.energy = energy;
+        this.name = name;
     }
 
     @Override
@@ -101,10 +112,10 @@ public class Animal extends Edible implements HasAppearance {
 
 
     protected ACTION think() {
-        System.out.println(this.getName() + " is thinking.");
         float[] thinkingInputs = new float[Main.NEURAL_NET_INPUT_SIZE];
         if (world == null) {
-            System.out.println("World is not initialized for : " + this);
+            Logger.logError("Animal Think", "World is not initialized for animal: " + this);
+            throw new IllegalStateException("World is not initialized for animal: " + this);
         }
         float[][] seen = see();
         int i = 0;
@@ -129,6 +140,7 @@ public class Animal extends Edible implements HasAppearance {
     */
     protected void move() {
         removeEnergy(attributes.getMoveCost());
+        if (!isAlive) {return;}
 
         
         Position newPos = getFacingPosition();
@@ -230,10 +242,14 @@ public class Animal extends Edible implements HasAppearance {
      */
     protected boolean eat() {
         removeEnergy(attributes.getEatCost());
+        if (!isAlive) {return false;}
         Thing thingToEat = getFacingThing();
         if (thingToEat instanceof Edible) {
             Edible edibleToEat = (Edible)thingToEat;
-            world.killThing(thingToEat);
+            world.removeThing(edibleToEat);
+            if (edibleToEat instanceof Livable) {
+                world.killThing((Livable)thingToEat);
+            }
             addEnergy(edibleToEat.getEnergy());
             return true;
         } else {
@@ -359,10 +375,18 @@ public class Animal extends Edible implements HasAppearance {
         return action;
     }
 
+    public DIRECTION getFacingDirection() {
+        return facing;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return isAlive;
+    }
+
     @Override
     public void die() {
-        System.out.println(getName() + " has died.");
-        super.die();
+        isAlive= false;
     }
 
     @Override
@@ -379,6 +403,11 @@ public class Animal extends Edible implements HasAppearance {
             }
         }
     }
+
+    @Override
+    public Thing clone() {
+        return new Animal(world, pos, attributes.clone(), facing, health, energy, name + "clone");
+    } 
 
     @Override
     public boolean needsToTick() {

@@ -4,12 +4,19 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import Run.Main;
 import Run.GUI.ControlPanel.ControlPanel;
+import Run.GUI.ControlPanel.ButtonPanel.DebugOptionsDialog;
+import Run.GUI.ControlPanel.ButtonPanel.NewWorldDialog;
 import Run.World.World;
+import Things.Thing;
+import Things.Helpers.Position;
 
 
 public class GUI {
@@ -19,46 +26,53 @@ public class GUI {
     private JPanel mainPanel;
     private WorldPanel worldPanel;
     private ControlPanel controlPanel;
+
+    private Position selectedPosition;
     
-    public GUI(World world) {
-        this.world = world;
-    }
     
-    public void run() {
+    public void run(boolean showOptionsOnFirstOpen) {
         SwingUtilities.invokeLater(() -> {
             frame = new JFrame("Evolution Simulator");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(800, 600);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setMinimumSize(new Dimension(625, 300));
+
             
             
             
             worldPanel = new WorldPanel(world, this);
             
             controlPanel = new ControlPanel(world, this);
+
+            frame.addComponentListener(new ComponentAdapter() {
+                @Override public void componentResized(ComponentEvent e) {
+                    worldPanel.setSize();
+                }
+            });
             
             mainPanel = new JPanel(new BorderLayout());
 
-            mainPanel.addComponentListener(new ComponentAdapter() {
-                @Override public void componentResized(ComponentEvent e) {
-                    worldPanel.setMaximumSize(new Dimension((int)(mainPanel.getWidth() * 0.75), mainPanel.getHeight()));
-                    controlPanel.setMinimumSize(new Dimension((int)(mainPanel.getWidth() * 0.1), mainPanel.getHeight()));
-                }
-            });
-
-
-            mainPanel.add(worldPanel, BorderLayout.CENTER);
-            mainPanel.add(controlPanel, BorderLayout.EAST);
+            mainPanel.add(worldPanel, BorderLayout.WEST);
+            mainPanel.add(controlPanel, BorderLayout.CENTER);
             
             frame.add(mainPanel);
-            frame.setVisible(true);
+            if (showOptionsOnFirstOpen) {
+                NewWorldDialog.showNewWorldDialog(frame);
+            } else {
+                frame.setVisible(true);
+            }
         });
         
         
     }
 
-    public void updateAfterTick(long tickStartTime) {
-        controlPanel.updateAfterTick();
-        worldPanel.updateAfterTick();
+    public void click(Position position, MouseEvent e) {
+        controlPanel.click(position, e);
+    }
+
+    public void update(long tickStartTime) {
+        controlPanel.update();
+        worldPanel.update();
     }
     
     public WorldPanel getWorldPanel() {
@@ -82,12 +96,16 @@ public class GUI {
     }
 
     public void setWorld(World world) {
+        if (this.world == null) {
+            this.world = world;
+            return;
+        }
         this.world = world;
         worldPanel = new WorldPanel(world, this);
         controlPanel = new ControlPanel(world, this);
         mainPanel.removeAll();
-        mainPanel.add(worldPanel, BorderLayout.CENTER);
-        mainPanel.add(controlPanel, BorderLayout.EAST);
+        mainPanel.add(worldPanel, BorderLayout.WEST);
+        mainPanel.add(controlPanel, BorderLayout.CENTER);
         mainPanel.revalidate();
         mainPanel.repaint();
         worldPanel.repaint();

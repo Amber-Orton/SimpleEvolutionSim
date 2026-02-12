@@ -20,6 +20,7 @@ import Run.Main;
 public class NewWorldDialog {
 
     public static void showNewWorldDialog(Component parentRef) {
+        parentRef.setVisible(false);
         Window mainWin = (parentRef instanceof Window) ? (Window) parentRef : SwingUtilities.getWindowAncestor(parentRef);
         JDialog dlg = new JDialog(mainWin, "Create New World", Dialog.ModalityType.APPLICATION_MODAL);
 
@@ -58,7 +59,7 @@ public class NewWorldDialog {
         wrapper.add(content);
         wrapper.add(buttons);
 
-        cancel.addActionListener(ev -> dlg.dispose());
+        cancel.addActionListener(ev -> {dlg.dispose(); parentRef.setVisible(true);});
 
         create.addActionListener(ev -> {
             int newW = ((Number) widthSpinner.getValue()).intValue();
@@ -77,6 +78,7 @@ public class NewWorldDialog {
             Main.createAndRunNewWorld();
 
             dlg.dispose();
+            parentRef.setVisible(true);
         });
 
         dlg.setContentPane(wrapper);

@@ -16,6 +16,7 @@ import Things.Egg;
 import Things.Nothing;
 import Things.Thing;
 import Things.Wall;
+import Things.Helpers.Livable;
 import Things.Helpers.Position;
 
 public class World implements Runnable {
@@ -26,7 +27,6 @@ public class World implements Runnable {
     private Thing[][] grid;
     private volatile boolean[][] changedGrid;
     private volatile Snapshot latestSnapshot;
-    protected Nothing[][] nothingGrid;
     
     private final Wall DEFAULTWALL = new Wall();
     private int tickCount = 0;
@@ -38,10 +38,13 @@ public class World implements Runnable {
 
 
     protected World(int width, int height) {
+        if (width <= 0 || height <= 0) {
+            Logger.logError("World", "Attempted to create world with non-positive dimensions: " + width + "x" + height);
+            throw new IllegalArgumentException("World dimensions must be positive. Given: " + width + "x" + height);
+        }
         this.width = width;
         this.height = height;
         this.grid = new Thing[height][width];
-        this.nothingGrid = new Nothing[height][width];
         changedGrid = new boolean[height][width];
         for (boolean[] row : changedGrid) {
             Arrays.fill(row, true);//initialise to true since the world has changed from completly empty to populated on boot
@@ -54,7 +57,6 @@ public class World implements Runnable {
      * The caller must first check and set readyToTick to false before calling
      */
     public synchronized void run() {
-        
         tick();
         
     }
@@ -107,17 +109,21 @@ public class World implements Runnable {
         thingsToUpdate.clear();
         for (Class<? extends Thing> clazz : things.keySet()) {
             if (clazz == Egg.class) {
-                thingsToUpdate.put(2, new HashSet<>(things.get(clazz)));
+                thingsToUpdate.computeIfAbsent(2, k -> new HashSet<>()).addAll(things.get(clazz));
             } else if (clazz == Nothing.class) {
-                thingsToUpdate.put(3, new HashSet<>(things.get(clazz)));
+                thingsToUpdate.computeIfAbsent(3, k -> new HashSet<>()).addAll(things.get(clazz));
             } else {
-                thingsToUpdate.put(1, new HashSet<>(things.get(clazz)));
+                thingsToUpdate.computeIfAbsent(1, k -> new HashSet<>()).addAll(things.get(clazz));
             }
+            Logger.logEvent("Tick: " + tickCount, "Added Things of class " + clazz.getSimpleName() + " to update set");
         }
 
+        for (Set<Thing> thingsToUpdate : thingsToUpdate.values()) {
+            thingsToUpdate.removeIf(thing -> !thing.needsToDoAction());
+        }
 
         
-        Logger.logEvent("Tick: " + tickCount, "Created update sets");
+        Logger.logEvent("Tick: " + tickCount, "Created update sets" + thingsToUpdate.size());
 
         for (Set<Thing> thingsToUpdate : thingsToUpdate.values()) {
             Logger.logEvent("Tick: " + tickCount, "Updating set of size " + thingsToUpdate.size());
@@ -154,7 +160,7 @@ public class World implements Runnable {
 
         addThing(pos, thing);
 
-        if (thing.getClass() != Egg.class || posIsNothing(pos)){//dont attempt to put Egg in grid if something else is aready there
+        if (thing.getClass() != Egg.class || posIsNothing(pos) || getThingAt(pos) == null){//dont attempt to put Egg in grid if something else is aready there
             changeGridAt(pos, thing);
         }
     }
@@ -175,8 +181,7 @@ public class World implements Runnable {
             thing.setPos(pos);
             thing.setWorld(this);
         }
-        if (!things.containsKey(thing.getClass())) { things.put(thing.getClass(), new HashSet<Thing>()); }
-        things.get(thing.getClass()).add(thing);
+        things.computeIfAbsent(thing.getClass(), k -> new HashSet<>()).add(thing);
     }
 
 
@@ -194,20 +199,27 @@ public class World implements Runnable {
 
     /**
      * changes Thing at the location of origionalThing to newThing as long as origionalThing is in grid at origionalThing.pos
-     * fails and returns false if origionalThing is not where it is supposed to be
+     * fails and throws exception if origionalThing is not at origionalThing.pos
      * @param origionalThing Thing to replace
      * @param newThing Thing to replace with
-     * @return true if the Thing was replaced false otherwise
      */
-    public boolean replaceThing(Thing origionalThing, Thing newThing){
-        things.get(origionalThing.getClass()).remove(origionalThing);
+    public void replaceThing(Thing origionalThing, Thing newThing){
         if (getThingAt(origionalThing.getPos()) == origionalThing){
+            things.get(origionalThing.getClass()).remove(origionalThing);
             changeGridAt(origionalThing.getPos(), null);
             putThingAt(origionalThing.getPos(), newThing);
-            return true;
         } else {
-            return false;
+            throw new IllegalArgumentException("Cannot replace Thing at " + origionalThing.getPos() + " as the origional Thing is not there. " + getThingAt(origionalThing.getPos()) + " there instead of " + origionalThing);
         }
+    }
+
+    /**
+     * changes Thing at pos to newThing as long as there is a Thing at pos
+     * @param pos position to replace Thing at
+     * @param newThing Thing to replace with
+     */
+    public void replaceThingAt(Position pos, Thing newThing){
+        replaceThing(getThingAt(pos), newThing);
     }
 
 
@@ -217,8 +229,17 @@ public class World implements Runnable {
      * @param thing the thing to remove
      */
     public void removeThing(Thing thing){
-        replaceThing(thing, nothingGrid[thing.getPos().getRow()][thing.getPos().getCol()]);
+        replaceThing(thing, new Nothing(this, thing.getPos()));
         things.get(thing.getClass()).remove(thing);
+    }
+
+    /**
+     * removes all references to thing at pos in this instance of world.
+     * does not edit thing
+     * @param pos the position to remove the thing at
+     */
+    public void removeThingAt(Position pos){
+        removeThing(getThingAt(pos));
     }
 
     /**
@@ -226,8 +247,11 @@ public class World implements Runnable {
      * interrupts things thread to kill it
      * @param thing the thing to kill
      */
-    public void killThing(Thing thing) {
-        removeThing(thing);
+    public void killThing(Livable thing) {
+        if (getThingAt(((Thing)thing).getPos()) == thing) {
+            removeThing((Thing)thing);
+        }
+        things.get(thing.getClass()).remove((Thing)thing);
         thing.die();
     }
 
