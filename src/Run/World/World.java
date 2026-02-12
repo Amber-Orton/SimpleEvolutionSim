@@ -168,13 +168,15 @@ public class World implements Runnable {
      */
     public void addThing(Position pos, Thing thing){
         if (!posIsInBounds(pos)) {
+            Logger.logError("World", "Attempted to place thing out of bounds at " + pos);
             throw new IndexOutOfBoundsException("Invalid grid coordinates when placing thing");
         }
         if (!thingIsNothing(thing)){// Don't attempt to change coordinates of Nothing
             thing.setPos(pos);
             thing.setWorld(this);
         }
-        things.getOrDefault(thing.getClass(), new HashSet<>()).add(thing);
+        if (!things.containsKey(thing.getClass())) { things.put(thing.getClass(), new HashSet<Thing>()); }
+        things.get(thing.getClass()).add(thing);
     }
 
 
@@ -216,6 +218,7 @@ public class World implements Runnable {
      */
     public void removeThing(Thing thing){
         replaceThing(thing, nothingGrid[thing.getPos().getRow()][thing.getPos().getCol()]);
+        things.get(thing.getClass()).remove(thing);
     }
 
     /**

@@ -14,6 +14,7 @@ import java.awt.image.RenderedImage;
 
 import javax.swing.SwingUtilities;
 
+import Logger.Logger;
 import Run.Main;
 import Run.World.World;
 import Run.World.World.Snapshot;
@@ -78,6 +79,7 @@ public class WorldPanel extends UpdateableJPanel {
 
         BufferedImage buf = backBuffer;
         if (buf == null) {
+            Logger.logError("WorldPanel", "Back buffer is null during paintComponent.");
             throw new IllegalStateException("Back buffer is null during paintComponent.");
         } else {
             g.drawImage(buf, 0, 0, imgW, imgH, null);
