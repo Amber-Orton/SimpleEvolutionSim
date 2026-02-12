@@ -53,7 +53,7 @@ public class Main {
     /**
      * other options
     */
-   private static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = true;
+   private static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false; // set to true to show world options dialog on first open, false to go straight to sim with default settings as defined above.
    private static boolean START_IN_INDEPTH_DEBUG_MODE = false;
    private static boolean START_IN_AUTO_DEBUG_MODE = false;
    private static boolean START_WITH_LOGGING_ENABLED = true;
