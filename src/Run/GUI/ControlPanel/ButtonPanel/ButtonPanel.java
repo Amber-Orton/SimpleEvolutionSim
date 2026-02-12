@@ -79,7 +79,7 @@ public class ButtonPanel extends JPanel {
     }
 
     private final java.awt.event.ActionListener saveWorldButtonClicked = e -> {
-        throw new UnsupportedOperationException("Not implemented yet");
+        throw new UnsupportedOperationException("Not implemented yet"); //TODO: implement world saving and loading
     };
 
     private final java.awt.event.ActionListener newWorldButtonClicked = e -> {
@@ -91,6 +91,6 @@ public class ButtonPanel extends JPanel {
     };
 
     private final java.awt.event.ActionListener debugOptionsButtonClicked = e -> {
-        DebugOptionsDialog.showNewWorldDialog(gui.getFrame());
+        DebugOptionsDialog.showDebugOptionsDialog(gui.getFrame());
     };
 }

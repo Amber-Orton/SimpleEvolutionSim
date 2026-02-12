@@ -80,7 +80,7 @@ public class WorldPanel extends UpdatableJPanel {
     protected void setSize() {
         int maxWidth = (int) (gui.getMainPanel().getWidth()/0.75);
         // check control panel is big enough, if not, shrink world panel to give it more room
-        if (gui.getMainPanel().getWidth() - maxWidth < 325) {
+        if (gui.getMainPanel().getWidth() - maxWidth < 350) {
             maxWidth = (int) (gui.getMainPanel().getWidth() - 350);
         }
         int maxColWidth = (int) (maxWidth / world.getWidth());

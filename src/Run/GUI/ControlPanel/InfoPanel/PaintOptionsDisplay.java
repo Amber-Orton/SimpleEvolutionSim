@@ -126,7 +126,6 @@ public class PaintOptionsDisplay extends UpdatableDisplayPanel {
     public void click(Position position, MouseEvent event) {
         if (event.getButton() == MouseEvent.BUTTON3) {
             if (paintOption == null) return;
-            System.out.println("Painting at " + position);
             paintOption.paint(position);
         } else if (event.getButton() == MouseEvent.BUTTON1 && Main.getSelectedThing() != null && (paintOption == null || paintOption instanceof PaintCloneOf)) {
             cloneSelectedButton.setBackground(Color.GREEN);

@@ -14,7 +14,7 @@ import Logger.Logger;
 import Run.Main;
 
 public class DebugOptionsDialog {
-    public static void showNewWorldDialog(Component parentRef) {
+    public static void showDebugOptionsDialog(Component parentRef) {
         Window mainWin = (parentRef instanceof Window) ? (Window) parentRef : SwingUtilities.getWindowAncestor(parentRef);
         JDialog dlg = new JDialog(mainWin, "Debug Options", Dialog.ModalityType.MODELESS);
         dlg.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);

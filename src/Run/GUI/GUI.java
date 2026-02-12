@@ -12,6 +12,8 @@ import javax.swing.SwingUtilities;
 
 import Run.Main;
 import Run.GUI.ControlPanel.ControlPanel;
+import Run.GUI.ControlPanel.ButtonPanel.DebugOptionsDialog;
+import Run.GUI.ControlPanel.ButtonPanel.NewWorldDialog;
 import Run.World.World;
 import Things.Thing;
 import Things.Helpers.Position;
@@ -28,12 +30,12 @@ public class GUI {
     private Position selectedPosition;
     
     
-    public void run() {
+    public void run(boolean showOptionsOnFirstOpen) {
         SwingUtilities.invokeLater(() -> {
             frame = new JFrame("Evolution Simulator");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-            frame.setMinimumSize(new Dimension(550, 200));
+            frame.setMinimumSize(new Dimension(625, 300));
 
             
             
@@ -54,7 +56,11 @@ public class GUI {
             mainPanel.add(controlPanel, BorderLayout.CENTER);
             
             frame.add(mainPanel);
-            frame.setVisible(true);
+            if (showOptionsOnFirstOpen) {
+                NewWorldDialog.showNewWorldDialog(frame);
+            } else {
+                frame.setVisible(true);
+            }
         });
         
         
@@ -98,8 +104,8 @@ public class GUI {
         worldPanel = new WorldPanel(world, this);
         controlPanel = new ControlPanel(world, this);
         mainPanel.removeAll();
-        mainPanel.add(worldPanel, BorderLayout.CENTER);
-        mainPanel.add(controlPanel, BorderLayout.EAST);
+        mainPanel.add(worldPanel, BorderLayout.WEST);
+        mainPanel.add(controlPanel, BorderLayout.CENTER);
         mainPanel.revalidate();
         mainPanel.repaint();
         worldPanel.repaint();

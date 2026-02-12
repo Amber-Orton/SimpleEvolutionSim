@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 
 import Logger.Logger;
 import Run.GUI.GUI;
+import Run.GUI.ControlPanel.ButtonPanel.DebugOptionsDialog;
 import Run.World.World;
 import Run.World.WorldCreator;
 import Things.Nothing;
@@ -19,6 +20,7 @@ public class Main {
     /*
      * world attributes
      * defaults have been provided
+     * can be changed at runtime
      */
     private static int ANIMAL_STAT_TOTAL = 100;
     private static int ANIMAL_EXISTANCE_COST = 0;
@@ -51,7 +53,7 @@ public class Main {
     /**
      * other options
     */
-   private static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = false;
+   private static final boolean SHOW_OPTIONS_ON_FIRST_OPEN = true;
    private static boolean START_IN_INDEPTH_DEBUG_MODE = false;
    private static boolean START_IN_AUTO_DEBUG_MODE = false;
    private static boolean START_WITH_LOGGING_ENABLED = true;
@@ -92,9 +94,13 @@ public class Main {
             System.exit(1);
         }
         updateAttributes();
+        if (SHOW_OPTIONS_ON_FIRST_OPEN) {
+            WORLD_HEIGHT = 1;
+            WORLD_WIDTH = 1;
+        }
         world = createWorld();
         gui.setWorld(world);
-        gui.run();
+        gui.run(SHOW_OPTIONS_ON_FIRST_OPEN);
     }
     
     public static void updateAttributes() {
@@ -107,7 +113,7 @@ public class Main {
     }
 
     public static void createAndRunNewWorld() {
-        Main.world = createWorld();
+        world = createWorld();
         gui.setWorld(world);
     }
 

@@ -38,6 +38,10 @@ public class World implements Runnable {
 
 
     protected World(int width, int height) {
+        if (width <= 0 || height <= 0) {
+            Logger.logError("World", "Attempted to create world with non-positive dimensions: " + width + "x" + height);
+            throw new IllegalArgumentException("World dimensions must be positive. Given: " + width + "x" + height);
+        }
         this.width = width;
         this.height = height;
         this.grid = new Thing[height][width];
