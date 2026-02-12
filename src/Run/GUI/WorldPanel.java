@@ -62,22 +62,13 @@ public class WorldPanel extends UpdatableJPanel {
                 }
                 gui.click(pos, e);
             }
-        });
-
-        addComponentListener(new ComponentAdapter() {
-            @Override public void componentResized(ComponentEvent e) {
-                setSize();
-                snapshot.resetChangedGrid(true);
-                asyncCreateBufferedImageAndRender(snapshot);
-            }
-        });
-        
+        });        
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+        
         BufferedImage buf = backBuffer;
         if (buf == null) {
             throw new IllegalStateException("Back buffer is null during paintComponent.");
@@ -85,14 +76,21 @@ public class WorldPanel extends UpdatableJPanel {
             g.drawImage(buf, 0, 0, imgW, imgH, null);
         }
     }
-
-    private void setSize() {
-        int maxColWidth = (int) ((gui.getMainPanel().getWidth()/0.75) / world.getWidth());
+    
+    protected void setSize() {
+        int maxWidth = (int) (gui.getMainPanel().getWidth()/0.75);
+        // check control panel is big enough, if not, shrink world panel to give it more room
+        if (gui.getMainPanel().getWidth() - maxWidth < 325) {
+            maxWidth = (int) (gui.getMainPanel().getWidth() - 350);
+        }
+        int maxColWidth = (int) (maxWidth / world.getWidth());
         int maxRowHeight = gui.getMainPanel().getHeight() / world.getHeight();
         int cellSize = Math.min(maxColWidth, maxRowHeight);
         imgW = cellSize * world.getWidth();
         imgH = cellSize * world.getHeight();
         setPreferredSize(new Dimension(imgW, imgH));
+        snapshot.resetChangedGrid(true);
+        asyncCreateBufferedImageAndRender(snapshot);
         gui.getMainPanel().revalidate();
     }
 

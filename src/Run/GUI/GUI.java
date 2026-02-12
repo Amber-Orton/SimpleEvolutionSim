@@ -32,13 +32,21 @@ public class GUI {
         SwingUtilities.invokeLater(() -> {
             frame = new JFrame("Evolution Simulator");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(800, 600);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setMinimumSize(new Dimension(550, 200));
+
             
             
             
             worldPanel = new WorldPanel(world, this);
             
             controlPanel = new ControlPanel(world, this);
+
+            frame.addComponentListener(new ComponentAdapter() {
+                @Override public void componentResized(ComponentEvent e) {
+                    worldPanel.setSize();
+                }
+            });
             
             mainPanel = new JPanel(new BorderLayout());
 
