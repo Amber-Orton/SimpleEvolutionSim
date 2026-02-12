@@ -1,5 +1,6 @@
 package Run.Paint;
 
+import Run.Main;
 import Run.World.World;
 import Things.Thing;
 import Things.Helpers.Livable;
@@ -9,7 +10,12 @@ public class Paint {
 
     protected static void paintThingAt(Position pos, Thing thing, World world) {
         KillThingAt(pos, world);
-        world.addThing(pos, thing);
+        world.replaceThingAt(pos, thing);
+        world.updateSnapshot();
+        boolean wasDoUpdateWorldView = Main.isDoUpdateWorldView();
+        Main.setDoUpdateWorldView(true);
+        Main.getGui().update(System.currentTimeMillis());
+        Main.setDoUpdateWorldView(wasDoUpdateWorldView);
     }
 
     protected static void KillThingAt(Position pos, World world) {

@@ -42,8 +42,8 @@ public class InfoPanel extends UpdatableJPanel {
     }
 
     @Override
-    public void updateAfterTick() {
-        panelInUse.updateAfterTick();
+    public void update() {
+        panelInUse.update();
     }
 
     public void click(Position position, MouseEvent event) {

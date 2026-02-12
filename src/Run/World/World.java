@@ -27,7 +27,6 @@ public class World implements Runnable {
     private Thing[][] grid;
     private volatile boolean[][] changedGrid;
     private volatile Snapshot latestSnapshot;
-    protected Nothing[][] nothingGrid;
     
     private final Wall DEFAULTWALL = new Wall();
     private int tickCount = 0;
@@ -42,7 +41,6 @@ public class World implements Runnable {
         this.width = width;
         this.height = height;
         this.grid = new Thing[height][width];
-        this.nothingGrid = new Nothing[height][width];
         changedGrid = new boolean[height][width];
         for (boolean[] row : changedGrid) {
             Arrays.fill(row, true);//initialise to true since the world has changed from completly empty to populated on boot
@@ -158,7 +156,7 @@ public class World implements Runnable {
 
         addThing(pos, thing);
 
-        if (thing.getClass() != Egg.class || posIsNothing(pos)){//dont attempt to put Egg in grid if something else is aready there
+        if (thing.getClass() != Egg.class || posIsNothing(pos) || getThingAt(pos) == null){//dont attempt to put Egg in grid if something else is aready there
             changeGridAt(pos, thing);
         }
     }
@@ -201,8 +199,8 @@ public class World implements Runnable {
      * @param newThing Thing to replace with
      */
     public void replaceThing(Thing origionalThing, Thing newThing){
-        things.get(origionalThing.getClass()).remove(origionalThing);
         if (getThingAt(origionalThing.getPos()) == origionalThing){
+            things.get(origionalThing.getClass()).remove(origionalThing);
             changeGridAt(origionalThing.getPos(), null);
             putThingAt(origionalThing.getPos(), newThing);
         } else {
@@ -212,7 +210,6 @@ public class World implements Runnable {
 
     /**
      * changes Thing at pos to newThing as long as there is a Thing at pos
-     * fails and throws exception if there is no Thing at pos
      * @param pos position to replace Thing at
      * @param newThing Thing to replace with
      */
@@ -227,7 +224,7 @@ public class World implements Runnable {
      * @param thing the thing to remove
      */
     public void removeThing(Thing thing){
-        replaceThing(thing, nothingGrid[thing.getPos().getRow()][thing.getPos().getCol()]);
+        replaceThing(thing, new Nothing(this, thing.getPos()));
     }
 
     /**

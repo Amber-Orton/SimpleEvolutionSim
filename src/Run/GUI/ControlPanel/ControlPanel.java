@@ -34,9 +34,9 @@ public class ControlPanel extends UpdatableJPanel {
         infoPanel.click(position, e);
     }
 
-    public void updateAfterTick() {
-        tickPanel.updateAfterTick();
-        infoPanel.updateAfterTick();
+    public void update() {
+        tickPanel.update();
+        infoPanel.update();
     }
 
     public void updatePlayPauseButton() {

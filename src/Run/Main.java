@@ -73,7 +73,7 @@ public class Main {
     protected static World world;
     protected static final ExecutorService executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     private static final Random random = new Random();
-    private static GUI gui;
+    private static final GUI gui = new GUI();
     private static Position selectedPosition;
     private static Thing selectedThing;
     
@@ -93,7 +93,7 @@ public class Main {
         }
         updateAttributes();
         world = createWorld();
-        gui = new GUI(world);
+        gui.setWorld(world);
         gui.run();
     }
     
@@ -112,7 +112,7 @@ public class Main {
     }
 
     public static void updateAfterTick(long startTime) {
-        gui.updateAfterTick(startTime);
+        gui.update(startTime);
         if (Logger.isAutoDebug()) {
             System.out.println(Logger.getMostRecentDebugInfo(Logger.isInDepthDebugMode()? 100 : 10));
         }
@@ -174,7 +174,9 @@ public class Main {
     
     
     
-    
+    public static GUI getGui() {
+        return gui;
+    }
     
     public static ExecutorService getExecutorService() {
         return executorService;

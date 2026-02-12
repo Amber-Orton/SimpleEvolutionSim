@@ -1,6 +1,7 @@
 package Run.Paint;
 
 import Run.World.World;
+import Things.Nothing;
 import Things.Helpers.Position;
 
 public class PaintNothing extends PaintOption {
@@ -10,7 +11,7 @@ public class PaintNothing extends PaintOption {
 
     @Override
     public void paint(Position pos) {
-        Paint.KillThingAt(pos, world);
+        Paint.paintThingAt(pos, new Nothing(world, pos), world);
     }
 
 }

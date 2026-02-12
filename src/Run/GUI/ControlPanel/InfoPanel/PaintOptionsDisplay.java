@@ -105,7 +105,7 @@ public class PaintOptionsDisplay extends UpdatableDisplayPanel {
     }
 
     @Override
-    public void updateAfterTick() {
+    public void update() {
         // No dynamic content to update
     }
 }

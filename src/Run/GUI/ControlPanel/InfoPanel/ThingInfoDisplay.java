@@ -121,7 +121,7 @@ class ThingInfoDisplay  extends UpdatableDisplayPanel {
     }
 
     @Override
-    public void updateAfterTick() {
+    public void update() {
         display();
     }
 }

@@ -27,9 +27,6 @@ public class GUI {
 
     private Position selectedPosition;
     
-    public GUI(World world) {
-        this.world = world;
-    }
     
     public void run() {
         SwingUtilities.invokeLater(() -> {
@@ -67,9 +64,9 @@ public class GUI {
         controlPanel.click(position, e);
     }
 
-    public void updateAfterTick(long tickStartTime) {
-        controlPanel.updateAfterTick();
-        worldPanel.updateAfterTick();
+    public void update(long tickStartTime) {
+        controlPanel.update();
+        worldPanel.update();
     }
     
     public WorldPanel getWorldPanel() {
@@ -93,6 +90,10 @@ public class GUI {
     }
 
     public void setWorld(World world) {
+        if (this.world == null) {
+            this.world = world;
+            return;
+        }
         this.world = world;
         worldPanel = new WorldPanel(world, this);
         controlPanel = new ControlPanel(world, this);

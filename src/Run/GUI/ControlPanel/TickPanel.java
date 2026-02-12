@@ -134,6 +134,11 @@ public class TickPanel extends UpdatableJPanel {
     }
 
     public void updateTableModelActual() {
+        if (Main.lastTickTime == 0) {
+            tickInfoTableModel.setValueAt("", 1, 1);
+            tickInfoTableModel.setValueAt("", 2, 1);
+            return;
+        }
         tickInfoTableModel.setValueAt(Long.toString(Main.lastTickTime / 1_000_000L), 1, 1);
         tickInfoTableModel.setValueAt(Long.toString(1_000_000_000L / Main.lastTickTime), 2, 1);
     }
@@ -142,7 +147,7 @@ public class TickPanel extends UpdatableJPanel {
         playPauseButton.setText(Main.isPlay() ? "Pause" : "Play");
     }
 
-    public void updateAfterTick() {
+    public void update() {
         targetTicksNumTextArea.setText(Main.getTicksToRun() <= 0 ? "∞" : Integer.toString(Main.getTicksToRun()));
         ticksPassedNumber.setText(Integer.toString(world.getTickCount()) + "/");
         updateTableModelActual();

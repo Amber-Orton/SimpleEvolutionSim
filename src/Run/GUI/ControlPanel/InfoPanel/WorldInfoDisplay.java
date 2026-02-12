@@ -35,7 +35,7 @@ public class WorldInfoDisplay extends UpdatableDisplayPanel {
         infoArea.setText(info.toString());
     }
 
-    public void updateAfterTick() {
+    public void update() {
         displayWorldInfo();
     }
 

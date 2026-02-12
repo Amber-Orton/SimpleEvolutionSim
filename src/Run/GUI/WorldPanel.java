@@ -224,9 +224,9 @@ public class WorldPanel extends UpdatableJPanel {
     }
 
     @Override
-    public void updateAfterTick() {
+    public void update() {
         if (Main.isDoUpdateWorldView()){
-            if (Main.isWaitForLongUpdateAfterTick()){
+            if (Main.isWaitForLongUpdateAfterTick() && !SwingUtilities.isEventDispatchThread()) {
                 createBufferedImageAndRender();
             } else {
                 asyncCreateBufferedImageAndRender();
