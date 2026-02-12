@@ -1,8 +1,8 @@
 package Things;
 import java.awt.Color;
 
-import Run.Main;
-import Run.World.World;
+import Main.Main;
+import Main.World.World;
 import Things.Helpers.Position;
 
 /**

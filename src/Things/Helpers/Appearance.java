@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import Run.Main;
+import Main.Main;
 
 public class Appearance {
     

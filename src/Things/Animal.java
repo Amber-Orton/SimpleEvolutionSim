@@ -3,8 +3,8 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import Logger.Logger;
-import Run.Main;
-import Run.World.World;
+import Main.Main;
+import Main.World.World;
 import Things.Helpers.ACTION;
 import Things.Helpers.AnimalAttributes;
 import Things.Helpers.DIRECTION;

@@ -1,8 +1,8 @@
 package Things.Helpers;
 import java.util.ArrayList;
 
+import Main.Main;
 import NeuralNet.NeuralNet;
-import Run.Main;
 
 public class AnimalAttributes {
 

@@ -27,3 +27,6 @@ replay_pid*
 log/*
 
 .vscode/
+
+# environment test files
+env_test/*

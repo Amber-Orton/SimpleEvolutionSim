@@ -14,7 +14,7 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.SimpleFormatter;
 
-import Run.Main;
+import Main.Main;
 
 public class Logger {
     private static final Map<String, LogEvent> logs = new ConcurrentHashMap<>();

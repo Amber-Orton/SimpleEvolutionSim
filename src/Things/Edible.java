@@ -1,6 +1,6 @@
 package Things;
 
-import Run.World.World;
+import Main.World.World;
 import Things.Helpers.Position;
 
 public abstract class Edible extends Thing {
