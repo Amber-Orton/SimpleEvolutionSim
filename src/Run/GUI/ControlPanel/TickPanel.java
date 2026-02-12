@@ -101,10 +101,14 @@ public class TickPanel extends UpdatableJPanel {
                 if (s.equals("∞")) return;
                 try {
                     long target = Long.parseLong(s);
-                    if (row == 2) { //MSPT
+                    if (row == 2) { //TPS
                         if (target < 0) target = 0;
-                        Main.setTargetMSPT(1_000L / target);
-                    } else { //TPS
+                        if (target == 0) {
+                            Main.setTargetMSPT(0);
+                        } else {
+                            Main.setTargetMSPT(1_000L / target);
+                        }
+                    } else { //MSPT
                         if (target <= 0) {
                             Main.setTargetMSPT(0);
                         } else {
@@ -126,8 +130,8 @@ public class TickPanel extends UpdatableJPanel {
     public void updateTableModelTarget() {
         try {
             tableModelUpdating = true;
-            tickInfoTableModel.setValueAt(Main.getTargetMSPT() == 0 ? "0" : Long.toString(1_000L / Main.getTargetMSPT()), 1, 2);
-            tickInfoTableModel.setValueAt(Main.getTargetMSPT() == 0 ? "∞" : Long.toString(Main.getTargetMSPT()), 2, 2);
+            tickInfoTableModel.setValueAt(Main.getTargetMSPT() == 0 ? "0" : Long.toString(Main.getTargetMSPT()), 1, 2);
+            tickInfoTableModel.setValueAt(Main.getTargetMSPT() == 0 ? "∞" : Long.toString(1_000L / Main.getTargetMSPT()), 2, 2);
         } finally {
             tableModelUpdating = false;
         }
