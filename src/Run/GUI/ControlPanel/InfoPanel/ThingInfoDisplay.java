@@ -58,6 +58,11 @@ class ThingInfoDisplay  extends UpdatableDisplayPanel {
         display();
     }
 
+    protected void display(Thing thing) {
+        currentThing = thing;
+        display();
+    }
+
     public void display() {
         if (currentThing instanceof Animal) {
             showAnimalInfo((Animal) currentThing);

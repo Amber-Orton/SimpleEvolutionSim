@@ -1,6 +1,8 @@
 package Run.GUI.ControlPanel.InfoPanel;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.util.List;
 import java.awt.event.MouseEvent;
@@ -10,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextPane;
 
 import Run.Main;
 import Run.GUI.GUI;
@@ -28,15 +31,30 @@ public class PaintOptionsDisplay extends UpdatableDisplayPanel {
     private JButton cloneSelectedButton;
     private List<JButton> paintButtons = new ArrayList<>();
     private World world;
+    private ThingInfoDisplay thingInfoDisplay;
     
     public PaintOptionsDisplay(World world, GUI gui) {
         this.world = world;
 
-        JPanel leftPanel = new JPanel();
-        JPanel rightPanel = new JPanel();
+        JPanel leftPanel = createLeftPanel();
+        JPanel rightPanel = createRightPanel();
 
-        leftPanel.setLayout(new GridLayout(2, 3));
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightPanel);
+        splitPane.setContinuousLayout(true);
+        splitPane.setResizeWeight(0.0); // left keeps its size, right takes extra space
+        splitPane.setDividerLocation(150);
 
+        leftPanel.setMinimumSize(new Dimension(150, 100));
+        rightPanel.setMinimumSize(new Dimension(200, 150));
+
+        this.setLayout(new BorderLayout());
+        this.add(splitPane, BorderLayout.CENTER);
+    }
+    
+    private JPanel createLeftPanel() {
+        JPanel panel = new JPanel();
+        panel.setLayout(new GridLayout(6, 1));
+    
         JButton wallButton = new JButton("Wall");
         wallButton.addActionListener(e -> { paintOption = new PaintWall(world); resetColors(); wallButton.setBackground(Color.GREEN); });
         
@@ -72,17 +90,30 @@ public class PaintOptionsDisplay extends UpdatableDisplayPanel {
         paintButtons.add(foodButton);
         paintButtons.add(randomAnimalButton);
         
-        leftPanel.add(wallButton);
-        leftPanel.add(removeButton);
-        leftPanel.add(cloneSelectedButton);
-        leftPanel.add(foodButton);
-        leftPanel.add(randomAnimalButton);
-        leftPanel.add(randomEggButton);
+        panel.add(wallButton);
+        panel.add(removeButton);
+        panel.add(cloneSelectedButton);
+        panel.add(foodButton);
+        panel.add(randomAnimalButton);
+        panel.add(randomEggButton);
 
-        JScrollPane rightScroll = new JScrollPane(rightPanel);
+        return panel;
+    }
 
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, leftPanel, rightScroll);
-        this.add(splitPane);
+    private JPanel createRightPanel() {
+        thingInfoDisplay = new ThingInfoDisplay(world, null);
+        thingInfoDisplay.setMinimumSize(new Dimension(200, 150));
+        thingInfoDisplay.setPreferredSize(new Dimension(300, 200));
+
+        JTextPane paintInfoPanel = new JTextPane();
+        paintInfoPanel.setEditable(false);
+        paintInfoPanel.setText("Right Click to paint, Left Click to select.");
+
+        JPanel panel = new JPanel(new BorderLayout());
+        panel.add(thingInfoDisplay, BorderLayout.CENTER);
+        panel.add(paintInfoPanel, BorderLayout.SOUTH);
+        panel.setMinimumSize(new Dimension(200, 150));
+        return panel;
     }
 
     private void resetColors() {
@@ -101,11 +132,12 @@ public class PaintOptionsDisplay extends UpdatableDisplayPanel {
             cloneSelectedButton.setBackground(Color.GREEN);
             paintOption = new PaintCloneOf(world, Main.getSelectedThing());
             cloneSelectedButton.setText("Clone Selected");
+            thingInfoDisplay.click(position, event);
         }
     }
 
     @Override
     public void update() {
-        // No dynamic content to update
+        thingInfoDisplay.update();
     }
 }

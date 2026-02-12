@@ -42,16 +42,8 @@ public class GUI {
             
             mainPanel = new JPanel(new BorderLayout());
 
-            mainPanel.addComponentListener(new ComponentAdapter() {
-                @Override public void componentResized(ComponentEvent e) {
-                    worldPanel.setMaximumSize(new Dimension((int)(mainPanel.getWidth() * 0.75), mainPanel.getHeight()));
-                    controlPanel.setMinimumSize(new Dimension((int)(mainPanel.getWidth() * 0.1), mainPanel.getHeight()));
-                }
-            });
-
-
-            mainPanel.add(worldPanel, BorderLayout.CENTER);
-            mainPanel.add(controlPanel, BorderLayout.EAST);
+            mainPanel.add(worldPanel, BorderLayout.WEST);
+            mainPanel.add(controlPanel, BorderLayout.CENTER);
             
             frame.add(mainPanel);
             frame.setVisible(true);

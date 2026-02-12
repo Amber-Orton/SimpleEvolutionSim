@@ -68,7 +68,7 @@ public class WorldPanel extends UpdatableJPanel {
             @Override public void componentResized(ComponentEvent e) {
                 setSize();
                 snapshot.resetChangedGrid(true);
-                asyncCreateBufferedImage(snapshot);
+                asyncCreateBufferedImageAndRender(snapshot);
             }
         });
         
@@ -87,12 +87,13 @@ public class WorldPanel extends UpdatableJPanel {
     }
 
     private void setSize() {
-        int maxColWidth = (int) (this.getWidth() / world.getWidth());
+        int maxColWidth = (int) ((gui.getMainPanel().getWidth()/0.75) / world.getWidth());
         int maxRowHeight = gui.getMainPanel().getHeight() / world.getHeight();
         int cellSize = Math.min(maxColWidth, maxRowHeight);
         imgW = cellSize * world.getWidth();
         imgH = cellSize * world.getHeight();
         setPreferredSize(new Dimension(imgW, imgH));
+        gui.getMainPanel().revalidate();
     }
 
     private void asyncRender() {
