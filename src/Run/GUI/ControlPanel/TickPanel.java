@@ -126,7 +126,7 @@ public class TickPanel extends UpdateableJPanel {
     public void updateTableModelTarget() {
         try {
             tableModelUpdating = true;
-            tickInfoTableModel.setValueAt(Main.getTargetMSPT() == 0 ? "∞" : Long.toString(1_000L / Main.getTargetMSPT()), 1, 2);
+            tickInfoTableModel.setValueAt(Main.getTargetMSPT() == 0 ? "0" : Long.toString(1_000L / Main.getTargetMSPT()), 1, 2);
             tickInfoTableModel.setValueAt(Main.getTargetMSPT() == 0 ? "∞" : Long.toString(Main.getTargetMSPT()), 2, 2);
         } finally {
             tableModelUpdating = false;
